@@ -1,0 +1,22 @@
+<?php
+return [
+    'about_section' => 'Mombamomba',
+    'about_description' => 'ATZ dia platforme maoderina natao mba ho fanehoana ny serivisy sy hetsika hataon\'ny fikambanana, mba hanatsarana ny fifandraisana eo amin\'ny fikambanana sy ny mpanohana sy mpiara-miasa',
+    'quick_links' => 'Rohy haingana',
+    'home_link' => 'Fandraisana',
+    'about_link' => 'Mombamomba',
+    'activities_link' => 'Hetsika',
+    'contact_link' => 'Fifandraisana',
+    'contact_section' => 'Mifandraisa Aminay',
+    'contact_email' => 'Mailaka : contact@atz.mg',
+    'contact_phone' => 'Finday : +261 34 00 000 00',
+    'contact_address' => 'Antananarivo, Madagasikara',
+    'follow_us' => 'Araho izahay',
+    'social_facebook' => 'Facebook',
+    'social_instagram' => 'Instagram',
+    'social_whatsapp' => 'WhatsApp',
+    'social_email' => 'Mailaka',
+    'newsletter_placeholder' => 'Ny Mailakao',
+    'newsletter_button' => 'Alefa',
+    'copyright' => '© 2026 ATZ Platform – Zo rehetra voatokana',
+];

@@ -1,0 +1,294 @@
+:root {
+    --color-primary: #feed02;
+    --color-secondary: #c7ba04;
+    --color-text: #0d0c43;
+    --color-background: #fffef2;
+    --color-accent: #6f4413;
+    --color-blue: #0da3d8;
+    --color-green: #6e9d2e;
+    --color-red: rgb(200, 0, 0);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #f8f9fa;
+    color: var(--color-text);
+    display: flex;
+    gap: 3rem;
+}
+
+
+
+/* Sidebar */
+.admin-sidebar {
+    width: 260px;
+    background: var(--color-text);
+    color: white;
+    display: block;
+    transition: transform 0.3s ease;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo{
+    width: 20px;
+}
+
+.logo-placeholder {
+    width: 36px;
+    height: 36px;
+    background-color:var(--color-background);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.logo-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1.25rem 0;
+}
+
+.nav-list {
+    list-style: none;
+}
+
+.nav-item {
+    margin: 0 1rem 0.25rem;
+}
+
+
+/* Barre latérale active (à gauche) */
+.nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: var(--color-primary);
+    border-radius: 0 4px 4px 0;
+    transition: height 0.3s ease;
+}
+
+/* État ACTIVE */
+.nav-item.active .nav-link {
+    background: rgba(254, 237, 2, 0.2);
+    color: white;
+    font-weight: 600;
+}
+
+.nav-item.active .nav-link::before {
+    height: 100%;
+    /* La barre apparaît */
+}
+
+.nav-item.active .nav-icon {
+    color: var(--color-primary);
+}
+
+/* Hover (optionnel) */
+.nav-link:hover {
+    padding-left: 1.5rem;
+}
+
+.nav-link:hover .nav-icon {
+    transform: scale(1.1);
+    color: var(--color-primary);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0.875rem 1.25rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+
+/* Sous-menu */
+.nav-item.has-submenu {
+    position: relative;
+}
+
+.submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 200px;
+    background: #0b0a3a;
+    /* légèrement plus foncé que --color-text */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.25s ease;
+    z-index: 100;
+}
+
+.nav-item.has-submenu:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.submenu-link {
+    display: block;
+    padding: 0.625rem 1.25rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.submenu-link:hover {
+    background: rgba(254, 237, 2, 0.15);
+    color: white;
+}
+
+.nav-link:hover{
+    background: rgba(254, 237, 2, 0.15);
+    color: white;
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Footer sidebar */
+.sidebar-footer {
+    padding: 1.25rem 1.25rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    width: 100%;
+    text-align: left;
+}
+
+.logout-btn:hover {
+    background: rgba(200, 0, 0, 0.2);
+    color: white;
+}
+
+.logout-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Main content */
+.admin-main {
+    flex: 1;
+    padding: 2rem;
+    overflow: auto;
+}
+
+.admin-header {
+    margin-bottom: 2rem;
+}
+
+.admin-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.admin-subtitle {
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-blue);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Recent activity */
+.recent-activity h2 {
+    font-size: 1.375rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.recent-activity ul {
+    list-style: none;
+    background: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.recent-activity li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.recent-activity li:last-child {
+    border-bottom: none;
+}

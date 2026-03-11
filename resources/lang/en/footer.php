@@ -1,0 +1,22 @@
+<?php
+return [
+    'about_section' => 'About',
+    'about_description' => 'ATZ is a modern platform dedicated to the management and digitalization of services to facilitate the relationship between association members and partners',
+    'quick_links' => 'Quick Links',
+    'home_link' => 'Home',
+    'about_link' => 'About',
+    'activities_link' => 'Activities',
+    'contact_link' => 'Contact',
+    'contact_section' => 'Contact',
+    'contact_email' => 'Email : contact@atz.mg',
+    'contact_phone' => 'Tel : +261 34 00 000 00',
+    'contact_address' => 'Antananarivo, Madagascar',
+    'follow_us' => 'Follow Us',
+    'social_facebook' => 'Facebook',
+    'social_instagram' => 'Instagram',
+    'social_whatsapp' => 'WhatsApp',
+    'social_email' => 'Email',
+    'newsletter_placeholder' => 'Your email',
+    'newsletter_button' => 'Send',
+    'copyright' => '© 2026 ATZ Platform – All rights reserved',
+];

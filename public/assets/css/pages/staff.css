@@ -1,0 +1,1317 @@
+:root {
+    --color-primary: #feed02;
+    --color-secondary: #c7ba04;
+    --color-text: #0d0c43;
+    --color-background: #fffef2;
+    --color-accent: #6f4413;
+    --color-blue: #0da3d8;
+    --color-green: #6e9d2e;
+    --color-red: rgb(200, 0, 0);
+}
+
+.staff{
+    padding: 4rem 0;
+    background: linear-gradient(to bottom, #ffffff, var(--color-background));
+    text-align: center;
+}
+
+.staff h1{
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-blue);
+    margin-bottom: 2rem;
+    padding: 5px 0;
+    border-bottom: solid 3px var(--color-secondary);
+    display:inline-flex;
+}
+
+.staff p{
+    color: var(--color-text);
+    line-height: 1.8;
+    text-align: justify;
+}
+
+
+
+   .team-intro-wrapper {
+       max-width: 900px;
+       margin: 0 auto 50px;
+       padding: 0 20px;
+       text-align: center;
+   }
+
+   .team-intro-text {
+       font-size: 1.2rem;
+       line-height: 1.8;
+       color: var(--color-text);
+       margin: 0;
+       font-weight: 400;
+   }
+
+   .team-link {
+       position: relative;
+       text-decoration: none;
+       color: var(--color-blue);
+       font-weight: 600;
+       padding: 2px 8px;
+       border-radius: 4px;
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+       display: inline-block;
+   }
+
+   .team-link::before {
+       content: '';
+       position: absolute;
+       bottom: 0;
+       left: 0;
+       width: 100%;
+       height: 2px;
+       background: linear-gradient(90deg, var(--color-primary), var(--color-blue));
+       transform: scaleX(0);
+       transform-origin: right;
+       transition: transform 0.3s ease;
+   }
+
+   .team-link::after {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background: linear-gradient(135deg,
+               rgba(254, 237, 2, 0.1),
+               rgba(13, 163, 216, 0.1));
+       border-radius: 4px;
+       opacity: 0;
+       transition: opacity 0.3s ease;
+       z-index: -1;
+   }
+
+   .team-link:hover {
+       color: var(--color-blue);
+       transform: translateY(-2px);
+   }
+
+   .team-link:hover::before {
+       transform: scaleX(1);
+       transform-origin: left;
+   }
+
+   .team-link:hover::after {
+       opacity: 1;
+   }
+
+   /* Couleurs spécifiques par catégorie */
+   .team-link[data-category="bureaucrate"]:hover {
+       color: var(--color-blue);
+   }
+
+   .team-link[data-category="terrain"]:hover {
+       color: var(--color-green);
+   }
+
+   .team-link[data-category="terrain"]::before {
+       background: linear-gradient(90deg, var(--color-primary), var(--color-green));
+   }
+
+   .team-link[data-category="benevoles"]:hover {
+       color: var(--color-accent);
+   }
+
+   .team-link[data-category="benevoles"]::before {
+       background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+   }
+
+   /* Animation des icônes (optionnel) */
+   .team-link::first-letter {
+       font-weight: 700;
+   }
+
+   /* Animation au chargement */
+   @keyframes fadeInUp {
+       from {
+           opacity: 0;
+           transform: translateY(20px);
+       }
+
+       to {
+           opacity: 1;
+           transform: translateY(0);
+       }
+   }
+
+   .team-intro-wrapper {
+       animation: fadeInUp 0.8s ease forwards;
+   }
+
+   /* Badge décoratif */
+   .team-link {
+       position: relative;
+   }
+
+   .team-link:active {
+       transform: translateY(0);
+   }
+
+   /* Responsive */
+   @media (max-width: 768px) {
+       .team-intro-text {
+           font-size: 1.1rem;
+           line-height: 1.7;
+       }
+
+       .team-link {
+           padding: 2px 6px;
+       }
+   }
+
+   @media (max-width: 480px) {
+       .team-intro-text {
+           font-size: 1rem;
+           line-height: 1.6;
+       }
+}
+
+
+
+
+
+
+
+
+/* office section */
+ /* Section principale */
+ .office_section {
+     padding: 80px 0;
+     background: linear-gradient(135deg, #ffffff 0%, var(--color-background) 100%);
+     height: 50vh;
+     overflow: hidden;
+     overflow-y: scroll;
+ }
+
+ .office_section .container {
+     max-width: 1400px;
+     margin: 0 auto;
+     padding: 0 40px;
+ }
+
+ /* En-tête de section */
+ .section-header {
+     text-align: center;
+     margin-bottom: 60px;
+ }
+
+ .section-title {
+     font-size: 3rem;
+     font-weight: 700;
+     color: var(--color-blue);
+     margin-bottom: 20px;
+     text-transform: capitalize;
+     letter-spacing: -0.5px;
+ }
+
+ .title-underline {
+     width: 100px;
+     height: 5px;
+     background: linear-gradient(90deg, var(--color-primary), var(--color-blue));
+     margin: 0 auto;
+     border-radius: 10px;
+ }
+
+ /* Grille des cartes */
+ .office_section_cards {
+     display: flex;
+     flex-direction: column;
+     gap: 30px;
+ }
+
+ /* Carte membre - Layout horizontal */
+ .office_card {
+     display: flex;
+     background: white;
+     border-radius: 16px;
+     overflow: hidden;
+     box-shadow: 0 8px 24px rgba(13, 12, 67, 0.08);
+     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+     position: relative;
+     min-height: 180px;
+ }
+
+ .office_card::before {
+     content: '';
+     position: absolute;
+     left: 0;
+     top: 0;
+     bottom: 0;
+     width: 6px;
+     background: linear-gradient(180deg, var(--color-primary), var(--color-blue));
+     transform: scaleY(0);
+     transition: transform 0.4s ease;
+ }
+
+ .office_card:hover {
+     transform: translateX(10px);
+     box-shadow: 0 16px 48px rgba(13, 163, 216, 0.2);
+ }
+
+ .office_card:hover::before {
+     transform: scaleY(1);
+ }
+
+ /* Partie gauche - Image */
+ .card-left {
+     flex-shrink: 0;
+     width: 220px;
+     position: relative;
+     overflow: hidden;
+ }
+
+ .member-image-wrapper {
+     width: 100%;
+     height: 100%;
+     position: relative;
+     overflow: hidden;
+ }
+
+ .member-image {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     transition: transform 0.6s ease;
+ }
+
+ .office_card:hover .member-image {
+     transform: scale(1.15);
+ }
+
+ .image-badge {
+     position: absolute;
+     bottom: 15px;
+     left: 15px;
+     background: var(--color-primary);
+     color: var(--color-text);
+     padding: 6px 16px;
+     border-radius: 20px;
+     font-size: 0.85rem;
+     font-weight: 600;
+     text-transform: capitalize;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+     transform: translateY(60px);
+     /* opacity: 0; */
+     transition: all 0.4s ease;
+ }
+
+ .office_card:hover .image-badge {
+     transform: translateY(0);
+     opacity: 1;
+ }
+
+ /* Partie droite - Contenu */
+ .card-right {
+     flex: 1;
+     padding: 30px 35px;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+ }
+
+ /* Header membre */
+ .member-header {
+     margin-bottom: 15px;
+ }
+
+ .member-name {
+     font-size: 1.75rem;
+     font-weight: 700;
+     color: var(--color-text);
+     margin: 0 0 8px 0;
+     transition: color 0.3s ease;
+ }
+
+ .office_card:hover .member-name {
+     color: var(--color-blue);
+ }
+
+ .member-role {
+     display: inline-block;
+     background: linear-gradient(135deg, rgba(254, 237, 2, 0.15), rgba(13, 163, 216, 0.15));
+     color: var(--color-blue);
+     padding: 5px 15px;
+     border-radius: 20px;
+     font-size: 0.9rem;
+     font-weight: 600;
+     text-transform: capitalize;
+     border: 1px solid var(--color-blue);
+ }
+
+ /* Description */
+ .member-description {
+     color: var(--color-text);
+     line-height: 1.6;
+     font-size: 0.95rem;
+     margin-bottom: 20px;
+     opacity: 0.85;
+ }
+
+ /* Contacts */
+ .member-contacts {
+     display: flex;
+     gap: 15px;
+ }
+
+ .contact-link {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     padding: 8px 15px;
+     background: var(--color-background);
+     border-radius: 8px;
+     text-decoration: none;
+     color: var(--color-text);
+     font-size: 0.85rem;
+     font-weight: 500;
+     transition: all 0.3s ease;
+     border: 2px solid transparent;
+     position: relative;
+     overflow: hidden;
+ }
+
+ .contact-link::before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: -100%;
+     width: 100%;
+     height: 100%;
+     background: var(--color-blue);
+     transition: left 0.3s ease;
+     z-index: -1;
+ }
+
+ .contact-link:hover::before {
+     left: 0;
+ }
+
+ .contact-link:hover {
+     color: white;
+     border-color: var(--color-blue);
+     transform: translateY(-3px);
+     box-shadow: 0 6px 16px rgba(13, 163, 216, 0.3);
+ }
+
+ .contact-link[data-type="email"]:hover {
+     border-color: var(--color-red);
+ }
+
+ .contact-link[data-type="email"]:hover::before {
+     background: var(--color-red);
+ }
+
+ .contact-link[data-type="facebook"]:hover {
+     border-color: #1877f2;
+ }
+
+ .contact-link[data-type="facebook"]:hover::before {
+     background: #1877f2;
+ }
+
+ .contact-link[data-type="whatsapp"]:hover {
+     border-color: #25d366;
+ }
+
+ .contact-link[data-type="whatsapp"]:hover::before {
+     background: #25d366;
+ }
+
+ .contact-link svg {
+     width: 18px;
+     height: 18px;
+     flex-shrink: 0;
+ }
+
+ .contact-link span {
+     white-space: nowrap;
+     position: relative;
+     z-index: 1;
+ }
+
+ /* Animation d'apparition */
+ @keyframes slideInFromLeft {
+     from {
+         opacity: 0;
+         transform: translateX(-50px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateX(0);
+     }
+ }
+
+ .office_card {
+     opacity: 0;
+     animation: slideInFromLeft 0.6s ease forwards;
+ }
+
+ .office_card:nth-child(1) {
+     animation-delay: 0.1s;
+ }
+
+ .office_card:nth-child(2) {
+     animation-delay: 0.2s;
+ }
+
+ .office_card:nth-child(3) {
+     animation-delay: 0.3s;
+ }
+
+ .office_card:nth-child(4) {
+     animation-delay: 0.4s;
+ }
+
+ .office_card:nth-child(5) {
+     animation-delay: 0.5s;
+ }
+
+/* end of office sectio style */
+
+
+
+
+
+/* benevol section */
+/* Section principale */
+.volunteers-section {
+    margin-top: 5rem;
+    padding: 60px 0;
+    background: linear-gradient(to bottom, white, var(--color-background));
+    height: 50vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.volunteers-section .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* En-tête de section */
+.volunteers-section .section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.volunteers-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-green);
+    margin-bottom: 15px;
+}
+
+.volunteers-section .title-underline {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-green));
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* Grille minimaliste - 2 colonnes */
+.volunteers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Carte bénévole - Ultra minimaliste horizontale */
+.volunteer-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Bordure animée gauche */
+.volunteer-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-green);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.volunteer-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 20px rgba(110, 157, 46, 0.15);
+}
+
+.volunteer-card:hover::before {
+    transform: scaleY(1);
+}
+
+/* Image - Petite et circulaire (80px) */
+.volunteer-image {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.volunteer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--color-primary);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.volunteer-card:hover .volunteer-image img {
+    transform: scale(1.05);
+    border-color: var(--color-green);
+}
+
+/* Overlay sur l'image */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(110, 157, 46, 0.85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.volunteer-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.volunteer-status {
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Informations - Minimalistes */
+.volunteer-info {
+    flex: 1;
+}
+
+.volunteer-coord{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.volunteer-coord ul{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.volunteer-coord img{
+    width: 22px;
+    height: 22px;
+}
+
+.volunteer-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 5px 0;
+    transition: color 0.3s ease;
+}
+
+.volunteer-card:hover .volunteer-name {
+    color: var(--color-green);
+}
+
+.volunteer-role {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    opacity: 0.7;
+    margin: 0 0 5px 0;
+}
+
+.volunteer-since {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: white;
+    background: var(--color-green);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.volunteer-since:hover {
+    transform: scale(1.1);
+}
+
+/* Animation d'apparition au chargement */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.volunteer-card {
+    opacity: 0;
+    animation: slideInRight 0.5s ease forwards;
+}
+
+/* Délais progressifs pour chaque carte */
+.volunteer-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.volunteer-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.volunteer-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.volunteer-card:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.volunteer-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.volunteer-card:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.volunteer-card:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.volunteer-card:nth-child(8) {
+    animation-delay: 0.4s;
+}
+
+/* Animation flash pour le JavaScript */
+@keyframes flash {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.95);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .volunteers-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .volunteers-section {
+        padding: 40px 0;
+    }
+
+    .volunteers-section .container {
+        padding: 0 20px;
+    }
+
+    .volunteers-section .section-title {
+        font-size: 2rem;
+    }
+
+    .volunteer-image {
+        width: 70px;
+        height: 70px;
+    }
+
+    .volunteer-name {
+        font-size: 1rem;
+    }
+
+    .volunteer-role {
+        font-size: 0.85rem;
+    }
+
+    .volunteer-since {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .volunteers-section .section-title {
+        font-size: 1.75rem;
+    }
+
+    .volunteer-card {
+        padding: 12px;
+    }
+
+    .volunteer-image {
+        width: 60px;
+        height: 60px;
+        margin-right: 12px;
+    }
+
+    .volunteer-name {
+        font-size: 0.95rem;
+    }
+
+    .volunteer-role {
+        font-size: 0.8rem;
+    }
+}
+
+/* end of benevol section */
+
+
+
+
+
+
+
+/* _________________________________________________________________________________________animation start _________________________________________________________________________ */
+/* ============================================
+   TIMELINE CSS PURE - CARTE MEMBRE
+   Animation au chargement avec délais progressifs
+   ============================================ */
+
+/* État initial - tous les éléments invisibles */
+.office_card {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation:
+        cardEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+@keyframes cardEntrance {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Image membre */
+.member-image-wrapper {
+    opacity: 0;
+    transform: translateX(-40px);
+    animation:
+        slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+/* Badge */
+.image-badge {
+    opacity: 0;
+    transform: translateY(20px);
+    animation:
+        slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 0.7s;
+}
+
+/* Nom */
+.member-name {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation:
+        slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.9s;
+}
+
+/* Rôle */
+.member-role {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation:
+        slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 1.1s;
+}
+
+/* Description */
+.member-description {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation:
+        slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 1.3s;
+}
+
+/* Liens de contact - apparition staggered */
+.contact-link {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation:
+        slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.contact-link:nth-child(1) {
+    animation-delay: 1.5s;
+}
+
+.contact-link:nth-child(2) {
+    animation-delay: 1.7s;
+}
+
+.contact-link:nth-child(3) {
+    animation-delay: 1.9s;
+}
+
+
+/* ============================================
+   KEYFRAMES RÉUTILISABLES
+   ============================================ */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ============================================
+   OPTIONNEL : RESET SUR HOVER POUR ÉVITER CONFLITS
+   ============================================ */
+/* .office_card:hover .member-image-wrapper,
+.office_card:hover .image-badge,
+.office_card:hover .member-name,
+.office_card:hover .member-role,
+.office_card:hover .member-description,
+.office_card:hover .contact-link {
+    animation: none !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+} */
+
+
+
+
+/* _________________________________________// RESPONSIVE //__________________________________________________________ */
+
+
+/* ============================================
+   RESPONSIVE - OFFICE CARDS
+   ============================================ */
+
+/* Tablettes et petits écrans (768px et moins) */
+@media (max-width: 768px) {
+    .office_card {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .card-left {
+        width: 100%;
+    }
+
+    .member-image-wrapper {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .card-right {
+        padding: 20px;
+    }
+}
+
+/* Smartphones moyens (480px) */
+@media (max-width: 480px) {
+    .office_section_cards {
+        gap: 20px;
+    }
+
+    .office_card {
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(13, 12, 67, 0.08);
+    }
+
+    .card-left {
+        padding: 20px 20px 10px 20px;
+    }
+
+    .member-image-wrapper {
+        max-width: 160px;
+    }
+
+    .image-badge {
+        font-size: 11px;
+        padding: 4px 12px;
+    }
+
+    .card-right {
+        padding: 15px 20px 20px 20px;
+    }
+
+    .member-header {
+        margin-bottom: 12px;
+    }
+
+    .member-name {
+        font-size: 18px;
+        margin-bottom: 6px;
+    }
+
+    .member-role {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    .member-description {
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .member-contacts {
+        gap: 10px;
+    }
+
+    .contact-link {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .contact-link svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Petits smartphones (350px) */
+@media (max-width: 350px) {
+    .office_section_cards {
+        gap: 15px;
+    }
+
+    .office_card {
+        border-radius: 10px;
+    }
+
+    .card-left {
+        padding: 15px 15px 8px 15px;
+    }
+
+    .member-image-wrapper {
+        max-width: 140px;
+    }
+
+    .image-badge {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    .card-right {
+        padding: 12px 15px 15px 15px;
+    }
+
+    .member-header {
+        margin-bottom: 10px;
+    }
+
+    .member-name {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .member-role {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+
+    .member-description {
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    }
+
+    .member-contacts {
+        gap: 8px;
+        flex-direction: column;
+    }
+
+    .contact-link {
+        font-size: 11px;
+        padding: 8px 10px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .contact-link svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+    }
+
+    .contact-link span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* Très petits écrans (320px et moins) - Support minimal */
+@media (max-width: 320px) {
+    .office_section_cards {
+        gap: 12px;
+    }
+
+    .card-left {
+        padding: 12px;
+    }
+
+    .member-image-wrapper {
+        max-width: 120px;
+    }
+
+    .card-right {
+        padding: 10px 12px 12px 12px;
+    }
+
+    .member-name {
+        font-size: 15px;
+    }
+
+    .member-description {
+        font-size: 11px;
+    }
+
+    .contact-link {
+        font-size: 10px;
+        padding: 6px 8px;
+    }
+}
+
+
+
+/* ============================================
+   RESPONSIVE - VOLUNTEER CARDS
+   ============================================ */
+
+/* Tablettes et petits écrans (768px et moins) */
+@media (max-width: 768px) {
+    .volunteer-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .volunteer-image {
+        margin-bottom: 15px;
+        width: 100%;
+        max-width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .volunteer-info {
+        width: 100%;
+    }
+
+    .volunteer-coord {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .volunteer-coord ul {
+        justify-content: center;
+    }
+}
+
+/* Smartphones moyens (480px) */
+@media (max-width: 480px) {
+    .volunteer-card {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .volunteer-image {
+        max-width: 150px;
+        margin-bottom: 12px;
+    }
+
+    .volunteer-image img {
+        border-radius: 10px;
+    }
+
+    .image-overlay {
+        border-radius: 10px;
+    }
+
+    .volunteer-status {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+
+    .volunteer-name {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .volunteer-coord ul {
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .volunteer-coord ul li a {
+        width: 32px;
+        height: 32px;
+    }
+
+    .volunteer-coord ul li img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .volunteer-role {
+        font-size: 13px;
+        margin: 10px 0 8px 0;
+    }
+
+    .volunteer-since {
+        font-size: 11px;
+    }
+}
+
+/* Petits smartphones (350px) */
+@media (max-width: 350px) {
+    .volunteer-card {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .volunteer-image {
+        max-width: 130px;
+        margin-bottom: 10px;
+    }
+
+    .volunteer-image img {
+        border-radius: 8px;
+    }
+
+    .image-overlay {
+        border-radius: 8px;
+    }
+
+    .volunteer-status {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+
+    .volunteer-name {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .volunteer-coord ul {
+        gap: 6px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+    }
+
+    .volunteer-coord ul li a {
+        width: 28px;
+        height: 28px;
+    }
+
+    .volunteer-coord ul li img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .volunteer-role {
+        font-size: 12px;
+        margin: 8px 0 6px 0;
+    }
+
+    .volunteer-since {
+        font-size: 10px;
+    }
+}
+
+/* Très petits écrans (320px et moins) - Support minimal */
+@media (max-width: 320px) {
+    .volunteer-card {
+        padding: 10px;
+    }
+
+    .volunteer-image {
+        max-width: 110px;
+    }
+
+    .volunteer-name {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .volunteer-coord ul {
+        gap: 5px;
+    }
+
+    .volunteer-coord ul li a {
+        width: 26px;
+        height: 26px;
+    }
+
+    .volunteer-coord ul li img {
+        width: 14px;
+        height: 14px;
+    }
+
+    .volunteer-role {
+        font-size: 11px;
+        margin: 6px 0 5px 0;
+    }
+
+    .volunteer-since {
+        font-size: 9px;
+    }
+}

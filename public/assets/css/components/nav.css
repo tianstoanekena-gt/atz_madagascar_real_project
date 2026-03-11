@@ -1,0 +1,188 @@
+/* ================= NAVBAR BASE ================= */
+
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-links {
+    max-width: 1600px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 80px;
+}
+
+/* ================= LOGO ================= */
+
+.logo {
+    width: 60px;
+    height: 60px;
+    transition: transform .3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* ================= MENU ================= */
+
+.nav-link ul {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+}
+
+/* Links */
+
+.nav-link-child {
+    text-transform: capitalize;
+    position: relative;
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding-bottom: 4px;
+    transition: .3s;
+}
+
+.nav-link-child:visited {
+    color: var(--color-accent);
+}
+
+.nav-link-child::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--color-secondary);
+    transition: .3s;
+}
+
+.nav-link-child:hover {
+    color: var(--color-blue);
+}
+
+.nav-link-child:hover::after {
+    width: 100%;
+}
+
+/* Active */
+
+.nav-link-child.active {
+    color: var(--color-blue);
+    font-weight: 600;
+}
+
+.nav-link-child.active::after {
+    width: 100%;
+    background: var(--color-primary);
+}
+
+/* ================= LANGUAGE ================= */
+.language-select {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.language-select:hover,
+.language-select:focus {
+    border-color: var(--color-blue);
+    outline: none;
+}
+/* ================= BURGER ================= */
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 28px;
+    height: 3px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: .3s;
+}
+
+/* ================= ULTRA LARGE SCREEN ================= */
+
+@media (min-width: 1600px) {
+    .nav-links {
+        padding: 15px 120px;
+    }
+
+    .nav-link-child {
+        font-size: 1.2rem;
+    }
+}
+
+/* ================= LAPTOP ================= */
+
+@media (max-width: 1200px) {
+    .nav-links {
+        padding: 12px 50px;
+    }
+}
+
+/* ================= TABLET ================= */
+
+@media (max-width: 992px) {
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-link {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 260px;
+        height: calc(100vh - 80px);
+        background: white;
+        box-shadow: 4px 0 15px rgba(0,0,0,.1);
+        padding: 30px;
+        transition: .4s ease;
+    }
+
+    .nav-link.open {
+        left: 0;
+    }
+
+    .nav-link ul {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 576px) {
+
+    .nav-links {
+        padding: 10px 20px;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+
+}

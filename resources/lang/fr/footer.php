@@ -1,0 +1,22 @@
+<?php
+return [
+    'about_section' => 'À propos',
+    'about_description' => 'ATZ est une plateforme moderne dédiée à la gestion et à la digitalisation des services pour faciliter la relation entre les membres de l\'association et les partenaires',
+    'quick_links' => 'Liens rapides',
+    'home_link' => 'Accueil',
+    'about_link' => 'À propos',
+    'activities_link' => 'Activités',
+    'contact_link' => 'Contact',
+    'contact_section' => 'Contact',
+    'contact_email' => 'Email : contact@atz.mg',
+    'contact_phone' => 'Tél : +261 34 00 000 00',
+    'contact_address' => 'Antananarivo, Madagascar',
+    'follow_us' => 'Suivez-nous',
+    'social_facebook' => 'Facebook',
+    'social_instagram' => 'Instagram',
+    'social_whatsapp' => 'WhatsApp',
+    'social_email' => 'Email',
+    'newsletter_placeholder' => 'Votre email',
+    'newsletter_button' => 'Envoyer',
+    'copyright' => '© 2026 ATZ Platform – Tous droits réservés',
+];
