@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ActivitiesDetailsController;
+use App\Http\Controllers\Admin\AboutCardController;
 use App\Http\Controllers\Admin\AboutTextController;
 use App\Http\Controllers\Admin\AboutVideoController;
 use App\Http\Controllers\BecomeParrainController;
@@ -111,6 +112,11 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/about-texts', AboutTextController::class)
             ->except(['show'])
             ->names('admin.about-texts');
+
+        //gestino du vlaue card dans la page about
+        Route::resource('dashboard/about-cards', AboutCardController::class)
+            ->except(['show'])
+            ->names('admin.about-cards');
     });
 
 Route::middleware('auth')->group(function () {

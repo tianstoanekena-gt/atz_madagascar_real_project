@@ -257,6 +257,8 @@
         color: var(--color-text);
         line-height: 1.8;
         text-align: justify;
+        font-size: 1.25rem;
+        font-weight: 700;
     }
 
     .intervention-cards {
@@ -367,7 +369,7 @@
     .value-icon {
         width: 4rem;
         height: 4rem;
-        background-color: var(--color-primary);
+        background-color: var(--color-background);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -375,23 +377,20 @@
         margin: 0 auto 1rem;
     }
 
-    .value-icon svg {
-        width: 2rem;
-        height: 2rem;
-        color: white;
-    }
 
     .value-title {
-        font-size: 1.25rem;
+        font-size: 1.55rem;
         font-weight: bold;
         color: var(--color-blue);
         margin-bottom: 0.5rem;
+        text-transform: capitalize;
     }
 
     .value-text {
         color: var(--color-text);
         font-size: 0.9rem;
         line-height: 1.6;
+        font-weight: bold;
     }
 
 /* _______________________________________________________________________________ANIMATION__________________________________________________________________________________*/

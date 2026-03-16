@@ -116,49 +116,35 @@
 
 
             {{-- Mission, Vision, Valeurs --}}
+            @php
+                use App\Models\AboutCard;
+                use Illuminate\Support\Facades\Storage;
+
+                $currentLang = app()->getLocale();
+
+                // Récupérer toutes les cartes pour la langue actuelle
+                $cards = AboutCard::where('lang', $currentLang)->get();
+
+                // Fallback sur français si pas trouvé
+                if ($cards->count() === 0) {
+                    $cards = AboutCard::where('lang', 'fr')->get();
+                }
+            @endphp
+
             <div class="values-section">
-                <div class="value-card">
-                    <div class="value-icon">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                        </svg>
+                @forelse ($cards as $card)
+                    <div class="value-card">
+                        <div class="value-icon">
+                            @if (Storage::disk('public')->exists($card->card_icon))
+                                <img src="{{ Storage::url($card->card_icon) }}" alt="{{ $card->card_title }}"
+                                    class="w-12 h-12 object-contain">
+                            @endif
+                        </div>
+                        <h3 class="value-title">{{ $card->card_title }}</h3>
+                        <p class="value-text">{{ $card->card_description }}</p>
                     </div>
-                    <h3 class="value-title">Notre Mission</h3>
-                    <p class="value-text">
-                        Soutenir socialement les personnes et familles vulnérables à travers l'éducation, la santé et la
-                        nutrition.
-                    </p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-icon">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                            <path fill-rule="evenodd"
-                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <h3 class="value-title">Notre Vision</h3>
-                    <p class="value-text">
-                        Chaque enfant a accès à l'éducation, la santé et peut réaliser son plein potentiel.
-                    </p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-icon">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <h3 class="value-title">Nos Valeurs</h3>
-                    <p class="value-text">
-                        Compassion, solidarité, intégrité et engagement envers les plus vulnérables de notre société.
-                    </p>
-                </div>
+                @empty
+                @endforelse
             </div>
 
 
