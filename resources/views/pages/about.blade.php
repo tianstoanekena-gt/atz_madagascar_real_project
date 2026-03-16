@@ -151,50 +151,33 @@
 
 
             {{-- Cards des domaines d'intervention --}}
+            @php
+                use App\Models\AboutIntervention;
+
+                $currentLang = app()->getLocale();
+                $interventions = AboutIntervention::with('translations')->orderBy('order')->get();
+            @endphp
+
             <div class="intervention-cards">
-                {{-- Card Santé --}}
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{ asset('assets/images/activity/sante21.jpg') }}" alt="Santé">
-                    </div>
-                    <div class="card-content card-health">
-                        <h3 class="card-title">La santé :</h3>
-                        <p class="card-text">
-                            ATZ soutient ses membres en assurant un accès aux soins de santé. Nous organisons des
-                            consultations médicales régulières et des campagnes de sensibilisation sanitaire pour garantir
-                            le bien-être de nos bénéficiaires.
-                        </p>
-                    </div>
-                </div>
+                @foreach ($interventions as $intervention)
+                    @php
+                        $translation = $intervention->translation($currentLang);
+                    @endphp
 
-                {{-- Card Nutrition --}}
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{ asset('assets/images/activity/sakafo.jpg') }}" alt="Nutrition">
-                    </div>
-                    <div class="card-content card-nutrition">
-                        <h3 class="card-title">La nutrition :</h3>
-                        <p class="card-text">
-                            ATZ soutient ses membres en améliorant leur nutrition. Nous offrons des repas nutritifs aux
-                            familles et une éducation nutritionnelle pour favoriser une croissance saine des enfants.
-                        </p>
-                    </div>
-                </div>
-
-                {{-- Card Éducation --}}
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{ asset('assets/images/activity/494060426_9603831496380796_6965740743675755470_n.jpg') }}"
-                            alt="Éducation">
-                    </div>
-                    <div class="card-content card-education">
-                        <h3 class="card-title">L'éducation :</h3>
-                        <p class="card-text">
-                            ATZ soutient et facilite l'éducation scolaire à travers la prise en charge des frais scolaires
-                            et fournitures. Nous offrons également un accompagnement pédagogique personnalisé.
-                        </p>
-                    </div>
-                </div>
+                    @if ($translation)
+                        <div class="card">
+                            <div class="card-image">
+                                @if (Storage::disk('public')->exists($intervention->image))
+                                    <img src="{{ Storage::url($intervention->image) }}" alt="{{ $translation->title }}">
+                                @endif
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">{{ $translation->title }}</h3>
+                                <p class="card-text">{{ $translation->description }}</p>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
 
         </div>

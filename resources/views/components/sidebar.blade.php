@@ -40,6 +40,8 @@
                     <li><a href="{{ route('admin.about-videos.index') }}" class="submenu-link">Vidéo About</a></li>
                     <li><a href="{{ route('admin.about-texts.index') }}" class="submenu-link">Textes About</a></li>
                     <li><a href="{{ route('admin.about-cards.index') }}" class="submenu-link">About value cards</a></li>
+                    <li><a href="{{ route('admin.about-interventions.index') }}" class="submenu-link">About
+                            interventions cartes</a></li>
             </li>
         </ul>
         </li>
