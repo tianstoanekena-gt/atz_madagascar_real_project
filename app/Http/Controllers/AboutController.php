@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutVideo;
 
 class AboutController extends Controller
 {

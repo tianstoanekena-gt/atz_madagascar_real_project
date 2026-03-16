@@ -37,6 +37,8 @@
                 <ul class="submenu">
                     <li><a href="{{ route('admin.hero-slides.index') }}" class="submenu-link">Hero_Slide</a></li>
                     <li><a href="{{ route('admin.logos.index') }}" class="submenu-link">Logo</a></li>
+                    <li><a href="{{ route('admin.about-videos.index') }}" class="submenu-link">Vidéo About</a></li>
+                    <li><a href="{{ route('admin.about-texts.index') }}" class="submenu-link">Textes About</a></li>
             </li>
         </ul>
         </li>

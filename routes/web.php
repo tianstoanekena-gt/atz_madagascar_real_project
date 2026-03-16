@@ -3,6 +3,8 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ActivitiesDetailsController;
+use App\Http\Controllers\Admin\AboutTextController;
+use App\Http\Controllers\Admin\AboutVideoController;
 use App\Http\Controllers\BecomeParrainController;
 use App\Http\Controllers\BecomeSponsorsController;
 use App\Http\Controllers\ContactController;
@@ -99,6 +101,16 @@ Route::middleware(['auth', 'verified'])
             ->name('admin.hero-slides.update');
         Route::delete('/dashboard/hero-slides/{heroSlide}', [\App\Http\Controllers\Admin\HeroSlideController::class, 'destroy'])
             ->name('admin.hero-slides.destroy');
+
+        // Gestion vidéos about
+        Route::resource('dashboard/about-videos', AboutVideoController::class)
+            ->except(['show'])
+            ->names('admin.about-videos');
+
+        // Gestion textes about
+        Route::resource('dashboard/about-texts', AboutTextController::class)
+            ->except(['show'])
+            ->names('admin.about-texts');
     });
 
 Route::middleware('auth')->group(function () {

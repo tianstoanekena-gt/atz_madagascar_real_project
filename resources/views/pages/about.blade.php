@@ -51,16 +51,66 @@
 
             {{-- Texte de présentation --}}
             <div class="about-video-text-parent">
-                <div class="about-video-parent">
-                    <video src="{{ asset('assets/videos/WhatsApp Video 2026-01-28 at 10.01.54.mp4') }}" controls></video>
+                @php
+                    use App\Models\AboutVideo;
+
+                    // Récupérer la vidéo selon la langue actuelle
+                    $currentLang = app()->getLocale(); // mg, fr, ou en
+                    $video = AboutVideo::where('lang', $currentLang)->first();
+
+                    // Fallback: si pas de vidéo pour cette langue, prendre la première disponible
+                    if (!$video) {
+                        $video = AboutVideo::first();
+                    }
+
+                    // Extraire l'ID YouTube de l'URL
+                    $videoId = null;
+                    if ($video && $video->video_url) {
+                        preg_match('/(?:v=|\/|be\/)([a-zA-Z0-9_-]{11})/', $video->video_url, $matches);
+                        $videoId = $matches[1] ?? null;
+                    }
+                @endphp
+
+                <div class="about-video-text-parent">
+                    <div class="about-video-parent">
+                        @if ($videoId)
+                            <iframe src="https://www.youtube.com/embed/{{ $videoId }}?rel=0&modestbranding=1"
+                                frameborder="0" class="videos"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen class="w-full h-64 md:h-96 rounded-lg">
+                            </iframe>
+                        @else
+                            <div class="w-full h-64 md:h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">
+                                    <i class="fas fa-video-slash mr-2"></i>
+                                    Vidéo non disponible
+                                </p>
+                            </div>
+                        @endif
+                    </div>
                 </div>
-                <div class="about-intro">
-                    <p class="intro-text">
-                        ATZ Madagascar (Akany Tia Zaza) est une association évangélique paroissiale ayant pour mission de
-                        soutenir socialement des personnes et familles en situation de vulnérabilité. Nous œuvrons auprès
-                        des
-                        familles nombreuses, orphelins, et enfants scolarisés en difficulté à Madagascar.
-                    </p>
+                @php
+                    use App\Models\AboutText;
+
+                    $currentLang = app()->getLocale();
+                    $aboutText = AboutText::where('lang', $currentLang)->first();
+
+                    if (!$aboutText) {
+                        $aboutText = AboutText::first();
+                    }
+                @endphp
+
+                <div class="about-video-text-parent">
+                    <div class="about-video-parent">
+                        <!-- Vidéo YouTube (déjà implémentée) -->
+                    </div>
+                    <div class="about-intro">
+                        @if ($aboutText && $aboutText->content)
+                            <p class="intro-text">
+                                {{ $aboutText->content }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
             </div>
 

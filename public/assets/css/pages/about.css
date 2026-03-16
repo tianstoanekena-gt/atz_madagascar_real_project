@@ -231,15 +231,6 @@
   }
 /* end of link about */
 
-
-
-
-
-
-
-
-
-
     .title-underline {
         width: 6rem;
         height: 4px;
@@ -254,11 +245,11 @@
         margin-bottom: 2rem;
     }
 
-    .about-video-parent video{
-        width: 100rem;
-        height: 30rem;
+
+    .videos{
+        width: 800px;
+        height: 450px;
         border-radius: 2rem;
-        border: solid 4px var(--color-blue);
     }
 
 
