@@ -131,6 +131,7 @@
                 }
             @endphp
 
+            <h3 class="semi_section_title">@lang('about.first_semi_section_title')</h3>
             <div class="values-section">
                 @forelse ($cards as $card)
                     <div class="value-card">
@@ -158,6 +159,7 @@
                 $interventions = AboutIntervention::with('translations')->orderBy('order')->get();
             @endphp
 
+            <h3 class="semi_section_title">@lang('about.second_semi_section_title')</h3>
             <div class="intervention-cards">
                 @foreach ($interventions as $intervention)
                     @php
