@@ -40,8 +40,14 @@
                     <li><a href="{{ route('admin.about-videos.index') }}" class="submenu-link">Vidéo About</a></li>
                     <li><a href="{{ route('admin.about-texts.index') }}" class="submenu-link">Textes About</a></li>
                     <li><a href="{{ route('admin.about-cards.index') }}" class="submenu-link">About value cards</a></li>
-                    <li><a href="{{ route('admin.about-interventions.index') }}" class="submenu-link">About
-                            interventions cartes</a></li>
+                    <li>
+                        <a href="{{ route('admin.about-interventions.index') }}" class="submenu-link">About
+                            interventions cartes</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.contact-types.index') }}" class="submenu-link">Types de contacts</a>
+                    </li>
+                </ul>
             </li>
         </ul>
         </li>
@@ -89,6 +95,29 @@
                 </svg>
                 <span class="nav-text">Partenaires</span>
             </a>
+        </li>
+
+        <li class="nav-item has-submenu">
+            <a href="" class="nav-link">
+                <i class="nav-icon fas fa-user-cog"></i>
+                <span class="nav-text">Staff Technique</span>
+            </a>
+
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="{{ route('admin.staff-members.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-tie"></i>
+                        <span class="nav-text">Bureaucrate</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-hands-helping"></i>
+                        <span class="nav-text">Bénévole</span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <!-- Sponsors -->

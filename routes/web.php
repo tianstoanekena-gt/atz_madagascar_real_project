@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AboutCardController;
 use App\Http\Controllers\Admin\AboutInterventionController;
 use App\Http\Controllers\Admin\AboutTextController;
 use App\Http\Controllers\Admin\AboutVideoController;
+use App\Http\Controllers\Admin\ContactTypeController;
 use App\Http\Controllers\BecomeParrainController;
 use App\Http\Controllers\BecomeSponsorsController;
 use App\Http\Controllers\ContactController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\ProjectDetailController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\StaffMemberController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -123,7 +125,22 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/about-interventions', AboutInterventionController::class)
             ->except(['show'])
             ->names('admin.about-interventions');
+
+        // Gestion des types de contacts
+        Route::resource('dashboard/contact-types', ContactTypeController::class)
+            ->except(['show'])
+            ->names('admin.contact-types');
+
+        // Gestion des membres du staff
+        Route::resource('dashboard/staff-members', StaffMemberController::class)
+            ->except(['show'])
+            ->names('admin.staff-members');
     });
+
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
