@@ -45,7 +45,9 @@
                             interventions cartes</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.contact-types.index') }}" class="submenu-link">Types de contacts</a>
+                        <a href="{{ route('admin.contact-types.index') }}" class="submenu-link">
+                            Types de contacts bureaucrate
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -112,7 +114,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.volunteers.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-hands-helping"></i>
                         <span class="nav-text">Bénévole</span>
                     </a>

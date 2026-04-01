@@ -8,4 +8,5 @@ return [
     'staff_cta_bureaucrat' => 'bureaucrates',
     'sec_title_office' => 'Voici les bureaucrates',
     'sec_title_benevol' => 'Nos bénévoles dévoués',
+    'sincere_benevol' => 'Depuis =>',
 ];

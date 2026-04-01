@@ -8,4 +8,5 @@ return [
     'staff_cta_bureaucrat' => 'Mpikamban\'ny Birao',
     'sec_title_office' => 'Ireo birao miasa',
     'sec_title_benevol' => 'Ireo mpilatsaka an-tsitrapo mavitrika',
+    'sincere_benevol' => 'Nanomboka tamin\'ny =>',
 ];

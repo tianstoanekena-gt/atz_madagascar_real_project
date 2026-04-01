@@ -9,367 +9,85 @@
 
         {{-- Grille des cartes bénévoles --}}
         <div class="volunteers-grid">
-            {{-- Bénévole 1 --}}
-            <div class="volunteer-card" data-volunteer="1">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103514.jpg') }}"
-                        alt="Rakoto Maminiaina">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Rakoto Maminiaina</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="volunteer-role">Coordinateur logistique</p>
-                    <span class="volunteer-since">Depuis 2022</span>
-                </div>
-            </div>
+            @php
+                use App\Models\Volunteer;
+                use Illuminate\Support\Facades\Storage;
 
-            {{-- Bénévole 2 --}}
-            <div class="volunteer-card" data-volunteer="2">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103440.jpg') }}"
-                        alt="Ravelo Hery">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Ravelo Hery</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="volunteer-role">Animateur jeunesse</p>
-                    <span class="volunteer-since">Depuis 2023</span>
-                </div>
-            </div>
+                $currentLang = app()->getLocale();
 
-            {{-- Bénévole 3 --}}
-            <div class="volunteer-card" data-volunteer="3">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103415.jpg') }}"
-                        alt="Andrianina Feno">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Andrianina Feno</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="volunteer-role">Aide éducative</p>
-                    <span class="volunteer-since">Depuis 2021</span>
-                </div>
-            </div>
+                // Récupérer tous les bénévoles actifs triés par ordre
+                $volunteers = Volunteer::with(['translations', 'allContacts.contactType'])
+                    ->active()
+                    ->ordered()
+                    ->get();
+            @endphp
 
-            {{-- Bénévole 4 --}}
-            <div class="volunteer-card" data-volunteer="4">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103353.jpg') }}"
-                        alt="Randriamanana Soa">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Randriamanana Soa</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="volunteer-role">Assistante sociale</p>
-                    <span class="volunteer-since">Depuis 2023</span>
-                </div>
-            </div>
+            @foreach ($volunteers as $volunteer)
+                @php
+                    $translation = $volunteer->translation($currentLang);
+                @endphp
 
-            {{-- Bénévole 5 --}}
-            <div class="volunteer-card" data-volunteer="5">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103330.jpg') }}"
-                        alt="Rasoamanana Lanto">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
+                <div class="volunteer-card" data-volunteer="{{ $volunteer->id }}">
+                    <div class="volunteer-image">
+                        @if ($volunteer->photo && Storage::disk('public')->exists($volunteer->photo))
+                            <img src="{{ Storage::url($volunteer->photo) }}" alt="{{ $volunteer->name }}">
+                        @else
+                            <img src="{{ asset('assets/images/personnel/default-avatar.jpg') }}"
+                                alt="{{ $volunteer->name }}">
+                        @endif
+                        <div class="image-overlay">
+                            @if ($volunteer->is_active)
+                                <span class="volunteer-status">Actif</span>
+                            @else
+                                <span class="volunteer-status inactive">Inactif</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Rasoamanana Lanto</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="volunteer-role">Responsable nutrition</p>
-                    <span class="volunteer-since">Depuis 2022</span>
-                </div>
-            </div>
+                    <div class="volunteer-info">
+                        <div class="volunteer-coord">
+                            <h4 class="volunteer-name">{{ $volunteer->name }}</h4>
 
-            {{-- Bénévole 6 --}}
-            <div class="volunteer-card" data-volunteer="6">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103304.jpg') }}"
-                        alt="Andriamampianina Noro">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Andriamampianina Noro</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="volunteer-role">Coach sportif</p>
-                    <span class="volunteer-since">Depuis 2024</span>
-                </div>
-            </div>
+                            @if ($volunteer->allContacts->count() > 0)
+                                <ul>
+                                    @foreach ($volunteer->allContacts as $contact)
+                                        @php
+                                            $url = $contact->url;
+                                            $dataType = $contact->type_slug;
 
-            {{-- Bénévole 7 --}}
-            <div class="volunteer-card" data-volunteer="7">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103239.jpg') }}"
-                        alt="Raharisoa Miora">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Raharisoa Miora</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
+                                            // Mapping icônes PNG (selon ton design)
+                                            $iconMap = [
+                                                'email' => 'email.png',
+                                                'facebook' => 'facebook.png',
+                                                'instagram' => 'instagram.png',
+                                                'messenger' => 'messenger.png',
+                                                'whatsapp' => 'whatsapp.png',
+                                                'linkedin' => 'linkedin.png',
+                                                'phone' => 'phone.png',
+                                                'website' => 'website.png',
+                                                'twitter' => 'twitter.png',
+                                                'tiktok' => 'tiktok.png',
+                                                'other' => 'link.png',
+                                            ];
+                                            $iconFile = $iconMap[$dataType] ?? 'link.png';
+                                        @endphp
 
+                                        <li>
+                                            <a href="{{ $url }}" target="_blank" rel="noopener">
+                                                <img src="{{ asset('assets/images/icons/' . $iconFile) }}"
+                                                    alt="{{ $dataType }}">
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                        <p class="volunteer-role">{{ $translation->role ?? 'Bénévole' }}</p>
+                        <span class="volunteer-since">@lang('staff.sincere_benevol') {{ $volunteer->volunteer_since }}</span>
                     </div>
-                    <p class="volunteer-role">Infirmière volontaire</p>
-                    <span class="volunteer-since">Depuis 2021</span>
                 </div>
-            </div>
+            @endforeach
 
-            {{-- Bénévole 8 --}}
-            <div class="volunteer-card" data-volunteer="8">
-                <div class="volunteer-image">
-                    <img src="{{ asset('assets/images/personnel/benevoles/IMG_20260127_103219.jpg') }}"
-                        alt="Randrianarisoa Tahina">
-                    <div class="image-overlay">
-                        <span class="volunteer-status">Actif</span>
-                    </div>
-                </div>
-                <div class="volunteer-info">
-                    <div class="volunteer-coord">
-                        <h4 class="volunteer-name">Randrianarisoa Tahina</h4>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                                </a>
-                            </li>
-                        </ul>
 
-                    </div>
-                    <p class="volunteer-role">Formateur professionnel</p>
-                    <span class="volunteer-since">Depuis 2023</span>
-                </div>
-            </div>
         </div>
     </div>
 </section>

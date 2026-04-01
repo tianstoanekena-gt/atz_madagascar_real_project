@@ -20,6 +20,7 @@ use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\StaffMemberController;
+use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -135,6 +136,11 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/staff-members', StaffMemberController::class)
             ->except(['show'])
             ->names('admin.staff-members');
+
+        // Gestion des bénévoles
+        Route::resource('dashboard/volunteers', VolunteerController::class)
+            ->except(['show'])
+            ->names('admin.volunteers');
     });
 
 
