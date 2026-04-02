@@ -13,136 +13,148 @@
             <!-- Dashboard -->
             <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}" class="nav-link">
-                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
+                    <i class="fas fa-home nav-icon"></i>
                     <span class="nav-text">Tableau de bord</span>
                 </a>
             </li>
 
-            <!-- Pages -->
-            <li class="nav-item">
+            <!-- Pages avec sous-menu -->
             <li
-                class="nav-item has-submenu {{ request()->routeIs('admin.hero-slides.*') || request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                class="nav-item has-submenu {{ request()->routeIs('admin.hero-slides.*') || request()->routeIs('admin.logos.*') || request()->routeIs('admin.about-videos.*') || request()->routeIs('admin.about-texts.*') || request()->routeIs('admin.about-cards.*') || request()->routeIs('admin.about-interventions.*') || request()->routeIs('admin.contact-types.*') ? 'active open' : '' }}">
                 <a href="#" class="nav-link">
-                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+                    <i class="fas fa-file-alt nav-icon"></i>
                     <span class="nav-text">Pages</span>
+                    <i class="fas fa-chevron-down submenu-arrow"></i>
                 </a>
 
                 <!-- Sous-menu -->
                 <ul class="submenu">
-                    <li><a href="{{ route('admin.hero-slides.index') }}" class="submenu-link">Hero_Slide</a></li>
-                    <li><a href="{{ route('admin.logos.index') }}" class="submenu-link">Logo</a></li>
-                    <li><a href="{{ route('admin.about-videos.index') }}" class="submenu-link">Vidéo About</a></li>
-                    <li><a href="{{ route('admin.about-texts.index') }}" class="submenu-link">Textes About</a></li>
-                    <li><a href="{{ route('admin.about-cards.index') }}" class="submenu-link">About value cards</a></li>
                     <li>
-                        <a href="{{ route('admin.about-interventions.index') }}" class="submenu-link">About
-                            interventions cartes</a>
+                        <a href="{{ route('admin.hero-slides.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.hero-slides.*') ? 'active' : '' }}">
+                            <i class="fas fa-images"></i>
+                            Hero Slides
+                        </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.contact-types.index') }}" class="submenu-link">
-                            Types de contacts bureaucrate
+                        <a href="{{ route('admin.logos.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.logos.*') ? 'active' : '' }}">
+                            <i class="fas fa-image"></i>
+                            Logo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.about-videos.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.about-videos.*') ? 'active' : '' }}">
+                            <i class="fas fa-video"></i>
+                            Vidéo About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.about-texts.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.about-texts.*') ? 'active' : '' }}">
+                            <i class="fas fa-align-left"></i>
+                            Textes About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.about-cards.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.about-cards.*') ? 'active' : '' }}">
+                            <i class="fas fa-th-large"></i>
+                            About Value Cards
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.about-interventions.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.about-interventions.*') ? 'active' : '' }}">
+                            <i class="fas fa-hands-helping"></i>
+                            About Interventions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.contact-types.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.contact-types.*') ? 'active' : '' }}">
+                            <i class="fas fa-address-book"></i>
+                            Types de Contact
                         </a>
                     </li>
                 </ul>
             </li>
-        </ul>
-        </li>
-        </li>
 
-        <!-- Activités -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M9 11V9a2 2 0 012-2h2a2 2 0 012 2v2" />
-                </svg>
-                <span class="nav-text">Activités</span>
-            </a>
-        </li>
+            <!-- Activités -->
+            <li class="nav-item {{ request()->routeIs('admin.activities.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-calendar-check nav-icon"></i>
+                    <span class="nav-text">Activités</span>
+                </a>
+            </li>
 
-        <!-- Projets -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-                <span class="nav-text">Projets</span>
-            </a>
-        </li>
+            <!-- Projets -->
+            <li class="nav-item {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-project-diagram nav-icon"></i>
+                    <span class="nav-text">Projets</span>
+                </a>
+            </li>
 
-        <!-- Parrainages -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span class="nav-text">Parrainages</span>
-            </a>
-        </li>
+            <!-- Parrainages -->
+            <li class="nav-item {{ request()->routeIs('admin.sponsorships.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-friends nav-icon"></i>
+                    <span class="nav-text">Parrainages</span>
+                </a>
+            </li>
 
-        <!-- Partenaires -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <span class="nav-text">Partenaires</span>
-            </a>
-        </li>
+            <!-- Partenaires -->
+            <li class="nav-item {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-handshake nav-icon"></i>
+                    <span class="nav-text">Partenaires</span>
+                </a>
+            </li>
 
-        <li class="nav-item has-submenu">
-            <a href="" class="nav-link">
-                <i class="nav-icon fas fa-user-cog"></i>
-                <span class="nav-text">Staff Technique</span>
-            </a>
+            <!-- Staff Technique avec sous-menu -->
+            <li
+                class="nav-item has-submenu {{ request()->routeIs('admin.staff-members.*') || request()->routeIs('admin.volunteers.*') ? 'active open' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-cog nav-icon"></i>
+                    <span class="nav-text">Staff Technique</span>
+                    <i class="fas fa-chevron-down submenu-arrow"></i>
+                </a>
 
-            <ul class="sub-menu">
-                <li class="nav-item">
-                    <a href="{{ route('admin.staff-members.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-user-tie"></i>
-                        <span class="nav-text">Bureaucrate</span>
-                    </a>
-                </li>
+                <ul class="submenu">
+                    <li>
+                        <a href="{{ route('admin.staff-members.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.staff-members.*') ? 'active' : '' }}">
+                            <i class="fas fa-user-tie"></i>
+                            Bureaucrate
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.volunteers.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.volunteers.*') ? 'active' : '' }}">
+                            <i class="fas fa-hands-helping"></i>
+                            Bénévole
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.volunteers.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-hands-helping"></i>
-                        <span class="nav-text">Bénévole</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+            <!-- Sponsors -->
+            <li class="nav-item {{ request()->routeIs('admin.sponsors.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-donate nav-icon"></i>
+                    <span class="nav-text">Sponsors</span>
+                </a>
+            </li>
 
-        <!-- Sponsors -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span class="nav-text">Sponsors</span>
-            </a>
-        </li>
-
-        <!-- Utilisateurs -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                <span class="nav-text">Utilisateurs</span>
-            </a>
-        </li>
+            <!-- Utilisateurs -->
+            <li class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Utilisateurs</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -150,10 +162,7 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">
-                <svg class="logout-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
+                <i class="fas fa-sign-out-alt logout-icon"></i>
                 <span>Déconnexion</span>
             </button>
         </form>
@@ -161,16 +170,427 @@
 </aside>
 
 
+<!-- ============================================
+     CSS - UNIQUEMENT SIDEBAR (Copie dans ton fichier CSS)
+     ============================================ -->
+
+<style>
+    /* ========== SIDEBAR UNIQUEMENT ========== */
+
+    /* Animations d'entrée */
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+        width: 260px;
+        background: var(--color-text);
+        color: white;
+        display: block;
+        transition: transform 0.3s ease;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Scrollbar personnalisée */
+    .admin-sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .admin-sidebar::-webkit-scrollbar-track {
+        background: var(--color-text);
+    }
+
+    .admin-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+    }
+
+    .admin-sidebar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .sidebar-header {
+        padding: 1.5rem 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        animation: slideInLeft 0.5s ease;
+    }
+
+    .logo-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo {
+        width: 20px;
+    }
+
+    .logo-placeholder {
+        width: 36px;
+        height: 36px;
+        background-color: var(--color-background);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+
+    .sidebar-nav {
+        flex: 1;
+        padding: 1.25rem 0;
+    }
+
+    .nav-list {
+        list-style: none;
+    }
+
+    .nav-item {
+        margin: 0 1rem 0.25rem;
+        position: relative;
+        opacity: 0;
+        animation: slideInLeft 0.5s ease forwards;
+    }
+
+    /* Animation en cascade */
+    .nav-item:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .nav-item:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .nav-item:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .nav-item:nth-child(4) {
+        animation-delay: 0.25s;
+    }
+
+    .nav-item:nth-child(5) {
+        animation-delay: 0.3s;
+    }
+
+    .nav-item:nth-child(6) {
+        animation-delay: 0.35s;
+    }
+
+    .nav-item:nth-child(7) {
+        animation-delay: 0.4s;
+    }
+
+    .nav-item:nth-child(8) {
+        animation-delay: 0.45s;
+    }
+
+    .nav-item:nth-child(9) {
+        animation-delay: 0.5s;
+    }
+
+    .nav-item:nth-child(10) {
+        animation-delay: 0.55s;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 0.875rem 1.25rem;
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Barre latérale active (à gauche) */
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 0;
+        background: var(--color-primary);
+        border-radius: 0 4px 4px 0;
+        transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* État HOVER */
+    .nav-link:hover {
+        background: rgba(254, 237, 2, 0.15);
+        color: white;
+        padding-left: 1.5rem;
+    }
+
+    .nav-link:hover .nav-icon {
+        transform: scale(1.15) rotate(5deg);
+        color: var(--color-primary);
+    }
+
+    /* État ACTIVE */
+    .nav-item.active .nav-link {
+        background: rgba(254, 237, 2, 0.2);
+        color: white;
+        font-weight: 600;
+    }
+
+    .nav-item.active .nav-link::before {
+        height: 100%;
+    }
+
+    .nav-item.active .nav-icon {
+        color: var(--color-primary);
+        transform: scale(1.1);
+    }
+
+    .nav-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 18px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-text {
+        flex: 1;
+    }
+
+    /* Sous-menu */
+    .nav-item.has-submenu .nav-link {
+        justify-content: space-between;
+    }
+
+    .submenu-arrow {
+        font-size: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-left: auto;
+    }
+
+    .nav-item.has-submenu.open .submenu-arrow {
+        transform: rotate(180deg);
+        color: var(--color-primary);
+    }
+
+    .submenu {
+        list-style: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 0 0 8px 8px;
+        margin-top: 4px;
+    }
+
+    .nav-item.has-submenu.open .submenu {
+        max-height: 500px;
+        padding: 0.5rem 0;
+    }
+
+    .submenu-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0.625rem 1.25rem 0.625rem 3rem;
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        position: relative;
+    }
+
+    /* Point indicateur */
+    .submenu-link::before {
+        content: '';
+        position: absolute;
+        left: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+
+    .submenu-link:hover {
+        background: rgba(254, 237, 2, 0.1);
+        color: white;
+        padding-left: 3.25rem;
+    }
+
+    .submenu-link:hover::before {
+        background: var(--color-primary);
+        width: 8px;
+        height: 8px;
+    }
+
+    .submenu-link i {
+        font-size: 14px;
+        width: 16px;
+        text-align: center;
+    }
+
+    /* Submenu ACTIVE */
+    .submenu-link.active {
+        background: rgba(254, 237, 2, 0.2);
+        color: white;
+        font-weight: 600;
+        padding-left: 3.25rem;
+    }
+
+    .submenu-link.active::before {
+        background: var(--color-primary);
+        width: 8px;
+        height: 8px;
+    }
+
+    .submenu-link.active i {
+        color: var(--color-primary);
+    }
+
+    /* Footer sidebar */
+    .sidebar-footer {
+        padding: 1.25rem 1.25rem 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        animation: slideInLeft 0.5s ease 0.6s backwards;
+    }
+
+    .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        text-align: left;
+    }
+
+    .logout-btn:hover {
+        background: rgba(200, 0, 0, 0.2);
+        border-color: var(--color-red);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(200, 0, 0, 0.2);
+    }
+
+    .logout-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 16px;
+    }
+
+    /* Effet ripple au clic */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 0.6s ease-out;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+</style>
+
+
+<!-- ============================================
+     JAVASCRIPT - GESTION DU SOUS-MENU ET ACTIVE
+     ============================================ -->
 
 <script>
-    // Détecter automatiquement la page active
     document.addEventListener('DOMContentLoaded', function() {
-        const currentPath = window.location.pathname;
 
-        document.querySelectorAll('.nav-link').forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.closest('.nav-item').classList.add('active');
+        // ===== GESTION DES SOUS-MENUS =====
+        const submenuItems = document.querySelectorAll('.nav-item.has-submenu');
+
+        submenuItems.forEach(item => {
+            const link = item.querySelector('.nav-link');
+
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Toggle le sous-menu actuel
+                item.classList.toggle('open');
+
+                // Optionnel : Fermer les autres sous-menus
+                submenuItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('open');
+                    }
+                });
+            });
+        });
+
+
+        // ===== EFFET RIPPLE AU CLIC =====
+        function createRipple(event) {
+            const button = event.currentTarget;
+
+            // Ne pas créer de ripple sur les liens avec #
+            if (button.getAttribute('href') === '#') {
+                return;
             }
+
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+
+            button.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // Ajouter l'effet ripple à tous les liens
+        document.querySelectorAll('.nav-link, .submenu-link, .logout-btn').forEach(link => {
+            link.style.position = 'relative';
+            link.style.overflow = 'hidden';
+            link.addEventListener('click', createRipple);
         });
     });
 </script>

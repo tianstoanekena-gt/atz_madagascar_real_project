@@ -49,12 +49,12 @@
                 <option value="mg" {{ app()->getLocale() == 'mg' ? 'selected' : '' }}>🇲🇬 MALAGASY</option>
                 <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🇺🇸 ANGLAIS</option>
             </select>
-            @if (Auth::check())
+            {{-- @if (Auth::check())
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="logout-btn">Déconnexion</button>
                 </form>
-            @endif
+            @endif --}}
         </div>
 
     </div>
