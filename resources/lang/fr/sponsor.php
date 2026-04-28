@@ -17,4 +17,8 @@ return [
 
     'cta_primary' => 'Devenir sponsor',
     'cta_secondary' => 'Nous contacter',
+
+    'section_title' => 'Découvrez tous les sponsors de notre association',
+    'section_intro' => "Nous remercions chaleureusement nos partenaires pour leur soutien indéfectible à la mission d’ATZ Madagascar.",
+    'section_cta_btn' => 'En savoir plus',
 ];

@@ -17,4 +17,8 @@ return [
 
     'cta_primary' => 'Ho lasa sponsor',
     'cta_secondary' => 'Hifandray aminay',
+
+    'section_title' => 'Ireo mpanohana rehetra ny fikambanana ATZ',
+    'section_intro' => "Misaotra indrindra ireo mpiara-miombon’antoka aminay izahay noho ny fanohanany tsy miova amin’ny fanatanterahana ny asa rehetra ataon’ny ATZ Madagascar.",
+    'section_cta_btn' => 'Hahafantatra bebe kokoa',
 ];

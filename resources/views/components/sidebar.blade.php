@@ -105,14 +105,6 @@
                 </a>
             </li>
 
-            <!-- Partenaires -->
-            <li class="nav-item {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-handshake nav-icon"></i>
-                    <span class="nav-text">Partenaires</span>
-                </a>
-            </li>
-
             <!-- Staff Technique avec sous-menu -->
             <li
                 class="nav-item has-submenu {{ request()->routeIs('admin.staff-members.*') || request()->routeIs('admin.volunteers.*') ? 'active open' : '' }}">
@@ -142,7 +134,7 @@
 
             <!-- Sponsors -->
             <li class="nav-item {{ request()->routeIs('admin.sponsors.*') ? 'active' : '' }}">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.sponsors.index') }}" class="nav-link">
                     <i class="fas fa-donate nav-icon"></i>
                     <span class="nav-text">Sponsors</span>
                 </a>

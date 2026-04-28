@@ -19,6 +19,8 @@ use App\Http\Controllers\ProjectDetailController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\SponsorController as AdminSponsorController;
+use App\Http\Controllers\Admin\SponsorDetailController;
 use App\Http\Controllers\Admin\StaffMemberController;
 use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Middleware\SetLocale;
@@ -60,8 +62,11 @@ Route::prefix('{locale?}')
         Route::get('/staff', [StaffController::class, 'index'])->name('staff');
         //partenary in about page
         Route::get('/partenary', [PartenaryController::class, 'index'])->name('partenary');
-        //sponsors in about page
-        Route::get('/sponsors', [SponsorController::class, 'index'])->name('sponsors');
+        // Page détails sponsor
+        Route::get('/sponsors/{slug}/', [SponsorController::class, 'show'])
+            ->name('sponsors.show');
+        // Route::get('/sponsors/test/{id}', [SponsorController::class, 'test'])
+        //     ->name('sponsors.test');
 
         //routing parrain
         Route::get('/parrain', [BecomeParrainController::class, 'index'])->name('auth.parrain');
@@ -141,6 +146,19 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/volunteers', VolunteerController::class)
             ->except(['show'])
             ->names('admin.volunteers');
+
+        // Gestion des sponsors
+        Route::resource('dashboard/sponsors', AdminSponsorController::class)
+            ->except(['show'])
+            ->names('admin.sponsors');
+
+        // Gestion des détails sponsors
+        Route::get('dashboard/sponsors/{sponsorId}/details', [SponsorDetailController::class, 'edit'])
+            ->name('admin.sponsors.details.edit');
+        Route::put('dashboard/sponsors/{sponsorId}/details', [SponsorDetailController::class, 'update'])
+            ->name('admin.sponsors.details.update');
+        Route::delete('dashboard/sponsor-photos/{photoId}', [SponsorDetailController::class, 'destroyPhoto'])
+            ->name('admin.sponsors.details.photo.destroy');
     });
 
 
