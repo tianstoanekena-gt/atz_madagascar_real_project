@@ -14,10 +14,10 @@
             <div class="footer-column">
                 <h3>@lang('footer.quick_links')</h3>
                 <ul>
-                    <li><a href="{{ route('home') }}">@lang('footer.home_link')</a></li>
-                    <li><a href="{{ route('about') }}">@lang('footer.about_link')</a></li>
-                    <li><a href="{{ route('activities') }}">@lang('footer.activities_link')</a></li>
-                    <li><a href="{{ route('contact') }}">@lang('footer.contact_link')</a></li>
+                    <li><a href="{{ localized_route('home') }}">@lang('footer.home_link')</a></li>
+                    <li><a href="{{ localized_route('about') }}">@lang('footer.about_link')</a></li>
+                    <li><a href="{{ localized_route('activities') }}">@lang('footer.activities_link')</a></li>
+                    <li><a href="{{ localized_route('contact') }}">@lang('footer.contact_link')</a></li>
                 </ul>
             </div>
 

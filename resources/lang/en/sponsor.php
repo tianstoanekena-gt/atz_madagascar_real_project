@@ -21,4 +21,11 @@ return [
     'section_title' => 'Discover all our sponsors',
     'section_intro' => "We warmly thank our partners for their unwavering support of ATZ Madagascar’s mission.",
     'section_cta_btn' => 'Learn More',
+    'back_to_list' => 'Back to Sponsors List',
+    'partner_since' => 'Partner since',
+    'about' => 'About the sponsor',
+    'our_story' => 'Our Story',
+    'gallery' => 'Gallery',
+    'cta_contact' => 'Contact Us',
+    'cta_see_all' => 'See All Sponsors'
 ];

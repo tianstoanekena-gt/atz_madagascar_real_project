@@ -2,7 +2,7 @@
     <div class="nav-links">
 
         <div class="logo-parent">
-            <a href="{{ route('home') }}">
+            <a href="{{ localized_route('home') }}">
                 @if (isset($globalLogo) && $globalLogo && \Illuminate\Support\Facades\Storage::disk('public')->exists($globalLogo->logo))
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($globalLogo->logo) }}" alt="Logo du site"
                         class="logo">
@@ -49,12 +49,7 @@
                 <option value="mg" {{ app()->getLocale() == 'mg' ? 'selected' : '' }}>🇲🇬 MALAGASY</option>
                 <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🇺🇸 ANGLAIS</option>
             </select>
-            {{-- @if (Auth::check())
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="logout-btn">Déconnexion</button>
-                </form>
-            @endif --}}
+
         </div>
 
     </div>

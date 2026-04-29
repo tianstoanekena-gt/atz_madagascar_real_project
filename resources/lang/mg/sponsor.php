@@ -21,4 +21,11 @@ return [
     'section_title' => 'Ireo mpanohana rehetra ny fikambanana ATZ',
     'section_intro' => "Misaotra indrindra ireo mpiara-miombon’antoka aminay izahay noho ny fanohanany tsy miova amin’ny fanatanterahana ny asa rehetra ataon’ny ATZ Madagascar.",
     'section_cta_btn' => 'Hahafantatra bebe kokoa',
+    'back_to_list' => 'Hiverina amin\'ny lisitry ny mpanohana',
+    'partner_since' => 'Mpiara-miombon’antoka nanomboka ny taona :',
+    'about' => 'Momba ny mpanohana',
+    'our_story' => 'Ny tantaranay',
+    'gallery' => 'Antontan-tsary',
+    'cta_contact' => 'Hifandray aminay',
+    'cta_see_all' => 'Hahita ireo mpanohana rehetra'
 ];

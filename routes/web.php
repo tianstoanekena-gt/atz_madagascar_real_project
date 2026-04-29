@@ -12,7 +12,6 @@ use App\Http\Controllers\BecomeParrainController;
 use App\Http\Controllers\BecomeSponsorsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PartenaryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectDetailController;
@@ -32,7 +31,7 @@ Route::get('/', function () {
 });
 
 // Groupe multilingue pour les pages publiques
-Route::prefix('{locale?}')
+Route::prefix('{locale}')
     ->where(['locale' => 'mg|fr|en'])
     ->middleware(SetLocale::class)
     ->group(function () {
@@ -61,13 +60,11 @@ Route::prefix('{locale?}')
         //staff in about page
         Route::get('/staff', [StaffController::class, 'index'])->name('staff');
         //partenary in about page
-        Route::get('/partenary', [PartenaryController::class, 'index'])->name('partenary');
+        Route::get('/sponsors', [SponsorController::class, 'index'])->name('sponsors');
         // Page détails sponsor
-        Route::get('/sponsors/{slug}/', [SponsorController::class, 'show'])
-            ->name('sponsors.show');
-        // Route::get('/sponsors/test/{id}', [SponsorController::class, 'test'])
-        //     ->name('sponsors.test');
-
+        Route::get('/sponsors/{slug}', [SponsorController::class, 'show'])
+            ->name('sponsors.show')
+            ->where('slug', '[a-z0-9\-]+');
         //routing parrain
         Route::get('/parrain', [BecomeParrainController::class, 'index'])->name('auth.parrain');
         //routing sponsor

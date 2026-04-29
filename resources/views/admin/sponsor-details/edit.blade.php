@@ -80,7 +80,8 @@
 
                             <!-- Bouton Voir Page -->
                             @if ($sponsor->details?->is_published)
-                                <a href="{{ route('sponsors.show', ['slug' => $sponsor->slug]) }}" target="_blank"
+                                <a href="{{ route('sponsors.show', ['locale' => app()->getLocale(), 'slug' => $sponsor->slug]) }}"
+                                    target="_blank"target="_blank"
                                     class="block text-center bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition">
                                     <i class="fas fa-external-link-alt mr-2"></i>
                                     Voir la page publique

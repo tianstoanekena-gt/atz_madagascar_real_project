@@ -16,7 +16,7 @@
             {{-- Grille de projets --}}
             <div class="projects-grid">
                 {{-- Projet 1 - Réalisé --}}
-                <a href="{{ route('project.details') }}">
+                <a href="{{ localized_route('project.details') }}">
                     <div class="project-card" data-status="completed">
                         <div class="project-image-wrapper">
                             <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500&h=300&fit=crop"

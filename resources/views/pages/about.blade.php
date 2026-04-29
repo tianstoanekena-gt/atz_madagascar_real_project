@@ -19,7 +19,8 @@
                         </a>
 
                         <!-- Lien Partenaires / Sponsors -->
-                        <a href="{{ localized_route('partenary') }}" class="about-link" data-category="partners">
+                        {{-- <a href="{{ localized_route('sponsors') }}" class="about-link" data-category="partners"> --}}
+                        <a href="{{ url(app()->getLocale() . '/sponsors') }}" class="about-link" data-category="partners">
                             <i class="fa-solid fa-handshake link-icon"></i>
                             <span class="link-text">@lang('about.cta_spons_btn')</span>
                             <i class="fa-solid fa-chevron-right link-arrow"></i>

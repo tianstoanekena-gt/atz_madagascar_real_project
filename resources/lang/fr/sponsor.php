@@ -21,4 +21,11 @@ return [
     'section_title' => 'Découvrez tous les sponsors de notre association',
     'section_intro' => "Nous remercions chaleureusement nos partenaires pour leur soutien indéfectible à la mission d’ATZ Madagascar.",
     'section_cta_btn' => 'En savoir plus',
+    'back_to_list' => 'Retour à la liste des sponsors',
+    'partner_since' => 'Partenaire depuis',
+    'about' => 'À propos du sponsor',
+    'our_story' => 'Notre histoire',
+    'gallery' => 'Galerie',
+    'cta_contact' => 'Nous contacter',
+    'cta_see_all' => 'Voir tous les sponsors'
 ];

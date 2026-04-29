@@ -8,7 +8,7 @@
             <div class="activities-carousel-wrapper">
                 <div class="activities-parent">
                     {{-- Activité 1 - Dispensaire --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
                                 <img src="{{ asset('assets/images/activity/activity2/akany_tia_zaza_dispensaire.jpg') }}"
@@ -29,7 +29,7 @@
                         </div>
                     </a>
                     {{-- Activité 2 - Événement communautaire --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
                                 <img src="{{ asset('assets/images/activity/activity2/FB_IMG_1721502775778.jpg') }}"
@@ -54,7 +54,7 @@
                     </a>
 
                     {{-- Activité 3 - Éducation --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
                                 <img src="{{ asset('assets/images/activity/activity2/education.jpg') }}"
@@ -77,7 +77,7 @@
                     </a>
 
                     {{-- Activité 4 - Distribution alimentaire --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
                                 <img src="{{ asset('assets/images/activity/activity2/582070073_25012989738371722_68473913590103708_n.jpg ') }}"
@@ -100,7 +100,7 @@
                     </a>
 
                     {{-- Activité 5 - Fournitures scolaires --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
                                 <img src="{{ asset('assets/images/activity/activity2/fourniture2.jpg') }}"
@@ -123,11 +123,11 @@
                     </a>
 
                     {{-- Activité 6 - Hygiène --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
-                                <img src="{{ asset('assets/images/activity/activity2/savony.jpg') }}"
-                                    alt="Hygiène et savon" class="activity-image">
+                                <img src="{{ asset('assets/images/activity/activity2/savony.jpg') }}" alt="Hygiène et savon"
+                                    class="activity-image">
                                 <div class="activity-overlay">
                                     <span class="activity-badge">Hygiène</span>
                                 </div>
@@ -145,7 +145,7 @@
                     </a>
 
                     {{-- Activité 7 - Sports --}}
-                    <a href="{{ route('activity.details') }}">
+                    <a href="">
                         <div class="activity-card">
                             <div class="activity-image-wrapper">
                                 <img src="{{ asset('assets/images/activity/activity2/sports.jpg') }}"
