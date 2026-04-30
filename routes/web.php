@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\SponsorController as AdminSponsorController;
 use App\Http\Controllers\Admin\SponsorDetailController;
 use App\Http\Controllers\Admin\StaffMemberController;
 use App\Http\Controllers\Admin\VolunteerController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -41,8 +42,11 @@ Route::prefix('{locale}')
         Route::get('/', [HomeController::class, 'index'])->name('home');
         //about
         Route::get('/about', [AboutController::class, 'index'])->name('about');
-        //about documents
-        Route::get('about/documents', [AboutController::class, 'documents'])->name('documents');
+        // Documents (frontend)
+        Route::get('/documents', [DocumentController::class, 'index'])->name('documents');
+        Route::get('/documents/{document}/download', [DocumentController::class, 'download'])
+            ->name('documents.download')
+            ->where('document', '[0-9]+');
         //about faq
         Route::get('about/faq', [AboutController::class, 'faq'])->name('faq');
         //about stat
@@ -156,6 +160,10 @@ Route::middleware(['auth', 'verified'])
             ->name('admin.sponsors.details.update');
         Route::delete('dashboard/sponsor-photos/{photoId}', [SponsorDetailController::class, 'destroyPhoto'])
             ->name('admin.sponsors.details.photo.destroy');
+
+        Route::resource('dashboard/documents', \App\Http\Controllers\Admin\DocumentController::class)
+            ->except(['show'])
+            ->names('admin.documents');
     });
 
 

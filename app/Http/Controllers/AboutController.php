@@ -32,15 +32,7 @@ class AboutController extends Controller
         return view('parrain.index');
     }
 
-    public function sponsor()
-    {
-        return view('sponsor.index');
-    }
 
-    public function documents()
-    {
-        return view('pages.documents');
-    }
 
     public function faq()
     {

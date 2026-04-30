@@ -132,6 +132,13 @@
                 </ul>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.documents.index') }}" class="nav-link">
+                    <i class="fas fa-file-alt nav-icon"></i>
+                    <span class="nav-text">Documents</span>
+                </a>
+            </li>
+
             <!-- Sponsors -->
             <li class="nav-item {{ request()->routeIs('admin.sponsors.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.sponsors.index') }}" class="nav-link">
