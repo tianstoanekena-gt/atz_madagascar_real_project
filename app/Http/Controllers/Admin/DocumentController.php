@@ -54,7 +54,7 @@ class DocumentController extends Controller
             'description_en' => 'nullable|string|max:5000',
 
             // Fichier (requis à la création)
-            'file' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240',
+            'file' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,odt,ods,odp|max:10240',
 
             // Statut
             'is_published' => 'boolean',
@@ -157,13 +157,13 @@ class DocumentController extends Controller
             'description_en' => 'nullable|string|max:5000',
 
             // Fichier (optionnel à la modification)
-            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,odt,ods,odp|max:10240',
 
             // Statut
             'is_published' => 'boolean',
             'order' => 'nullable|integer|min:0',
         ], [
-            'file.mimes' => 'Types de fichiers autorisés : PDF, Word, Excel, PowerPoint.',
+            'file.mimes' => 'Types de fichiers autorisés : PDF, Word, Excel, PowerPoint, ODT, ODS, ODP.',
             'file.max' => 'Le fichier ne doit pas dépasser 10 MB.',
         ]);
 
@@ -248,18 +248,15 @@ class DocumentController extends Controller
         }
     }
 
-    /**
-     * Déterminer le type de fichier selon l'extension.
-     */
     private function determineFileType($extension)
     {
         $extension = strtolower($extension);
 
         return match ($extension) {
             'pdf' => 'pdf',
-            'doc', 'docx' => 'word',
-            'xls', 'xlsx' => 'excel',
-            'ppt', 'pptx' => 'powerpoint',
+            'doc', 'docx', 'odt' => 'word',
+            'xls', 'xlsx', 'ods' => 'excel',
+            'ppt', 'pptx', 'odp' => 'powerpoint',
             default => 'pdf',
         };
     }

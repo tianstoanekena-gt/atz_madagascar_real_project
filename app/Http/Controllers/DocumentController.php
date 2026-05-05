@@ -8,17 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
-    /**
-     * Display a listing of the documents (frontend).
-     */
+
     public function index()
     {
-        // Récupérer les documents publiés, triés par ordre
         $documents = Document::published()
             ->ordered()
             ->get();
 
-        // Calculer les statistiques pour l'affichage
         $stats = [
             'pdf' => Document::published()->ofType('pdf')->count(),
             'word' => Document::published()->ofType('word')->count(),
@@ -29,23 +25,36 @@ class DocumentController extends Controller
         return view('pages.documents', compact('documents', 'stats'));
     }
 
-    /**
-     * Handle document download with tracking.
-     */
-    public function download(Document $document)
-    {
 
-        dd('CONTROLLER HIT!', [
-            'id' => $document->id,
-            'title' => $document->title,
-            'file_path' => $document->file_path,
-            'is_published' => $document->is_published,
-        ]);
+    public function download($locale, Document $document)
+    {
+        // Vérifier que le document est publié
+        if (!$document->is_published) {
+            abort(404);
+        }
+
+        // Vérifier que le fichier existe
+        if (!Storage::disk('public')->exists($document->file_path)) {
+            abort(404);
+        }
+
+        // Incrémenter les compteurs
+        $document->incrementViewCount();
+        $document->incrementDownloadCount();
+
+        // Télécharger le fichier avec les bons headers
+        return Storage::disk('public')->download(
+            $document->file_path,
+            $document->file_original_name,
+            [
+                'Content-Type' => $this->getMimeType($document->file_type),
+            ]
+        );
     }
 
-    /**
-     * Get MIME type based on file type.
-     */
+
+
+
     private function getMimeType($fileType)
     {
         return match ($fileType) {

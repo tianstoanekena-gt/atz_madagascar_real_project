@@ -4,136 +4,174 @@
 
 @section('content')
     <section class="content_contents">
-        <div class="admin-container mt-11">
+        <div class="container mx-auto px-4 py-6">
 
             <!-- Header -->
-            <div class="page-header">
-                <h1 class="page-title">
-                    <i class="fas fa-file-alt mr-3"></i>
-                    Gestion des Documents
-                </h1>
-                <a href="{{ route('admin.documents.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus mr-2"></i>
-                    Ajouter un document
-                </a>
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-file-alt text-3xl text-blue-600"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">Gestion des Documents</h1>
+                </div>
+                <div class="flex gap-3">
+                    <a href="{{ route('admin.documents.create') }}"
+                        class="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition shadow-md">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Ajouter un document</span>
+                    </a>
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Stats rapides -->
-            <div class="stats-grid mb-6">
-                <div class="stat-card">
-                    <i class="fas fa-file-pdf text-red-500"></i>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-file-pdf text-red-600 text-xl"></i>
+                    </div>
                     <div>
-                        <span class="stat-number">{{ \App\Models\Document::ofType('pdf')->count() }}</span>
-                        <span class="stat-label">PDF</span>
+                        <span
+                            class="block text-2xl font-bold text-gray-800">{{ \App\Models\Document::ofType('pdf')->count() }}</span>
+                        <span class="text-sm text-gray-500">PDF</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-file-word text-blue-500"></i>
+                <div class="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-file-word text-blue-600 text-xl"></i>
+                    </div>
                     <div>
-                        <span class="stat-number">{{ \App\Models\Document::ofType('word')->count() }}</span>
-                        <span class="stat-label">Word</span>
+                        <span
+                            class="block text-2xl font-bold text-gray-800">{{ \App\Models\Document::ofType('word')->count() }}</span>
+                        <span class="text-sm text-gray-500">Word</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-file-excel text-green-500"></i>
+                <div class="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-file-excel text-green-600 text-xl"></i>
+                    </div>
                     <div>
-                        <span class="stat-number">{{ \App\Models\Document::ofType('excel')->count() }}</span>
-                        <span class="stat-label">Excel</span>
+                        <span
+                            class="block text-2xl font-bold text-gray-800">{{ \App\Models\Document::ofType('excel')->count() }}</span>
+                        <span class="text-sm text-gray-500">Excel</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-file-powerpoint text-orange-500"></i>
+                <div class="bg-white shadow-md rounded-xl p-4 flex items-center gap-4 hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-file-powerpoint text-orange-600 text-xl"></i>
+                    </div>
                     <div>
-                        <span class="stat-number">{{ \App\Models\Document::ofType('powerpoint')->count() }}</span>
-                        <span class="stat-label">PowerPoint</span>
+                        <span
+                            class="block text-2xl font-bold text-gray-800">{{ \App\Models\Document::ofType('powerpoint')->count() }}</span>
+                        <span class="text-sm text-gray-500">PowerPoint</span>
                     </div>
                 </div>
             </div>
 
             <!-- Messages de feedback -->
             @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div
+                    class="mb-6 flex items-center gap-3 bg-green-100 border-l-4 border-green-500 text-green-700 px-6 py-4 rounded-lg">
+                    <i class="fas fa-check-circle text-2xl"></i>
+                    <span>{{ session('success') }}</span>
                 </div>
             @endif
 
             @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-circle mr-2"></i>
-                    <ul class="mb-0">
+                <div
+                    class="mb-6 flex items-start gap-3 bg-red-100 border-l-4 border-red-500 text-red-700 px-6 py-4 rounded-lg">
+                    <i class="fas fa-exclamation-circle text-2xl mt-1"></i>
+                    <ul class="list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
             <!-- Tableau des documents -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Liste des documents</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="table-light">
+            <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+                @if ($documents->count() > 0)
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
                                 <tr>
-                                    <th>Document</th>
-                                    <th>Type</th>
-                                    <th>Taille</th>
-                                    <th>Vues</th>
-                                    <th>Téléchargements</th>
-                                    <th>Statut</th>
-                                    <th>Ordre</th>
-                                    <th class="text-end">Actions</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">Document</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">Type</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">Taille</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">Vues</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">
+                                        Téléchargements</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">Statut</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase">Ordre</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse($documents as $document)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <i
-                                                    class="fas {{ $document->icon }} fa-2x me-3 {{ $document->type_class }}"></i>
+                                    <tr class="hover:bg-blue-50 transition">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-10 h-10 rounded-lg flex items-center justify-center {{ $document->type_class }}">
+                                                    <i class="fas {{ $document->icon }} text-white"></i>
+                                                </div>
                                                 <div>
-                                                    <strong>{{ $document->title }}</strong>
+                                                    <strong class="text-gray-900">{{ $document->title }}</strong>
                                                     <br>
-                                                    <small class="text-muted">{{ $document->file_original_name }}</small>
+                                                    <small
+                                                        class="text-gray-500">{{ $document->file_original_name }}</small>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="px-6 py-4">
                                             <span
-                                                class="badge bg-{{ $document->file_type === 'pdf' ? 'danger' : ($document->file_type === 'word' ? 'primary' : ($document->file_type === 'excel' ? 'success' : 'warning')) }}">
+                                                class="px-3 py-1 rounded-full text-xs font-medium
+                                                {{ $document->file_type === 'pdf'
+                                                    ? 'bg-red-100 text-red-700'
+                                                    : ($document->file_type === 'word'
+                                                        ? 'bg-blue-100 text-blue-700'
+                                                        : ($document->file_type === 'excel'
+                                                            ? 'bg-green-100 text-green-700'
+                                                            : 'bg-orange-100 text-orange-700')) }}">
                                                 {{ strtoupper($document->file_type) }}
                                             </span>
                                         </td>
-                                        <td>{{ $document->formatted_size }}</td>
-                                        <td>{{ number_format($document->view_count) }}</td>
-                                        <td>{{ number_format($document->download_count) }}</td>
-                                        <td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">{{ $document->formatted_size }}</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            {{ number_format($document->view_count) }}</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            {{ number_format($document->download_count) }}</td>
+                                        <td class="px-6 py-4">
                                             @if ($document->is_published)
-                                                <span class="badge bg-success">Publié</span>
+                                                <span
+                                                    class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                    <i class="fas fa-check-circle mr-1"></i>Publié
+                                                </span>
                                             @else
-                                                <span class="badge bg-secondary">Brouillon</span>
+                                                <span
+                                                    class="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                                                    <i class="fas fa-pause-circle mr-1"></i>Brouillon
+                                                </span>
                                             @endif
                                         </td>
-                                        <td>{{ $document->order }}</td>
-                                        <td class="text-end">
-                                            <div class="btn-group">
+                                        <td class="px-6 py-4 text-sm text-gray-600">#{{ $document->order }}</td>
+                                        <td class="px-6 py-4 text-right">
+                                            <div class="flex justify-end gap-2">
                                                 <a href="{{ route('admin.documents.edit', $document->id) }}"
-                                                    class="btn btn-sm btn-outline-primary" title="Modifier">
+                                                    class="text-orange-600 hover:text-orange-900 transition p-2"
+                                                    title="Modifier">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <form action="{{ route('admin.documents.destroy', $document->id) }}"
-                                                    method="POST" class="d-inline"
+                                                    method="POST" class="inline"
                                                     onsubmit="return confirm('Supprimer ce document ? Cette action est irréversible.')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                    <button type="submit"
+                                                        class="text-red-600 hover:text-red-900 transition p-2"
                                                         title="Supprimer">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -143,13 +181,17 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center py-5 text-muted">
-                                            <i class="fas fa-folder-open fa-3x mb-3 d-block"></i>
-                                            Aucun document pour le moment.
-                                            <br>
+                                        <td colspan="8" class="text-center py-16">
+                                            <div
+                                                class="w-20 h-20 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                                <i class="fas fa-folder-open text-4xl text-blue-600"></i>
+                                            </div>
+                                            <h3 class="text-xl font-bold text-gray-900 mb-2">Aucun document</h3>
+                                            <p class="text-gray-500 mb-6">Commencez par ajouter votre premier document</p>
                                             <a href="{{ route('admin.documents.create') }}"
-                                                class="btn btn-sm btn-primary mt-3">
-                                                Ajouter le premier document
+                                                class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition">
+                                                <i class="fas fa-plus-circle"></i>
+                                                <span>Ajouter le premier document</span>
                                             </a>
                                         </td>
                                     </tr>
@@ -157,50 +199,16 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
 
-                <!-- Pagination -->
-                @if ($documents->hasPages())
-                    <div class="card-footer">
-                        {{ $documents->links() }}
-                    </div>
+                    <!-- Pagination -->
+                    @if ($documents->hasPages())
+                        <div class="px-6 py-4 bg-gray-50 border-t">
+                            {{ $documents->links() }}
+                        </div>
+                    @endif
                 @endif
             </div>
 
         </div>
     </section>
-    <!-- Styles additionnels pour les icônes de type -->
-    <style>
-        .fa-file-pdf {
-            color: #dc3545;
-        }
-
-        .fa-file-word {
-            color: #0d6efd;
-        }
-
-        .fa-file-excel {
-            color: #198754;
-        }
-
-        .fa-file-powerpoint {
-            color: #fd7e14;
-        }
-
-        .pdf-bg {
-            background: rgba(220, 53, 69, 0.1);
-        }
-
-        .word-bg {
-            background: rgba(13, 110, 253, 0.1);
-        }
-
-        .excel-bg {
-            background: rgba(25, 135, 84, 0.1);
-        }
-
-        .ppt-bg {
-            background: rgba(253, 126, 20, 0.1);
-        }
-    </style>
 @endsection

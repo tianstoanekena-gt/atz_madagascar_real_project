@@ -36,23 +36,21 @@
                                     {{ $document->created_at->format('d M Y') }}</span>
                                 <span><i class="fa-regular fa-file"></i> {{ strtoupper($document->file_type) }},
                                     {{ $document->formatted_size }}</span>
-                                <span><i class="fa-regular fa-eye"></i> {{ number_format($document->view_count) }}
-                                    vues</span>
                             </div>
                             <div class="doc-actions">
                                 @if ($document->file_type === 'pdf')
                                     <a href="{{ Storage::url($document->file_path) }}" class="btn-preview" target="_blank">
-                                        <i class="fa-regular fa-eye"></i> Aperçu
+                                        <i class="fa-regular fa-eye"></i> @lang('documents.cta_view')
                                     </a>
                                 @else
                                     <span class="btn-preview" style="opacity:0.6;cursor:not-allowed">
-                                        <i class="fa-regular fa-eye"></i> Aperçu
+                                        <i class="fa-regular fa-eye"></i> @lang('documents.cta_view')
                                     </span>
                                 @endif
-                                {{-- <a href="{{ route('documents.download', ['locale' => app()->getLocale(), 'document' => $document->id]) }}"
+                                <a href="{{ route('documents.download', ['locale' => app()->getLocale(), 'document' => $document->id]) }}"
                                     class="btn-download" download>
-                                    <i class="fa-regular fa-circle-down"></i> Télécharger
-                                </a> --}}
+                                    <i class="fa-regular fa-circle-down"></i> @lang('documents.cta_download')
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -72,22 +70,22 @@
                 <div class="stat-item">
                     <i class="fa-regular fa-file-pdf"></i>
                     <span class="stat-number">{{ $stats['pdf'] }}</span>
-                    <span class="stat-label">Documents PDF</span>
+                    <span class="stat-label">@lang('documents.filter_pdf')</span>
                 </div>
                 <div class="stat-item">
                     <i class="fa-regular fa-file-word"></i>
                     <span class="stat-number">{{ $stats['word'] }}</span>
-                    <span class="stat-label">Documents Word</span>
+                    <span class="stat-label">@lang('documents.filter_word')</span>
                 </div>
                 <div class="stat-item">
                     <i class="fa-regular fa-file-excel"></i>
                     <span class="stat-number">{{ $stats['excel'] }}</span>
-                    <span class="stat-label">Documents Excel</span>
+                    <span class="stat-label">@lang('documents.filter_excel')</span>
                 </div>
                 <div class="stat-item">
                     <i class="fa-regular fa-file-powerpoint"></i>
                     <span class="stat-number">{{ $stats['powerpoint'] }}</span>
-                    <span class="stat-label">Présentations</span>
+                    <span class="stat-label">@lang('documents.filter_powerpoint')</span>
                 </div>
             </div>
         </div>
@@ -96,8 +94,8 @@
     {{-- CSS : ON GARDE TON CODE ORIGINAL INTACT --}}
     <style>
         /* ============================================
-                                                                                                                                                                                                                                                                                       PAGE DOCUMENTS - STYLES
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               PAGE DOCUMENTS - STYLES
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
 
         .documents-section {
             padding: 4rem 0;
@@ -119,8 +117,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       FILTRES
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               FILTRES
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .documents-filters {
             display: flex;
             justify-content: center;
@@ -157,8 +155,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       GRILLE DES DOCUMENTS
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               GRILLE DES DOCUMENTS
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .documents-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -167,8 +165,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       CARTE DOCUMENT - STYLE DE BASE
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               CARTE DOCUMENT - STYLE DE BASE
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .document-card {
             background: white;
             border-radius: 20px;
@@ -251,8 +249,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       ICÔNE DE LA CARTE
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               ICÔNE DE LA CARTE
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .card-icon {
             height: 100px;
             display: flex;
@@ -300,8 +298,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       CONTENU DE LA CARTE
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               CONTENU DE LA CARTE
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .card-content {
             padding: 25px;
             flex: 1;
@@ -343,8 +341,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       MÉTADONNÉES
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               MÉTADONNÉES
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .doc-meta {
             display: flex;
             flex-wrap: wrap;
@@ -374,8 +372,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       BOUTONS D'ACTION
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               BOUTONS D'ACTION
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .doc-actions {
             display: flex;
             gap: 12px;
@@ -430,8 +428,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       STATISTIQUES
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               STATISTIQUES
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         .documents-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -494,8 +492,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       ANIMATIONS SUPPLÉMENTAIRES
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               ANIMATIONS SUPPLÉMENTAIRES
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         @keyframes float {
 
             0%,
@@ -536,8 +534,8 @@
         }
 
         /* ============================================
-                                                                                                                                                                                                                                                                                       RESPONSIVE
-                                                                                                                                                                                                                                                                                       ============================================ */
+                                                                                                                                                                                                                                                                                                                                                                                               RESPONSIVE
+                                                                                                                                                                                                                                                                                                                                                                                               ============================================ */
         @media (max-width: 1024px) {
             .documents-grid {
                 grid-template-columns: repeat(2, 1fr);

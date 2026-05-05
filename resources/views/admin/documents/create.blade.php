@@ -4,217 +4,248 @@
 
 @section('content')
     <section class="content_contents">
-        <div class="admin-container">
+        <div class="container mx-auto px-4 py-6">
 
             <!-- Header -->
-            <div class="page-header">
-                <h1 class="page-title">
-                    <i class="fas fa-plus-circle mr-3"></i>
-                    Ajouter un Document
-                </h1>
-                <a href="{{ route('admin.documents.index') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Retour à la liste
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-plus-circle text-3xl text-blue-600"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">Ajouter un Document</h1>
+                </div>
+                <a href="{{ route('admin.documents.index') }}" class="text-gray-600 hover:text-blue-600 transition">
+                    <i class="fas fa-arrow-left mr-2"></i>Retour à la liste
                 </a>
             </div>
 
-            <!-- Formulaire -->
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.documents.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+            @if ($errors->any())
+                <div class="mb-4 bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-                        <!-- Section: Fichier -->
-                        <div class="form-section mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-upload mr-2"></i>
-                                Fichier
-                            </h5>
+            <form action="{{ route('admin.documents.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-                            <div class="mb-3">
-                                <label for="file" class="form-label required">Fichier *</label>
-                                <input type="file" name="file" id="file"
-                                    class="form-control @error('file') is-invalid @enderror"
-                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" required>
-                                <small class="form-text text-muted">
-                                    Types autorisés : PDF, Word, Excel, PowerPoint • Max : 10 MB
-                                </small>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                    <!-- COLONNE GAUCHE : Upload & Paramètres -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white shadow-lg rounded-xl p-6 sticky top-6">
+
+                            <!-- Upload Fichier -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">
+                                    <i class="fas fa-upload mr-2"></i>Fichier *
+                                </label>
+                                <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-400 transition cursor-pointer bg-gray-50"
+                                    onclick="document.getElementById('file').click()">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-blue-600 mb-3"></i>
+                                    <p class="text-sm font-medium text-gray-700">Cliquez pour sélectionner un fichier</p>
+                                    <p class="text-xs text-gray-500 mt-2">PDF, Word, Excel, PowerPoint, ODT, ODS, ODP • Max
+                                        10 MB</p>
+                                    <input type="file" name="file" id="file" class="hidden"
+                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.odt,.ods,.odp" required
+                                        onchange="previewFileName(event)">
+                                </div>
+                                <p id="file-preview" class="mt-3 text-sm text-blue-600 font-medium hidden">
+                                    <i class="fas fa-check-circle mr-1"></i><span id="file-name"></span>
+                                </p>
                                 @error('file')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <!-- Ordre d'affichage -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-sort mr-2"></i>Ordre d'affichage *
+                                </label>
+                                <input type="number" name="order" value="{{ old('order', 0) }}" min="0"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                    placeholder="0 = premier">
+                                <p class="text-xs text-gray-500 mt-1">Plus le chiffre est bas, plus haut il apparaît</p>
+                            </div>
+
+                            <!-- Statut Publié -->
+                            <div class="mb-6">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" name="is_published" value="1"
+                                        {{ old('is_published') ? 'checked' : '' }}
+                                        class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300">
+                                    <span class="text-sm font-medium text-gray-700">
+                                        <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                                        Publier immédiatement
+                                    </span>
+                                </label>
+                                <p class="text-xs text-gray-500 mt-2 ml-8">Si décoché, le document sera en brouillon</p>
+                            </div>
+
                         </div>
+                    </div>
 
-                        <!-- Section: Titres multilingues -->
-                        <div class="form-section mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-language mr-2"></i>
+                    <!-- COLONNE DROITE : Titres & Descriptions Multilingues -->
+                    <div class="lg:col-span-2">
+
+                        <!-- Titres Multilingues -->
+                        <div class="bg-white shadow-lg rounded-xl p-6 mb-6">
+                            <h2 class="text-lg font-bold text-gray-800 mb-4">
+                                <i class="fas fa-heading mr-2 text-blue-600"></i>
                                 Titres (au moins un requis)
-                            </h5>
+                            </h2>
 
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="title_fr" class="form-label">Titre Français</label>
-                                    <input type="text" name="title_fr" id="title_fr"
-                                        class="form-control @error('title_fr') is-invalid @enderror"
-                                        value="{{ old('title_fr') }}" maxlength="255" placeholder="Ex: Rapport annuel 2025">
-                                    @error('title_fr')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        🇫🇷 Français
+                                    </label>
+                                    <input type="text" name="title_fr" value="{{ old('title_fr') }}" maxlength="255"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                        placeholder="Ex: Rapport annuel 2025">
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="title_mg" class="form-label">Titre Malagasy</label>
-                                    <input type="text" name="title_mg" id="title_mg"
-                                        class="form-control @error('title_mg') is-invalid @enderror"
-                                        value="{{ old('title_mg') }}" maxlength="255"
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        🇲🇬 Malagasy
+                                    </label>
+                                    <input type="text" name="title_mg" value="{{ old('title_mg') }}" maxlength="255"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                                         placeholder="Ohatra: Tatitra taona 2025">
-                                    @error('title_mg')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="title_en" class="form-label">Titre English</label>
-                                    <input type="text" name="title_en" id="title_en"
-                                        class="form-control @error('title_en') is-invalid @enderror"
-                                        value="{{ old('title_en') }}" maxlength="255"
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        🇬🇧 English
+                                    </label>
+                                    <input type="text" name="title_en" value="{{ old('title_en') }}" maxlength="255"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                                         placeholder="Example: Annual Report 2025">
-                                    @error('title_en')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                             @error('title_fr')
                                 @if (!$errors->has('title_mg') && !$errors->has('title_en'))
-                                    <div class="text-danger small">* Au moins un titre est requis</div>
+                                    <p class="mt-2 text-sm text-red-600">* Au moins un titre est requis</p>
                                 @endif
                             @enderror
                         </div>
 
-                        <!-- Section: Descriptions multilingues -->
-                        <div class="form-section mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-align-left mr-2"></i>
+                        <!-- Descriptions Multilingues avec Onglets -->
+                        <div class="bg-white shadow-lg rounded-xl p-6">
+                            <h2 class="text-lg font-bold text-gray-800 mb-4">
+                                <i class="fas fa-align-left mr-2 text-blue-600"></i>
                                 Descriptions (optionnel)
-                            </h5>
+                            </h2>
 
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="description_fr" class="form-label">Description Français</label>
-                                    <textarea name="description_fr" id="description_fr" class="form-control @error('description_fr') is-invalid @enderror"
-                                        rows="3" maxlength="5000" placeholder="Brève description du document...">{{ old('description_fr') }}</textarea>
-                                    @error('description_fr')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="description_mg" class="form-label">Description Malagasy</label>
-                                    <textarea name="description_mg" id="description_mg" class="form-control @error('description_mg') is-invalid @enderror"
-                                        rows="3" maxlength="5000" placeholder="Famaritana fohy momba ny antontan-taratasy...">{{ old('description_mg') }}</textarea>
-                                    @error('description_mg')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="description_en" class="form-label">Description English</label>
-                                    <textarea name="description_en" id="description_en" class="form-control @error('description_en') is-invalid @enderror"
-                                        rows="3" maxlength="5000" placeholder="Brief description of the document...">{{ old('description_en') }}</textarea>
-                                    @error('description_en')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <!-- Onglets de langues -->
+                            <div class="flex gap-2 mb-6 border-b border-gray-200">
+                                <button type="button" onclick="switchDescTab('fr')"
+                                    class="desc-tab px-4 py-2 font-medium rounded-t-lg transition border-b-2 border-blue-600 text-blue-600"
+                                    data-lang="fr">
+                                    🇫🇷 Français
+                                </button>
+                                <button type="button" onclick="switchDescTab('mg')"
+                                    class="desc-tab px-4 py-2 font-medium rounded-t-lg transition border-b-2 border-transparent text-gray-500 hover:text-gray-700"
+                                    data-lang="mg">
+                                    🇲🇬 Malagasy
+                                </button>
+                                <button type="button" onclick="switchDescTab('en')"
+                                    class="desc-tab px-4 py-2 font-medium rounded-t-lg transition border-b-2 border-transparent text-gray-500 hover:text-gray-700"
+                                    data-lang="en">
+                                    🇬🇧 English
+                                </button>
                             </div>
-                        </div>
 
-                        <!-- Section: Paramètres -->
-                        <div class="form-section mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-cog mr-2"></i>
-                                Paramètres
-                            </h5>
+                            <!-- Champs par langue -->
+                            @foreach (['fr' => '🇫🇷', 'mg' => '🇲🇬', 'en' => '🇬🇧'] as $code => $flag)
+                                <div class="desc-content {{ $code !== 'fr' ? 'hidden' : '' }}"
+                                    data-lang="{{ $code }}">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        {{ $flag }} Description {{ strtoupper($code) }}
+                                    </label>
+                                    <textarea name="description_{{ $code }}" rows="5"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                        placeholder="Brève description du document...">{{ old('description_' . $code) }}</textarea>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        <i class="fas fa-info-circle mr-1"></i>5000 caractères maximum
+                                    </p>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" name="is_published"
-                                            id="is_published" value="1" {{ old('is_published') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_published">
-                                            Publier immédiatement
-                                        </label>
-                                        <small class="form-text text-muted d-block">
-                                            Si décoché, le document sera en brouillon
-                                        </small>
-                                    </div>
+                                    @if ($code !== 'fr')
+                                        <div class="text-right mt-3">
+                                            <button type="button" onclick="copyFromFrench('{{ $code }}')"
+                                                class="text-sm text-blue-600 hover:text-blue-800 font-medium transition">
+                                                <i class="fas fa-copy mr-1"></i>
+                                                Copier depuis le français
+                                            </button>
+                                        </div>
+                                    @endif
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="order" class="form-label">Ordre d'affichage</label>
-                                    <input type="number" name="order" id="order"
-                                        class="form-control @error('order') is-invalid @enderror"
-                                        value="{{ old('order', 0) }}" min="0" placeholder="0 = premier">
-                                    <small class="form-text text-muted">
-                                        Plus le chiffre est bas, plus le document apparaît en haut
-                                    </small>
-                                    @error('order')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
 
                         <!-- Boutons d'action -->
-                        <div class="d-flex justify-content-end gap-3 pt-3 border-top">
-                            <a href="{{ route('admin.documents.index') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-times mr-2"></i>
+                        <div class="flex gap-3 pt-6 mt-6 border-t border-gray-200">
+                            <button type="submit"
+                                class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2">
+                                <i class="fas fa-save"></i>
+                                <span>Enregistrer le document</span>
+                            </button>
+                            <a href="{{ route('admin.documents.index') }}"
+                                class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
                                 Annuler
                             </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save mr-2"></i>
-                                Enregistrer le document
-                            </button>
                         </div>
 
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
 
         </div>
     </section>
-    <!-- Styles additionnels -->
-    <style>
-        .form-section {
-            background: #f8f9fa;
-            padding: 1.25rem;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-        }
 
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #0d6efd;
-        }
-
-        .required::after {
-            content: " *";
-            color: #dc3545;
-        }
-
-        .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-        }
-    </style>
-
-    <!-- Script: Prévisualisation du nom de fichier -->
+    <!-- Scripts -->
     <script>
-        document.getElementById('file').addEventListener('change', function(e) {
-            const fileName = e.target.files[0]?.name;
+        // Prévisualisation du nom de fichier
+        function previewFileName(event) {
+            const fileName = event.target.files[0]?.name;
             if (fileName) {
-                // Optionnel : afficher un aperçu du nom sélectionné
-                console.log('Fichier sélectionné :', fileName);
+                document.getElementById('file-name').textContent = fileName;
+                document.getElementById('file-preview').classList.remove('hidden');
             }
-        });
+        }
+
+        // Gestion des onglets de description
+        function switchDescTab(lang) {
+            // Cacher tous les contenus
+            document.querySelectorAll('.desc-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            // Réinitialiser tous les onglets
+            document.querySelectorAll('.desc-tab').forEach(el => {
+                el.classList.remove('border-blue-600', 'text-blue-600');
+                el.classList.add('border-transparent', 'text-gray-500');
+            });
+            // Activer l'onglet sélectionné
+            document.querySelector(`.desc-content[data-lang="${lang}"]`).classList.remove('hidden');
+            const activeTab = document.querySelector(`.desc-tab[data-lang="${lang}"]`);
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            activeTab.classList.add('border-blue-600', 'text-blue-600');
+        }
+
+        // Copier depuis le français
+        function copyFromFrench(lang) {
+            const frDesc = document.querySelector(`.desc-content[data-lang="fr"] textarea`).value;
+            document.querySelector(`.desc-content[data-lang="${lang}"] textarea`).value = frDesc;
+
+            // Feedback visuel
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check mr-1"></i>Copié !';
+            btn.classList.add('text-green-600');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('text-green-600');
+            }, 2000);
+        }
     </script>
 @endsection
