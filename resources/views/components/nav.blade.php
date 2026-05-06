@@ -45,12 +45,21 @@
 
         <div class="nav-lang">
             <select name="language" id="language" class="language-select">
-                <option value="fr" {{ app()->getLocale() == 'fr' ? 'selected' : '' }}>🇫🇷 FRANÇAIS</option>
-                <option value="mg" {{ app()->getLocale() == 'mg' ? 'selected' : '' }}>🇲🇬 MALAGASY</option>
-                <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🇺🇸 ANGLAIS</option>
+                <option value="fr" {{ app()->getLocale() == 'fr' ? 'selected' : '' }} data-flag="🇫🇷">
+                    <span class="flag-mobile">🇫🇷</span>
+                    <span class="text-desktop">🇫🇷 FRANÇAIS</span>
+                </option>
+                <option value="mg" {{ app()->getLocale() == 'mg' ? 'selected' : '' }} data-flag="🇲🇬">
+                    <span class="flag-mobile">🇲🇬</span>
+                    <span class="text-desktop">🇲🇬 MALAGASY</span>
+                </option>
+                <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }} data-flag="🇺🇸">
+                    <span class="flag-mobile">🇺🇸</span>
+                    <span class="text-desktop">🇺🇸 ANGLAIS</span>
+                </option>
             </select>
-
         </div>
+
 
     </div>
 </nav>
@@ -75,11 +84,13 @@
         document.querySelectorAll('.nav-link-child').forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.remove('open');
+                toggle.classList.remove('active');
             });
         });
 
     })();
 
+    // Changement de langue
     document.getElementById('language').addEventListener('change', function() {
         const selectedLang = this.value;
         const currentPath = window.location.pathname;
@@ -90,4 +101,57 @@
         // Redirige vers la nouvelle URL
         window.location.href = newPath + window.location.search;
     });
+
+    // Afficher uniquement le drapeau sur mobile
+    (function updateLanguageDisplay() {
+        const select = document.getElementById('language');
+        const selectedOption = select.options[select.selectedIndex];
+        const flag = selectedOption.getAttribute('data-flag');
+
+        function updateSelectText() {
+            const isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                // Afficher uniquement le drapeau
+                select.style.fontSize = '1.5rem';
+                select.style.padding = '0.3rem 0.5rem';
+                select.style.width = '60px';
+                select.style.textAlign = 'center';
+
+                // Changer le texte des options en drapeau uniquement
+                Array.from(select.options).forEach(option => {
+                    const optionFlag = option.getAttribute('data-flag');
+                    option.textContent = optionFlag;
+                });
+            } else {
+                // Afficher drapeau + texte
+                select.style.fontSize = '0.9rem';
+                select.style.padding = '0.4rem 0.8rem';
+                select.style.width = 'auto';
+                select.style.textAlign = 'left';
+
+                // Restaurer le texte complet
+                Array.from(select.options).forEach(option => {
+                    const lang = option.value;
+                    const optionFlag = option.getAttribute('data-flag');
+                    const langMap = {
+                        'fr': optionFlag + ' FRANÇAIS',
+                        'mg': optionFlag + ' MALAGASY',
+                        'en': optionFlag + ' ANGLAIS'
+                    };
+                    option.textContent = langMap[lang];
+                });
+            }
+        }
+
+        // Appliquer au chargement
+        updateSelectText();
+
+        // Réappliquer au resize
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(updateSelectText, 200);
+        });
+    })();
 </script>

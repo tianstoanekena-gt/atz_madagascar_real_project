@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\SponsorDetailController;
 use App\Http\Controllers\Admin\StaffMemberController;
 use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FaqController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -47,8 +48,8 @@ Route::prefix('{locale}')
         Route::get('/documents/{document}/download', [DocumentController::class, 'download'])
             ->name('documents.download')
             ->where('document', '[0-9]+');
-        //about faq
-        Route::get('about/faq', [AboutController::class, 'faq'])->name('faq');
+        // FAQ (frontend)
+        Route::get('/faq', [FaqController::class, 'index'])->name('faq');
         //about stat
         Route::get('about/stat', [AboutController::class, 'stat'])->name('stat');
         //about staff
@@ -161,9 +162,15 @@ Route::middleware(['auth', 'verified'])
         Route::delete('dashboard/sponsor-photos/{photoId}', [SponsorDetailController::class, 'destroyPhoto'])
             ->name('admin.sponsors.details.photo.destroy');
 
+        // Gestion des docs
         Route::resource('dashboard/documents', \App\Http\Controllers\Admin\DocumentController::class)
             ->except(['show'])
             ->names('admin.documents');
+
+        // Gestion des FAQs
+        Route::resource('dashboard/faq', \App\Http\Controllers\Admin\FaqController::class)
+            ->except(['show'])
+            ->names('admin.faq');
     });
 
 

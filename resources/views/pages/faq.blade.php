@@ -5,16 +5,16 @@
         <div class="faq-container">
             {{-- En-tête de la page --}}
             <div class="section-header">
-                <h2 class="section-title">Foire Aux Questions</h2>
+                <h2 class="section-title">@lang('faq.categories.all')</h2>
                 <div class="title-underline"></div>
-                <p class="section-subtitle">Trouvez rapidement les réponses à vos questions</p>
+                <p class="section-subtitle">@lang('faq.not_found_text')</p>
             </div>
 
             {{-- Barre de recherche --}}
             <div class="faq-search-wrapper">
                 <div class="faq-search-container">
                     <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    <input type="text" class="faq-search" placeholder="Rechercher une question..." id="faqSearch">
+                    <input type="text" class="faq-search" placeholder="@lang('faq.search_placeholder')" id="faqSearch">
                     <button class="search-clear" id="clearSearch">
                         <i class="fa-solid fa-times"></i>
                     </button>
@@ -23,303 +23,67 @@
 
             {{-- Catégories FAQ --}}
             <div class="faq-categories">
-                <button class="category-btn active" data-category="all">Toutes les questions</button>
-                <button class="category-btn" data-category="general">Général</button>
-                <button class="category-btn" data-category="membership">Adhésion</button>
-                <button class="category-btn" data-category="donation">Dons</button>
-                <button class="category-btn" data-category="activities">Activités</button>
-                <button class="category-btn" data-category="contact">Contact</button>
+                <button class="category-btn active" data-category="all">@lang('faq.categories.all')</button>
+                <button class="category-btn" data-category="general">@lang('faq.categories.general')</button>
+                <button class="category-btn" data-category="membership">@lang('faq.categories.membership')</button>
+                <button class="category-btn" data-category="donation">@lang('faq.categories.donation')</button>
+                <button class="category-btn" data-category="activities">@lang('faq.categories.activities')</button>
+                <button class="category-btn" data-category="contact">@lang('faq.categories.contact')</button>
             </div>
 
             {{-- Grille FAQ --}}
             <div class="faq-grid">
-                {{-- Catégorie: Général --}}
-                <div class="faq-category-group" data-category="general">
-                    <h3 class="faq-category-title">
-                        <i class="fa-regular fa-circle-question"></i>
-                        Général
-                    </h3>
+                @forelse($faqsByCategory as $category => $faqs)
+                    <div class="faq-category-group" data-category="{{ $category }}">
+                        <h3 class="faq-category-title">
+                            <i class="fa-regular {{ $faqs->first()->category_icon }}"></i>
+                            {{ __('faq.categories.' . $category) }}
+                        </h3>
 
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Qu'est-ce que ATZ Madagascar ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>ATZ Madagascar (Akany Tia Zaza) est une association évangélique paroissiale ayant pour
-                                mission de soutenir socialement des personnes et familles en situation de vulnérabilité à
-                                Madagascar.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Depuis quand l'association existe-t-elle ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>L'association a été fondée en 2010 et depuis, nous œuvrons quotidiennement auprès des
-                                familles nombreuses, orphelins, et enfants scolarisés en difficulté.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Quelles sont les zones d'intervention ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Nous intervenons principalement dans la région d'Analamanga et progressivement dans d'autres
-                                régions de Madagascar où les besoins sont les plus urgents.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Catégorie: Adhésion --}}
-                <div class="faq-category-group" data-category="membership">
-                    <h3 class="faq-category-title">
-                        <i class="fa-regular fa-handshake"></i>
-                        Adhésion
-                    </h3>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Comment devenir membre de l'association ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Pour devenir membre, il suffit de :</p>
-                            <ul class="faq-list">
-                                <li><i class="fa-regular fa-circle-check"></i> Remplir le formulaire d'adhésion disponible
-                                    sur notre site</li>
-                                <li><i class="fa-regular fa-circle-check"></i> S'acquitter de la cotisation annuelle (20 000
-                                    Ar)</li>
-                                <li><i class="fa-regular fa-circle-check"></i> Fournir une pièce d'identité et deux photos
-                                    d'identité</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Quels sont les avantages d'être membre ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Les membres peuvent participer aux assemblées générales, voter pour les décisions
-                                importantes, et bénéficier de certains services sociaux de l'association.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>La cotisation est-elle obligatoire ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Oui, la cotisation annuelle est obligatoire pour tous les membres actifs. Elle permet de
-                                financer une partie de nos actions sociales.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Catégorie: Dons --}}
-                <div class="faq-category-group" data-category="donation">
-                    <h3 class="faq-category-title">
-                        <i class="fa-regular fa-heart"></i>
-                        Dons
-                    </h3>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Comment faire un don à ATZ ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Vous pouvez faire un don par virement bancaire, mobile money (MVola, Orange Money) ou
-                                directement à notre bureau. Pour plus d'informations :</p>
-                            <div class="faq-highlight">
-                                <i class="fa-solid fa-phone"></i>
-                                <span>Contactez notre équipe au +261 34 00 000 00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Puis-je faire un don en nature ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Oui, nous acceptons les dons en nature : vêtements, fournitures scolaires, denrées
-                                alimentaires, médicaments. Contactez-nous pour organiser la collecte.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Les dons sont-ils déductibles fiscalement ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Oui, ATZ Madagascar est habilitée à délivrer des reçus fiscaux pour les dons. Vous pouvez
-                                déduire vos dons de vos impôts dans la limite légale.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Catégorie: Activités --}}
-                <div class="faq-category-group" data-category="activities">
-                    <h3 class="faq-category-title">
-                        <i class="fa-regular fa-calendar"></i>
-                        Activités
-                    </h3>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Quelles sont les principales activités ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Nos activités principales sont : le soutien à l'éducation (frais scolaires, fournitures),
-                                l'aide nutritionnelle (repas pour les enfants), et l'accès aux soins de santé (consultations
-                                médicales).</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Comment être informé des événements ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Suivez notre page Facebook, inscrivez-vous à notre newsletter ou consultez régulièrement la
-                                section "Actualités" de notre site web.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Puis-je participer comme bénévole ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Absolument ! Nous accueillons toujours des bénévoles. Contactez-nous pour connaître les
-                                missions disponibles et les modalités d'inscription.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Catégorie: Contact --}}
-                <div class="faq-category-group" data-category="contact">
-                    <h3 class="faq-category-title">
-                        <i class="fa-regular fa-envelope"></i>
-                        Contact
-                    </h3>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Comment contacter l'association ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Voici nos coordonnées :</p>
-                            <div class="faq-contact-info">
-                                <div class="contact-item">
-                                    <i class="fa-solid fa-phone"></i>
-                                    <span>+261 34 00 000 00</span>
+                        @foreach ($faqs as $faq)
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <div class="question-content">
+                                        <i class="fa-regular fa-comment"></i>
+                                        <span>{{ $faq->question }}</span>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down faq-toggle"></i>
                                 </div>
-                                <div class="contact-item">
-                                    <i class="fa-solid fa-envelope"></i>
-                                    <span>contact@atz-madagascar.org</span>
-                                </div>
-                                <div class="contact-item">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <span>Lot IVT 56 Bis, Ambohimanarina, Antananarivo</span>
+                                <div class="faq-answer">
+                                    {!! $faq->answer !!}
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <div class="question-content">
-                                <i class="fa-regular fa-comment"></i>
-                                <span>Quels sont vos réseaux sociaux ?</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down faq-toggle"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Suivez-nous sur :</p>
-                            <div class="faq-social-links">
-                                <a href="#" class="social-link"><i class="fa-brands fa-facebook"></i> Facebook</a>
-                                <a href="#" class="social-link"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                                <a href="#" class="social-link"><i class="fa-brands fa-telegram"></i> Telegram</a>
-                            </div>
-                        </div>
+                @empty
+                    {{-- État vide --}}
+                    <div class="text-center py-16">
+                        <i class="fa-regular fa-circle-question" style="font-size:4rem;color:#ccc;margin-bottom:20px"></i>
+                        <p class="text-gray-500 text-lg">@lang('faq.no_results')</p>
                     </div>
-                </div>
+                @endforelse
             </div>
 
             {{-- Section "Vous n'avez pas trouvé?" --}}
             <div class="faq-no-answer">
                 <div class="no-answer-content">
                     <i class="fa-regular fa-message-question"></i>
-                    <h3>Vous n'avez pas trouvé votre réponse ?</h3>
-                    <p>Notre équipe est là pour vous aider ! Envoyez-nous votre question directement.</p>
+                    <h3>@lang('faq.not_found_title')</h3>
+                    <p>@lang('faq.not_found_text')</p>
                     <a href="{{ localized_route('contact') }}" class="contact-btn">
                         <i class="fa-regular fa-envelope"></i>
-                        Contactez-nous
+                        @lang('faq.contact_btn')
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-
+    {{-- CSS : ON GARDE TON CODE ORIGINAL INTACT --}}
     <style coped>
         /* ============================================
-                                                               PAGE FAQ - STYLES AVEC VOS COULEURS
-                                                               ============================================ */
+                                                                       PAGE FAQ - STYLES AVEC VOS COULEURS
+                                                                       ============================================ */
 
         :root {
             --color-primary: #feed02;
@@ -371,8 +135,8 @@
         }
 
         /* ============================================
-                                                               BARRE DE RECHERCHE
-                                                               ============================================ */
+                                                                       BARRE DE RECHERCHE
+                                                                       ============================================ */
         .faq-search-wrapper {
             max-width: 600px;
             margin: 40px auto 30px;
@@ -449,8 +213,8 @@
         }
 
         /* ============================================
-                                                               CATÉGORIES
-                                                               ============================================ */
+                                                                       CATÉGORIES
+                                                                       ============================================ */
         .faq-categories {
             display: flex;
             justify-content: center;
@@ -496,8 +260,8 @@
         }
 
         /* ============================================
-                                                               GRILLE FAQ
-                                                               ============================================ */
+                                                                       GRILLE FAQ
+                                                                       ============================================ */
         .faq-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -555,8 +319,8 @@
         }
 
         /* ============================================
-                                                               ITEMS FAQ
-                                                               ============================================ */
+                                                                       ITEMS FAQ
+                                                                       ============================================ */
         .faq-item {
             background: white;
             border-radius: 16px;
@@ -653,8 +417,8 @@
         }
 
         /* ============================================
-                                                               ÉLÉMENTS SPÉCIAUX DANS LES RÉPONSES
-                                                               ============================================ */
+                                                                       ÉLÉMENTS SPÉCIAUX DANS LES RÉPONSES
+                                                                       ============================================ */
         .faq-highlight {
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             color: var(--color-text);
@@ -734,8 +498,8 @@
         }
 
         /* ============================================
-                                                               SECTION "VOUS N'AVEZ PAS TROUVÉ?"
-                                                               ============================================ */
+                                                                       SECTION "VOUS N'AVEZ PAS TROUVÉ?"
+                                                                       ============================================ */
         .faq-no-answer {
             margin: 80px 0 40px;
             padding: 60px 40px;
@@ -801,8 +565,8 @@
         }
 
         /* ============================================
-                                                               RECHERCHE HIGHLIGHT
-                                                               ============================================ */
+                                                                       RECHERCHE HIGHLIGHT
+                                                                       ============================================ */
         .faq-item.highlight {
             animation: highlightPulse 1s ease 2;
             border-color: var(--color-primary);
@@ -821,8 +585,8 @@
         }
 
         /* ============================================
-                                                               RESPONSIVE
-                                                               ============================================ */
+                                                                       RESPONSIVE
+                                                                       ============================================ */
 
         /* Tablettes (1024px) */
         @media (max-width: 1024px) {
@@ -977,6 +741,7 @@
         }
     </style>
 
+    {{-- JS : ON GARDE TON CODE ORIGINAL INTACT --}}
     <script>
         // ============================================
         // FAQ - INTERACTIVITÉ
@@ -992,14 +757,6 @@
                 const question = item.querySelector('.faq-question');
 
                 question.addEventListener('click', function() {
-                    // Fermer les autres items (optionnel - décommentez si voulu)
-                    // faqItems.forEach(otherItem => {
-                    //     if (otherItem !== item && otherItem.classList.contains('active')) {
-                    //         otherItem.classList.remove('active');
-                    //     }
-                    // });
-
-                    // Toggle l'item actuel
                     item.classList.toggle('active');
                 });
             });
@@ -1014,15 +771,12 @@
                 button.addEventListener('click', function() {
                     const category = this.dataset.category;
 
-                    // Mettre à jour les boutons actifs
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
 
-                    // Filtrer les catégories
                     categoryGroups.forEach(group => {
                         if (category === 'all' || group.dataset.category === category) {
                             group.style.display = 'block';
-                            // Réanimer l'apparition
                             group.style.animation = 'none';
                             group.offsetHeight;
                             group.style.animation = 'groupFadeIn 0.6s ease forwards';
@@ -1031,7 +785,6 @@
                         }
                     });
 
-                    // Réinitialiser la recherche
                     const searchInput = document.getElementById('faqSearch');
                     if (searchInput) {
                         searchInput.value = '';
@@ -1063,7 +816,6 @@
                     resetSearchHighlights();
 
                     if (searchTerm === '') {
-                        // Afficher tous les groupes selon le filtre actuel
                         const activeCategory = document.querySelector('.category-btn.active').dataset.category;
                         document.querySelectorAll('.faq-category-group').forEach(group => {
                             if (activeCategory === 'all' || group.dataset.category === activeCategory) {
@@ -1071,7 +823,6 @@
                             }
                         });
 
-                        // Afficher tous les items
                         allFaqItems.forEach(item => {
                             item.style.display = 'block';
                         });
@@ -1082,7 +833,6 @@
 
                     clearButton.classList.add('visible');
 
-                    // Chercher dans toutes les questions et réponses
                     allFaqItems.forEach(item => {
                         const question = item.querySelector('.question-content span').textContent
                             .toLowerCase();
@@ -1090,11 +840,8 @@
                         const category = item.closest('.faq-category-group');
 
                         if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                            // Afficher la catégorie
                             if (category) category.style.display = 'block';
-                            // Afficher l'item
                             item.style.display = 'block';
-                            // Highlight l'item
                             item.classList.add('highlight');
                             hasResults = true;
                         } else {
@@ -1102,7 +849,6 @@
                         }
                     });
 
-                    // Masquer les catégories vides
                     document.querySelectorAll('.faq-category-group').forEach(group => {
                         const visibleItems = group.querySelectorAll('.faq-item[style="display: block;"]');
                         if (visibleItems.length === 0) {
@@ -1110,7 +856,6 @@
                         }
                     });
 
-                    // Ouvrir automatiquement les items trouvés
                     if (hasResults) {
                         document.querySelectorAll('.faq-item.highlight').forEach(item => {
                             item.classList.add('active');
@@ -1124,7 +869,6 @@
                     searchInput.value = '';
                     this.classList.remove('visible');
 
-                    // Réinitialiser l'affichage selon le filtre actuel
                     const activeCategory = document.querySelector('.category-btn.active').dataset.category;
                     document.querySelectorAll('.faq-category-group').forEach(group => {
                         if (activeCategory === 'all' || group.dataset.category === activeCategory) {
@@ -1134,7 +878,6 @@
                         }
                     });
 
-                    // Réafficher tous les items
                     document.querySelectorAll('.faq-item').forEach(item => {
                         item.style.display = 'block';
                         item.classList.remove('highlight', 'active');
@@ -1142,9 +885,6 @@
                 });
             }
 
-            // ============================================
-            // ANIMATION DU BOUTON CLEAR
-            // ============================================
             if (searchInput) {
                 searchInput.addEventListener('input', function() {
                     const clearBtn = document.getElementById('clearSearch');

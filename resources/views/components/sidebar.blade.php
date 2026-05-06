@@ -20,9 +20,9 @@
 
             <!-- Pages avec sous-menu -->
             <li
-                class="nav-item has-submenu {{ request()->routeIs('admin.hero-slides.*') || request()->routeIs('admin.logos.*') || request()->routeIs('admin.about-videos.*') || request()->routeIs('admin.about-texts.*') || request()->routeIs('admin.about-cards.*') || request()->routeIs('admin.about-interventions.*') || request()->routeIs('admin.contact-types.*') ? 'active open' : '' }}">
+                class="nav-item has-submenu {{ request()->routeIs('admin.hero-slides.*') || request()->routeIs('admin.logos.*') || request()->routeIs('admin.about-videos.*') || request()->routeIs('admin.about-texts.*') || request()->routeIs('admin.about-cards.*') || request()->routeIs('admin.about-interventions.*') || request()->routeIs('admin.contact-types.*') || request()->routeIs('admin.faq.*') ? 'active open' : '' }}">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-file-alt nav-icon"></i>
+                    <i class="fas fa-door-closed"></i>
                     <span class="nav-text">Pages</span>
                     <i class="fas fa-chevron-down submenu-arrow"></i>
                 </a>
@@ -76,6 +76,13 @@
                             class="submenu-link {{ request()->routeIs('admin.contact-types.*') ? 'active' : '' }}">
                             <i class="fas fa-address-book"></i>
                             Types de Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.faq.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.faq.*') ? 'active' : '' }}">
+                            <i class="fas fa-question-circle"></i>
+                            FAQ
                         </a>
                     </li>
                 </ul>
@@ -134,7 +141,7 @@
 
             <li class="nav-item {{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.documents.index') }}" class="nav-link">
-                    <i class="fas fa-file-alt nav-icon"></i>
+                    <i class="fas fa-copy"></i>
                     <span class="nav-text">Documents</span>
                 </a>
             </li>
