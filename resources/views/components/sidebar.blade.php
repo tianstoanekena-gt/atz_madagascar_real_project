@@ -154,6 +154,46 @@
                 </a>
             </li>
 
+            <!-- Statistiques avec sous-menu -->
+            <li class="nav-item has-submenu {{ request()->routeIs('admin.stats.*') ? 'active open' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-bar nav-icon"></i>
+                    <span class="nav-text">Statistiques</span>
+                    <i class="fas fa-chevron-down submenu-arrow"></i>
+                </a>
+
+                <ul class="submenu">
+                    <li>
+                        <a href="{{ route('admin.stats.main.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.stats.main.*') ? 'active' : '' }}">
+                            <i class="fas fa-chart-line"></i>
+                            Stats Principales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.stats.education.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.stats.education.*') ? 'active' : '' }}">
+                            <i class="fas fa-graduation-cap"></i>
+                            Éducation
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.stats.nutrition.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.stats.nutrition.*') ? 'active' : '' }}">
+                            <i class="fas fa-utensils"></i>
+                            Nutrition
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.stats.health.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.stats.health.*') ? 'active' : '' }}">
+                            <i class="fas fa-heart-pulse"></i>
+                            Santé
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <!-- Utilisateurs -->
             <li class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <a href="#" class="nav-link">
@@ -176,9 +216,6 @@
 </aside>
 
 
-<!-- ============================================
-     CSS - UNIQUEMENT SIDEBAR (Copie dans ton fichier CSS)
-     ============================================ -->
 
 <style>
     /* ========== SIDEBAR UNIQUEMENT ========== */

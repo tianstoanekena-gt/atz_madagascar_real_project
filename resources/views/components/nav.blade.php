@@ -19,22 +19,45 @@
             <span></span>
         </button>
 
-        <!-- Menu -->
         <div class="nav-link" id="navMenu">
             <ul>
                 @php
                     $navItems = [
-                        ['route' => 'home', 'label' => 'navigation.home'],
-                        ['route' => 'about', 'label' => 'navigation.about'],
-                        ['route' => 'activities', 'label' => 'navigation.activities'],
-                        ['route' => 'projects', 'label' => 'navigation.projects'],
-                        ['route' => 'contact', 'label' => 'navigation.contact'],
+                        [
+                            'route' => 'home',
+                            'label' => 'navigation.home',
+                            'children' => [],
+                        ],
+                        [
+                            'route' => 'about',
+                            'label' => 'navigation.about',
+                            'children' => ['staff', 'documents', 'faq', 'stats', 'sponsors', 'sponsors.show'],
+                        ],
+                        [
+                            'route' => 'activities',
+                            'label' => 'navigation.activities',
+                            'children' => ['activity.details'],
+                        ],
+                        [
+                            'route' => 'projects',
+                            'label' => 'navigation.projects',
+                            'children' => ['project.details'],
+                        ],
+                        [
+                            'route' => 'contact',
+                            'label' => 'navigation.contact',
+                            'children' => [],
+                        ],
                     ];
                 @endphp
 
                 @foreach ($navItems as $item)
+                    @php
+                        $routesToCheck = array_merge([$item['route']], $item['children']);
+                        $isActive = request()->routeIs($routesToCheck);
+                    @endphp
                     <li>
-                        <a class="nav-link-child {{ request()->routeIs($item['route']) ? 'active' : '' }}"
+                        <a class="nav-link-child {{ $isActive ? 'active' : '' }}"
                             href="{{ localized_route($item['route']) }}">
                             {{ __($item['label']) }}
                         </a>
@@ -60,10 +83,8 @@
             </select>
         </div>
 
-
     </div>
 </nav>
-
 
 
 
@@ -80,7 +101,6 @@
             toggle.classList.toggle('active');
         });
 
-        // Close menu when clicking link (mobile UX)
         document.querySelectorAll('.nav-link-child').forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.remove('open');
@@ -90,47 +110,35 @@
 
     })();
 
-    // Changement de langue
     document.getElementById('language').addEventListener('change', function() {
         const selectedLang = this.value;
         const currentPath = window.location.pathname;
-
-        // Remplace la locale actuelle dans l'URL
         const newPath = currentPath.replace(/^\/(fr|mg|en)/, '/' + selectedLang);
-
-        // Redirige vers la nouvelle URL
         window.location.href = newPath + window.location.search;
     });
 
-    // Afficher uniquement le drapeau sur mobile
     (function updateLanguageDisplay() {
         const select = document.getElementById('language');
-        const selectedOption = select.options[select.selectedIndex];
-        const flag = selectedOption.getAttribute('data-flag');
 
         function updateSelectText() {
             const isMobile = window.innerWidth <= 768;
 
             if (isMobile) {
-                // Afficher uniquement le drapeau
                 select.style.fontSize = '1.5rem';
                 select.style.padding = '0.3rem 0.5rem';
                 select.style.width = '60px';
                 select.style.textAlign = 'center';
 
-                // Changer le texte des options en drapeau uniquement
                 Array.from(select.options).forEach(option => {
                     const optionFlag = option.getAttribute('data-flag');
                     option.textContent = optionFlag;
                 });
             } else {
-                // Afficher drapeau + texte
                 select.style.fontSize = '0.9rem';
                 select.style.padding = '0.4rem 0.8rem';
                 select.style.width = 'auto';
                 select.style.textAlign = 'left';
 
-                // Restaurer le texte complet
                 Array.from(select.options).forEach(option => {
                     const lang = option.value;
                     const optionFlag = option.getAttribute('data-flag');
@@ -144,10 +152,8 @@
             }
         }
 
-        // Appliquer au chargement
         updateSelectText();
 
-        // Réappliquer au resize
         let resizeTimer;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);

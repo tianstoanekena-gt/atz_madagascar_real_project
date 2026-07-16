@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AboutVideo;
+// use App\Models\AboutVideo;
 
 class AboutController extends Controller
 {
@@ -30,17 +30,5 @@ class AboutController extends Controller
     public function parrain()
     {
         return view('parrain.index');
-    }
-
-
-
-    public function faq()
-    {
-        return view('pages.faq');
-    }
-
-    public function stat()
-    {
-        return view('pages.stat');
     }
 }

@@ -50,10 +50,7 @@ Route::prefix('{locale}')
             ->where('document', '[0-9]+');
         // FAQ (frontend)
         Route::get('/faq', [FaqController::class, 'index'])->name('faq');
-        //about stat
-        Route::get('about/stat', [AboutController::class, 'stat'])->name('stat');
         //about staff
-        Route::get('about/staff', [AboutController::class, 'staff'])->name('staff');
         //activities
         Route::get('/activities', [ActivitiesController::class, 'index'])->name('activities');
         Route::get('/activity/details', [ActivitiesDetailsController::class, 'index'])->name('activity.details');
@@ -64,6 +61,8 @@ Route::prefix('{locale}')
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
         //staff in about page
         Route::get('/staff', [StaffController::class, 'index'])->name('staff');
+        // Statistiques (Frontend)
+        Route::get('/stats', [App\Http\Controllers\StatsController::class, 'index'])->name('stats');
         //partenary in about page
         Route::get('/sponsors', [SponsorController::class, 'index'])->name('sponsors');
         // Page détails sponsor
@@ -171,6 +170,27 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/faq', \App\Http\Controllers\Admin\FaqController::class)
             ->except(['show'])
             ->names('admin.faq');
+
+        // Gestion des Statistiques (Admin)
+        Route::resource('dashboard/stats/main', \App\Http\Controllers\Admin\StatMainController::class)
+            ->except(['show'])
+            ->parameters(['main' => 'stat_main'])
+            ->names('admin.stats.main');
+
+        Route::resource('dashboard/stats/education', \App\Http\Controllers\Admin\StatEducationController::class)
+            ->except(['show'])
+            ->parameters(['education' => 'stat_education'])
+            ->names('admin.stats.education');
+
+        Route::resource('dashboard/stats/nutrition', \App\Http\Controllers\Admin\StatNutritionController::class)
+            ->except(['show'])
+            ->parameters(['nutrition' => 'stat_nutrition'])
+            ->names('admin.stats.nutrition');
+
+        Route::resource('dashboard/stats/health', \App\Http\Controllers\Admin\StatHealthController::class)
+            ->except(['show'])
+            ->parameters(['health' => 'stat_health'])
+            ->names('admin.stats.health');
     });
 
 

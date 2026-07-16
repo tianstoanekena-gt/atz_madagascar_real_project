@@ -41,7 +41,7 @@
                         </a>
 
                         <!-- Lien Statistiques -->
-                        <a href="{{ localized_route('stat') }}" class="about-link" data-category="stats">
+                        <a href="{{ localized_route('stats') }}" class="about-link" data-category="stats">
                             <i class="fa-solid fa-chart-line link-icon"></i>
                             <span class="link-text">@lang('about.cta_stat_btn')</span>
                             <i class="fa-solid fa-chevron-right link-arrow"></i>
