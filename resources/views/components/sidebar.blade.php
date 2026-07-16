@@ -88,14 +88,6 @@
                 </ul>
             </li>
 
-            <!-- Activités -->
-            <li class="nav-item {{ request()->routeIs('admin.activities.*') ? 'active' : '' }}">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-calendar-check nav-icon"></i>
-                    <span class="nav-text">Activités</span>
-                </a>
-            </li>
-
             <!-- Projets -->
             <li class="nav-item {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
                 <a href="#" class="nav-link">
@@ -111,6 +103,16 @@
                     <span class="nav-text">Parrainages</span>
                 </a>
             </li>
+
+
+            <!-- Activités -->
+            <li class="nav-item {{ request()->routeIs('admin.activities.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.activities.index') }}" class="nav-link">
+                    <i class="fas fa-hands-helping nav-icon"></i>
+                    <span class="nav-text">Activités</span>
+                </a>
+            </li>
+
 
             <!-- Staff Technique avec sous-menu -->
             <li

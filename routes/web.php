@@ -50,10 +50,9 @@ Route::prefix('{locale}')
             ->where('document', '[0-9]+');
         // FAQ (frontend)
         Route::get('/faq', [FaqController::class, 'index'])->name('faq');
-        //about staff
-        //activities
-        Route::get('/activities', [ActivitiesController::class, 'index'])->name('activities');
-        Route::get('/activity/details', [ActivitiesDetailsController::class, 'index'])->name('activity.details');
+        // Activités (Frontend)
+        Route::get('/activities', [App\Http\Controllers\ActivityPageController::class, 'index'])->name('activities');
+        Route::get('/activities/{slug}', [App\Http\Controllers\ActivityPageController::class, 'show'])->name('activities.show');
         //projects
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
         Route::get('/project/details', [ProjectDetailController::class, 'index'])->name('project.details');
@@ -191,6 +190,11 @@ Route::middleware(['auth', 'verified'])
             ->except(['show'])
             ->parameters(['health' => 'stat_health'])
             ->names('admin.stats.health');
+
+
+        Route::resource('dashboard/activities', \App\Http\Controllers\Admin\ActivityController::class)
+            ->except(['show'])
+            ->names('admin.activities');
     });
 
 
