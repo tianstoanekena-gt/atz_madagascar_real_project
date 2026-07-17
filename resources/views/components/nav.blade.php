@@ -36,7 +36,7 @@
                         [
                             'route' => 'activities',
                             'label' => 'navigation.activities',
-                            'children' => ['activity.details'],
+                            'children' => ['activities.show'],
                         ],
                         [
                             'route' => 'projects',

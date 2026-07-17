@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\ActivityTranslation;
+use App\Models\ActivityGallery; // <-- AJOUTÉ
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        $activities = Activity::with('translations')
+        $activities = Activity::with(['translations', 'galleries'])
             ->orderBy('order')
             ->paginate(10);
         return view('admin.activities.index', compact('activities'));
@@ -30,7 +31,8 @@ class ActivityController extends Controller
         $request->validate([
             'category' => 'required|string|max:50',
             'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'gallery' => 'nullable|array|max:10',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'order' => 'nullable|integer|min:0',
             'is_published' => 'boolean',
             'title_fr' => 'required|string|max:255',
@@ -43,30 +45,34 @@ class ActivityController extends Controller
 
         DB::beginTransaction();
         try {
-            // Gestion de l'image Hero
+            // 1. Gestion de l'image Hero
             $heroPath = null;
             if ($request->hasFile('hero_image')) {
                 $heroPath = $request->file('hero_image')->store('activities/hero', 'public');
             }
 
-            // Gestion de la Galerie
-            $galleryPaths = [];
-            if ($request->hasFile('gallery')) {
-                foreach ($request->file('gallery') as $file) {
-                    $galleryPaths[] = $file->store('activities/gallery', 'public');
-                }
-            }
-
+            // 2. Création de l'activité (SANS la colonne gallery)
             $activity = Activity::create([
                 'slug' => Str::slug($request->title_fr),
                 'category' => $request->category,
                 'hero_image' => $heroPath,
-                'gallery' => $galleryPaths,
                 'order' => $request->order ?? 0,
                 'is_published' => $request->has('is_published'),
             ]);
 
-            // Sauvegarde des traductions
+            // 3. Gestion de la Galerie via la nouvelle table
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $index => $file) {
+                    $path = $file->store('activities/gallery', 'public');
+                    ActivityGallery::create([
+                        'activity_id' => $activity->id,
+                        'image_path' => $path,
+                        'order' => $index,
+                    ]);
+                }
+            }
+
+            // 4. Sauvegarde des traductions
             foreach (['fr', 'mg', 'en'] as $locale) {
                 if ($request->filled("title_{$locale}")) {
                     ActivityTranslation::create([
@@ -88,7 +94,7 @@ class ActivityController extends Controller
 
     public function edit(Activity $activity)
     {
-        $activity->load('translations');
+        $activity->load(['translations', 'galleries']);
         return view('admin.activities.edit', compact('activity'));
     }
 
@@ -97,7 +103,8 @@ class ActivityController extends Controller
         $request->validate([
             'category' => 'required|string|max:50',
             'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'gallery' => 'nullable|array|max:10',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'order' => 'nullable|integer|min:0',
             'is_published' => 'boolean',
             'title_fr' => 'required|string|max:255',
@@ -122,22 +129,20 @@ class ActivityController extends Controller
                 $updateData['hero_image'] = $request->file('hero_image')->store('activities/hero', 'public');
             }
 
-            // Mise à jour Galerie (on remplace tout pour simplifier, ou on ajoute)
-            if ($request->hasFile('gallery')) {
-                // Supprimer les anciennes images de galerie
-                if ($activity->gallery) {
-                    foreach ($activity->gallery as $oldImg) {
-                        Storage::disk('public')->delete($oldImg);
-                    }
-                }
-                $newGallery = [];
-                foreach ($request->file('gallery') as $file) {
-                    $newGallery[] = $file->store('activities/gallery', 'public');
-                }
-                $updateData['gallery'] = $newGallery;
-            }
-
             $activity->update($updateData);
+
+            // Ajout des nouvelles images de galerie (on les ajoute à la suite des existantes)
+            if ($request->hasFile('gallery')) {
+                $currentCount = $activity->galleries()->count();
+                foreach ($request->file('gallery') as $index => $file) {
+                    $path = $file->store('activities/gallery', 'public');
+                    ActivityGallery::create([
+                        'activity_id' => $activity->id,
+                        'image_path' => $path,
+                        'order' => $currentCount + $index,
+                    ]);
+                }
+            }
 
             // Mise à jour des traductions
             foreach (['fr', 'mg', 'en'] as $locale) {
@@ -167,13 +172,20 @@ class ActivityController extends Controller
 
     public function destroy(Activity $activity)
     {
-        // Supprimer les fichiers physiques
-        if ($activity->hero_image) Storage::disk('public')->delete($activity->hero_image);
-        if ($activity->gallery) {
-            foreach ($activity->gallery as $img) Storage::disk('public')->delete($img);
+        // Supprimer l'image Hero
+        if ($activity->hero_image) {
+            Storage::disk('public')->delete($activity->hero_image);
         }
 
+        // Supprimer les images de la galerie (fichiers physiques)
+        foreach ($activity->galleries as $gallery) {
+            Storage::disk('public')->delete($gallery->image_path);
+        }
+
+        // La suppression en BDD des lignes 'activity_galleries' se fait automatiquement 
+        // grâce au ->cascadeOnDelete() défini dans la migration.
         $activity->delete();
+
         return redirect()->route('admin.activities.index')->with('success', 'Activité supprimée !');
     }
 }

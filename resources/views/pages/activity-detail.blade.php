@@ -9,19 +9,16 @@
             {{-- HEADER --}}
             <div class="header mb-12 fade-up">
                 <nav class="breadcrumb text-sm text-gray-500 mb-4 flex items-center gap-2">
-                    <a href="{{ localized_route('home') }}" class="hover:text-blue-600 transition">@lang('activity.common_home')</a>
-                    <i class="fas fa-chevron-right text-xs"></i>
-                    <a href="{{ localized_route('activities') }}" class="hover:text-blue-600 transition">@lang('activity.title')</a>
-                    <i class="fas fa-chevron-right text-xs"></i>
-                    <span class="text-gray-800 font-medium truncate">{{ $activity->title }}</span>
+                    <a href="{{ localized_route('home') }}" class="head_cta"><i class="fas fa-home"></i></a>
+                    <a href="{{ localized_route('activities') }}" class="head_cta"><i class="fas fa-list"></i></a>
                 </nav>
-                <h1 class="activity-title-main">{{ $activity->title }}</h1>
                 <div class="title-decoration"></div>
             </div>
 
             {{-- GRID --}}
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 detail_card_section">
 
+                <h1 class="activity-title-main">{{ $activity->title }}</h1>
                 {{-- MEDIA (3/5) --}}
                 <div class="lg:col-span-3 fade-up delay-1">
                     <div class="media-card">
@@ -65,24 +62,6 @@
                             <p>{{ $activity->description }}</p>
                         </div>
 
-                        {{-- PRACTICAL INFO --}}
-                        <div class="practical-info">
-                            <div class="info-box category-box">
-                                <div class="info-icon category-icon">
-                                    <i class="fas fa-tag"></i>
-                                </div>
-                                <div class="info-content">
-                                    <small>@lang('activity.category')</small>
-                                    <strong>{{ $activity->category }}</strong>
-                                </div>
-                            </div>
-                            <div class="info-box status-box">
-                                <div class="info-icon status-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                            </div>
-                        </div>
-
                         {{-- CTA --}}
                         <div class="cta-buttons">
                             <a href="{{ localized_route('contact') }}" class="btn btn-primary">
@@ -102,8 +81,8 @@
 
     <style>
         /* ============================================
-                                                                                   ANIMATIONS & DÉCORATIONS CSS PUR
-                                                                                   ============================================ */
+                                                                                                                                                                                                               ANIMATIONS & DÉCORATIONS CSS PUR
+                                                                                                                                                                                                               ============================================ */
 
         /* Animations d'apparition */
         .fade-up {
@@ -127,6 +106,28 @@
             }
         }
 
+        .activity-page {
+            margin-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .head_cta {
+            color: #0DA3D8;
+            transition: color 0.3s ease;
+            font-size: 2rem;
+            margin-right: 5rem;
+            transition: 0.2s ease-in-out;
+        }
+
+        .head_cta:hover {
+            color: #FEE002;
+            scale: 1.05;
+        }
+
+        .detail_card_section {
+            margin-top: 4rem;
+        }
+
         /* Header & Titre */
         .activity-title-main {
             font-size: clamp(2rem, 5vw, 3.5rem);
@@ -135,6 +136,7 @@
             line-height: 1.2;
             margin-bottom: 1rem;
             position: relative;
+            text-transform: capitalize;
         }
 
         .title-decoration {
@@ -311,10 +313,11 @@
         }
 
         .info-description p {
-            color: #4b5563;
             line-height: 1.8;
-            font-size: 1rem;
             white-space: pre-line;
+            font-size: 1.09rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
 
         /* Practical Info Boxes */

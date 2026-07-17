@@ -52,6 +52,11 @@ class Activity extends Model
         return $translation ? $translation->$field : '';
     }
 
+    public function galleries()
+    {
+        return $this->hasMany(ActivityGallery::class)->orderBy('order');
+    }
+
     // Scopes pour filtrer facilement
     public function scopePublished($query)
     {
