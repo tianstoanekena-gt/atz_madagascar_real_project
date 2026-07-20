@@ -43,6 +43,13 @@ class ActivityController extends Controller
             'description_en' => 'nullable|string',
         ]);
 
+        // dd(
+        //     'Fichiers détectés ?',
+        //     $request->hasFile('gallery'),
+        //     'Détail des fichiers :',
+        //     $request->file('gallery')
+        // );
+
         DB::beginTransaction();
         try {
             // 1. Gestion de l'image Hero

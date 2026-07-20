@@ -4,7 +4,7 @@
     <section class="activities-section py-20 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">@lang('activity.sec_title')</h1>
+                <h1 class="sec_title">@lang('activity.sec_title')</h1>
                 <div class="w-24 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
                 <p class="text-gray-600 mt-6 max-w-2xl mx-auto text-lg">
                     @lang('activity.subtitle')
@@ -58,7 +58,7 @@
                     @else
                         <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-dashed border-gray-300">
                             <i class="fas fa-hands-helping text-6xl text-gray-300 mb-6"></i>
-                            <p class="text-gray-500 text-xl font-medium">@lang('activities.empty')</p>
+                            <p class="text-gray-500 text-xl font-medium">@lang('activity.empty')</p>
                         </div>
                     @endif
                 </div>
@@ -66,7 +66,15 @@
         </div>
     </section>
 
-    {{-- TON SCRIPT ORIGINAL EST CONSERVÉ INTACT POUR LE CARROUSEL --}}
+    <style>
+        .sec_title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 1rem;
+        }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const carouselWrapper = document.querySelector('.activities-parent');

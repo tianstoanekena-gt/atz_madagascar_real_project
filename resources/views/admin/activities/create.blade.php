@@ -23,7 +23,8 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.activities.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="activity-form" action="{{ route('admin.activities.store') }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -131,10 +132,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Hero Preview
+            // === 1. HERO PREVIEW ===
             const heroInput = document.getElementById('hero-input');
             const heroPreview = document.getElementById('hero-preview');
             const heroContainer = document.getElementById('hero-preview-container');
+
             heroInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file && file.type.startsWith('image/')) {
@@ -149,15 +151,16 @@
                 }
             });
 
-            // Gallery Logic
-            const galleryInput = document.getElementById('gallery-input');
+            // === 2. GALLERY LOGIC ===
             const dropzone = document.getElementById('gallery-dropzone');
+            const galleryInput = document.getElementById('gallery-input');
             const preview = document.getElementById('gallery-preview');
             const countLabel = document.getElementById('gallery-count');
             const MAX_FILES = 10;
             let files = [];
 
             dropzone.addEventListener('click', () => galleryInput.click());
+
             dropzone.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 dropzone.classList.add('border-blue-500', 'bg-blue-50');
@@ -173,7 +176,7 @@
 
             galleryInput.addEventListener('change', (e) => {
                 handleFiles(e.target.files);
-                galleryInput.value = '';
+                galleryInput.value = ''; // Reset pour permettre de rajouter
             });
 
             function handleFiles(newFiles) {
@@ -203,14 +206,15 @@
                         div.innerHTML = `
                         <img src="${e.target.result}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <button type="button" data-index="${index}" class="remove-btn bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition flex items-center justify-center"><i class="fas fa-times"></i></button>
+                            <button type="button" data-index="${index}" class="remove-btn bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition flex items-center justify-center">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                     `;
                         preview.appendChild(div);
                     };
                     reader.readAsDataURL(file);
                 });
-
                 countLabel.textContent = files.length;
 
                 preview.querySelectorAll('.remove-btn').forEach(btn => {
@@ -220,12 +224,58 @@
                         renderPreviews();
                     });
                 });
-
-                // Mise à jour native de l'input file (fonctionne sur tous les navigateurs modernes)
-                const dt = new DataTransfer();
-                files.forEach(f => dt.items.add(f));
-                galleryInput.files = dt.files;
             }
+
+            // === 3. SOUMISSION BULLETPROOF (FormData + Fetch) ===
+            const form = document.getElementById('activity-form');
+            form.addEventListener('submit', function(e) {
+                // Si on a des fichiers en mémoire, on utilise FormData pour garantir l'envoi
+                if (files.length > 0) {
+                    e.preventDefault(); // Empêche l'envoi natif qui est bloqué par le navigateur
+
+                    const formData = new FormData(form);
+                    formData.delete('gallery'); // Supprime l'input vide natif
+
+                    // On ajoute nos fichiers JS manuellement (100% fiable)
+                    files.forEach(file => {
+                        formData.append('gallery[]', file);
+                    });
+
+                    // Envoi via Fetch API
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                        .then(response => {
+                            if (response.redirected) {
+                                // Succès : Laravel a redirigé
+                                window.location.href = response.url;
+                            } else {
+                                // Erreur de validation : on affiche les erreurs
+                                return response.text().then(html => {
+                                    const parser = new DOMParser();
+                                    const doc = parser.parseFromString(html, 'text/html');
+                                    const errorBlock = doc.querySelector('.bg-red-100');
+                                    if (errorBlock) {
+                                        form.insertAdjacentElement('afterbegin', errorBlock);
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: 'smooth'
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Erreur:', err);
+                            alert('Une erreur est survenue lors de l\'upload.');
+                        });
+                }
+            });
         });
     </script>
 @endsection
