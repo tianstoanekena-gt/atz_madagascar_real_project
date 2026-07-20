@@ -78,7 +78,7 @@
                                     {{ Str::limit($activity->description, 100) }}</p>
 
                                 <div class="flex justify-between items-center text-xs text-gray-400 border-t pt-3">
-                                    <span><i class="fas fa-images mr-1"></i> {{ count($activity->gallery ?? []) }}
+                                    <span><i class="fas fa-images mr-1"></i> {{ $activity->galleries->count() }}
                                         photos</span>
                                     <span>Ordre: {{ $activity->order }}</span>
                                 </div>

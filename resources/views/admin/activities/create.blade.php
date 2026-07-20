@@ -23,6 +23,7 @@
                 </div>
             @endif
 
+            {{-- ✅ Formulaire natif classique - PLUS de fetch/AJAX --}}
             <form id="activity-form" action="{{ route('admin.activities.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
@@ -117,7 +118,7 @@
                         @endforeach
 
                         <div class="flex gap-3">
-                            <button type="submit"
+                            <button type="submit" id="submit-btn"
                                 class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2">
                                 <i class="fas fa-save"></i><span>Enregistrer l'activité</span>
                             </button>
@@ -132,7 +133,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // === 1. HERO PREVIEW ===
+            // 1. HERO PREVIEW (inchangé)
             const heroInput = document.getElementById('hero-input');
             const heroPreview = document.getElementById('hero-preview');
             const heroContainer = document.getElementById('hero-preview-container');
@@ -151,7 +152,7 @@
                 }
             });
 
-            // === 2. GALLERY LOGIC ===
+            // 2. GALLERY LOGIC
             const dropzone = document.getElementById('gallery-dropzone');
             const galleryInput = document.getElementById('gallery-input');
             const preview = document.getElementById('gallery-preview');
@@ -176,7 +177,6 @@
 
             galleryInput.addEventListener('change', (e) => {
                 handleFiles(e.target.files);
-                galleryInput.value = ''; // Reset pour permettre de rajouter
             });
 
             function handleFiles(newFiles) {
@@ -204,77 +204,50 @@
                         div.className =
                             'relative group aspect-square rounded-lg overflow-hidden border border-gray-200 shadow-sm';
                         div.innerHTML = `
-                        <img src="${e.target.result}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <button type="button" data-index="${index}" class="remove-btn bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition flex items-center justify-center">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    `;
+                    <img src="${e.target.result}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <button type="button" data-index="${index}" class="remove-btn bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition flex items-center justify-center">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
                         preview.appendChild(div);
+
+                        div.querySelector('.remove-btn').addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            files.splice(index, 1);
+                            renderPreviews();
+                        });
                     };
                     reader.readAsDataURL(file);
                 });
+
                 countLabel.textContent = files.length;
 
-                preview.querySelectorAll('.remove-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        files.splice(parseInt(btn.dataset.index), 1);
-                        renderPreviews();
-                    });
-                });
+                // ✅✅✅ LA CORRECTION CRUCIALE ✅✅✅
+                // Sans ces 3 lignes, les fichiers restent uniquement dans le
+                // tableau JS "files" et ne sont JAMAIS envoyés au serveur lors
+                // d'une soumission native du formulaire. C'est cette synchro
+                // qui manquait (elle existe déjà dans edit.blade.php).
+                const dt = new DataTransfer();
+                files.forEach(f => dt.items.add(f));
+                galleryInput.files = dt.files;
             }
 
-            // === 3. SOUMISSION BULLETPROOF (FormData + Fetch) ===
+            // ❌ SUPPRIMÉ : l'ancien bloc "3. SOUMISSION BULLETPROOF" en fetch().
+            // Il n'est plus nécessaire : maintenant que galleryInput.files est
+            // correctement synchronisé, un simple <form method="POST"> natif
+            // envoie TOUT (champs texte, hero_image, gallery[]) en un seul
+            // multipart/form-data classique, et Laravel affiche les vraies
+            // erreurs de validation via $errors->any() si besoin.
+
+            // Petit confort UX : désactiver le bouton pendant l'envoi pour éviter le double-clic
             const form = document.getElementById('activity-form');
-            form.addEventListener('submit', function(e) {
-                // Si on a des fichiers en mémoire, on utilise FormData pour garantir l'envoi
-                if (files.length > 0) {
-                    e.preventDefault(); // Empêche l'envoi natif qui est bloqué par le navigateur
-
-                    const formData = new FormData(form);
-                    formData.delete('gallery'); // Supprime l'input vide natif
-
-                    // On ajoute nos fichiers JS manuellement (100% fiable)
-                    files.forEach(file => {
-                        formData.append('gallery[]', file);
-                    });
-
-                    // Envoi via Fetch API
-                    fetch(form.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                                'X-Requested-With': 'XMLHttpRequest'
-                            }
-                        })
-                        .then(response => {
-                            if (response.redirected) {
-                                // Succès : Laravel a redirigé
-                                window.location.href = response.url;
-                            } else {
-                                // Erreur de validation : on affiche les erreurs
-                                return response.text().then(html => {
-                                    const parser = new DOMParser();
-                                    const doc = parser.parseFromString(html, 'text/html');
-                                    const errorBlock = doc.querySelector('.bg-red-100');
-                                    if (errorBlock) {
-                                        form.insertAdjacentElement('afterbegin', errorBlock);
-                                        window.scrollTo({
-                                            top: 0,
-                                            behavior: 'smooth'
-                                        });
-                                    }
-                                });
-                            }
-                        })
-                        .catch(err => {
-                            console.error('Erreur:', err);
-                            alert('Une erreur est survenue lors de l\'upload.');
-                        });
-                }
+            const submitBtn = document.getElementById('submit-btn');
+            form.addEventListener('submit', function() {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML =
+                    '<i class="fas fa-spinner fa-spin"></i><span>Enregistrement...</span>';
             });
         });
     </script>

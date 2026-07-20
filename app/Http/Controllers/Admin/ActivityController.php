@@ -43,22 +43,13 @@ class ActivityController extends Controller
             'description_en' => 'nullable|string',
         ]);
 
-        // dd(
-        //     'Fichiers détectés ?',
-        //     $request->hasFile('gallery'),
-        //     'Détail des fichiers :',
-        //     $request->file('gallery')
-        // );
-
         DB::beginTransaction();
         try {
-            // 1. Gestion de l'image Hero
             $heroPath = null;
             if ($request->hasFile('hero_image')) {
                 $heroPath = $request->file('hero_image')->store('activities/hero', 'public');
             }
 
-            // 2. Création de l'activité (SANS la colonne gallery)
             $activity = Activity::create([
                 'slug' => Str::slug($request->title_fr),
                 'category' => $request->category,
@@ -67,7 +58,7 @@ class ActivityController extends Controller
                 'is_published' => $request->has('is_published'),
             ]);
 
-            // 3. Gestion de la Galerie via la nouvelle table
+            // C'est ICI que la magie opère maintenant
             if ($request->hasFile('gallery')) {
                 foreach ($request->file('gallery') as $index => $file) {
                     $path = $file->store('activities/gallery', 'public');
@@ -79,7 +70,6 @@ class ActivityController extends Controller
                 }
             }
 
-            // 4. Sauvegarde des traductions
             foreach (['fr', 'mg', 'en'] as $locale) {
                 if ($request->filled("title_{$locale}")) {
                     ActivityTranslation::create([
@@ -179,19 +169,15 @@ class ActivityController extends Controller
 
     public function destroy(Activity $activity)
     {
-        // Supprimer l'image Hero
         if ($activity->hero_image) {
             Storage::disk('public')->delete($activity->hero_image);
         }
 
-        // Supprimer les images de la galerie (fichiers physiques)
         foreach ($activity->galleries as $gallery) {
             Storage::disk('public')->delete($gallery->image_path);
         }
 
-        // La suppression en BDD des lignes 'activity_galleries' se fait automatiquement 
-        // grâce au ->cascadeOnDelete() défini dans la migration.
-        $activity->delete();
+        $activity->forceDelete();
 
         return redirect()->route('admin.activities.index')->with('success', 'Activité supprimée !');
     }

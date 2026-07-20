@@ -18,38 +18,7 @@
             {{-- GRID --}}
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 detail_card_section">
 
-                <h1 class="activity-title-main">{{ $activity->title }}</h1>
-                {{-- MEDIA (3/5) --}}
-                <div class="lg:col-span-3 fade-up delay-1">
-                    <div class="media-card">
-                        @if ($activity->hero_image)
-                            <img src="{{ Storage::url($activity->hero_image) }}" alt="{{ $activity->title }}"
-                                class="hero-image">
-                        @else
-                            <div class="hero-placeholder">
-                                <i class="fas fa-image text-6xl text-gray-400"></i>
-                            </div>
-                        @endif
-                        <div class="media-overlay"></div>
-                    </div>
-
-                    @if (!empty($activity->gallery) && count($activity->gallery) > 0)
-                        <div class="gallery mt-8 fade-up delay-2">
-                            <h3 class="gallery-title">
-                                <i class="fas fa-images"></i> @lang('activity.gallery')
-                            </h3>
-                            <div class="gallery-grid grid grid-cols-2 md:grid-cols-3 gap-4">
-                                @foreach ($activity->gallery as $img)
-                                    <div class="gallery-item">
-                                        <img src="{{ Storage::url($img) }}" alt="Galerie" class="gallery-image">
-                                        <div class="gallery-overlay"></div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                </div>
-
+                <h1 class="activity-title-main col-span-1 lg:col-span-5">{{ $activity->title }}</h1>
                 {{-- INFO (2/5) --}}
                 <div class="lg:col-span-2 fade-up delay-2">
                     <div class="info-card">
@@ -75,14 +44,68 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- MEDIA (3/5) --}}
+                <div class="lg:col-span-3 fade-up delay-1">
+                    {{-- HERO IMAGE AVEC ZOOM --}}
+                    @if ($activity->hero_image)
+                        <div class="media-card cursor-zoom-in"
+                            onclick="openLightbox('{{ Storage::url($activity->hero_image) }}')">
+                            <img src="{{ Storage::url($activity->hero_image) }}" alt="{{ $activity->title }}"
+                                class="hero-image">
+                            <div class="media-overlay flex items-center justify-center">
+                                <i
+                                    class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                            </div>
+                        </div>
+                    @else
+                        <div class="media-card">
+                            <div class="hero-placeholder">
+                                <i class="fas fa-image text-6xl text-gray-400"></i>
+                            </div>
+                        </div>
+                    @endif
+                    <br>
+                    <br>
+
+                    {{-- GALERIE MINIMALISTE AVEC ZOOM --}}
+                    @if ($activity->galleries->isNotEmpty())
+                        <div class="gallery mt-10 fade-up delay-2">
+                            <h3 class="gallery-title">
+                                <i class="fas fa-images"></i> @lang('activity.gallery')
+                            </h3>
+                            <div class="gallery-grid grid grid-cols-2 md:grid-cols-3 gap-3">
+                                @foreach ($activity->galleries as $galleryItem)
+                                    <div class="gallery-item cursor-zoom-in"
+                                        onclick="openLightbox('{{ Storage::url($galleryItem->image_path) }}')">
+                                        <img src="{{ Storage::url($galleryItem->image_path) }}" alt="Galerie"
+                                            class="gallery-image">
+                                        <div class="gallery-overlay flex items-center justify-center">
+                                            <i
+                                                class="fas fa-search-plus text-white text-2xl opacity-0 transition-opacity duration-300"></i>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
             </div>
         </div>
+
+        {{-- LIGHTBOX (GRAND PLAN) --}}
+        <div id="image-lightbox" class="lightbox" onclick="closeLightbox(event)">
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-content" id="lightbox-img">
+        </div>
+
     </section>
 
     <style>
         /* ============================================
-                                                                                                                                                                                                               ANIMATIONS & DÉCORATIONS CSS PUR
-                                                                                                                                                                                                               ============================================ */
+                                                                   ANIMATIONS & DÉCORATIONS CSS PUR
+                                                                   ============================================ */
 
         /* Animations d'apparition */
         .fade-up {
@@ -113,15 +136,14 @@
 
         .head_cta {
             color: #0DA3D8;
-            transition: color 0.3s ease;
+            transition: all 0.2s ease-in-out;
             font-size: 2rem;
             margin-right: 5rem;
-            transition: 0.2s ease-in-out;
         }
 
         .head_cta:hover {
             color: #FEE002;
-            scale: 1.05;
+            transform: scale(1.05);
         }
 
         .detail_card_section {
@@ -196,11 +218,8 @@
 
         .media-overlay {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -209,12 +228,12 @@
             opacity: 1;
         }
 
-        /* Gallery */
+        /* Gallery Minimaliste */
         .gallery-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: #1a202c;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -222,22 +241,21 @@
 
         .gallery-title i {
             color: #0DA3D8;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
 
         .gallery-item {
             aspect-ratio: 1;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             position: relative;
-            cursor: pointer;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .gallery-item:hover {
-            transform: scale(1.08);
-            box-shadow: 0 12px 30px rgba(13, 163, 216, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(13, 163, 216, 0.15);
         }
 
         .gallery-image {
@@ -248,15 +266,15 @@
         }
 
         .gallery-item:hover .gallery-image {
-            transform: scale(1.15);
+            transform: scale(1.1);
         }
 
         .gallery-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(13, 163, 216, 0.3), rgba(254, 224, 2, 0.2));
+            background: rgba(13, 163, 216, 0.4);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
 
         .gallery-item:hover .gallery-overlay {
@@ -279,7 +297,7 @@
         }
 
         .info-title {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #1a202c;
             margin-bottom: 1.5rem;
@@ -315,80 +333,9 @@
         .info-description p {
             line-height: 1.8;
             white-space: pre-line;
-            font-size: 1.09rem;
+            font-size: 1.05rem;
             font-weight: 500;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Practical Info Boxes */
-        .practical-info {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .info-box {
-            padding: 1.25rem;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .info-box:hover {
-            transform: translateX(5px);
-        }
-
-        .category-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-        }
-
-        .status-box {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-        }
-
-        .info-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .info-box:hover .info-icon {
-            transform: rotate(360deg);
-        }
-
-        .category-icon {
-            background: linear-gradient(135deg, #3b82f6, #0DA3D8);
-            color: white;
-        }
-
-        .status-icon {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-        }
-
-        .info-icon i {
-            font-size: 1.25rem;
-        }
-
-        .info-content small {
-            display: block;
-            font-size: 0.75rem;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-        }
-
-        .info-content strong {
-            color: #1a202c;
-            font-size: 1rem;
+            color: #4b5563;
         }
 
         /* CTA Buttons */
@@ -464,108 +411,59 @@
             transform: scale(1.2);
         }
 
-        /* Related Activities */
-        .related-activities {
-            margin-top: 5rem;
-            padding-top: 4rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .related-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1a202c;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .related-title::after {
-            content: '';
-            position: absolute;
-            bottom: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #0DA3D8, #FEE002);
-            border-radius: 2px;
-        }
-
-        .related-card {
-            display: block;
-            text-decoration: none;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid #f3f4f6;
-        }
-
-        .related-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(13, 163, 216, 0.15);
-        }
-
-        .related-image-wrapper {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .related-image {
+        /* ============================================
+                                                                   LIGHTBOX (GRAND PLAN)
+                                                                   ============================================ */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .related-card:hover .related-image {
-            transform: scale(1.1);
-        }
-
-        .related-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .related-placeholder i {
-            font-size: 3rem;
-            color: #9ca3af;
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
         }
 
-        .related-content {
-            padding: 1.5rem;
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            object-fit: contain;
         }
 
-        .related-category {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            color: #92400e;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-radius: 20px;
-            margin-bottom: 0.75rem;
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
         }
 
-        .related-card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1a202c;
-            line-height: 1.4;
-            transition: color 0.3s ease;
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
         }
 
-        .related-card:hover .related-card-title {
+        .lightbox-close:hover {
             color: #0DA3D8;
+            transform: rotate(90deg);
         }
 
         /* Responsive adjustments */
@@ -588,6 +486,41 @@
             .btn {
                 width: 100%;
             }
+
+            .gallery-grid {
+                gap: 2 !important;
+            }
         }
     </style>
+
+    <script>
+        // Logique Lightbox (Grand Plan)
+        function openLightbox(src) {
+            const lightbox = document.getElementById('image-lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Empêche le scroll arrière-plan
+        }
+
+        function closeLightbox(event) {
+            // Ferme si on clique sur le fond ou la croix, mais pas sur l'image elle-même
+            if (event.target.id === 'image-lightbox' || event.target.classList.contains('lightbox-close')) {
+                const lightbox = document.getElementById('image-lightbox');
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Réactive le scroll
+            }
+        }
+
+        // Fermeture avec la touche Echap
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const lightbox = document.getElementById('image-lightbox');
+                if (lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+    </script>
 @endsection

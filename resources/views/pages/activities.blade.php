@@ -18,7 +18,7 @@
                             <a href="{{ route('activities.show', ['locale' => app()->getLocale(), 'slug' => $activity->slug]) }}"
                                 class="activity-link block">
                                 <div
-                                    class="activity-card bg-white rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-gray-100">
+                                    class="activity-card rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border">
                                     <div class="activity-image-wrapper relative h-64 overflow-hidden">
                                         @if ($activity->hero_image)
                                             <img src="{{ Storage::url($activity->hero_image) }}"
@@ -32,21 +32,18 @@
                                         <div
                                             class="activity-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
                                         </div>
-                                        <span
-                                            class="activity-badge absolute top-4 left-4 px-4 py-1.5 bg-yellow-400 text-gray-900 text-xs font-bold uppercase tracking-wider rounded-full shadow-md">
+                                        <span class="text-red-500 font-bold">
                                             {{ $activity->category }}
                                         </span>
                                     </div>
                                     <div class="activity-content p-6 md:p-8">
-                                        <h2
-                                            class="activity-title text-xl md:text-2xl font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                                            {{ $activity->title }}
+                                        <h2 class="activity-title">
+                                            "{{ $activity->title }}"
                                         </h2>
-                                        <p
-                                            class="activity-description text-gray-600 text-sm md:text-base line-clamp-3 mb-6 leading-relaxed">
+                                        <p class="activity-description">
                                             {{ Str::limit(strip_tags($activity->description), 150) }}
                                         </p>
-                                        <div class="flex items-center text-blue-600 font-semibold text-sm group">
+                                        <div class="read_more">
                                             <span>@lang('activity.read_more')</span>
                                             <i
                                                 class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-2"></i>

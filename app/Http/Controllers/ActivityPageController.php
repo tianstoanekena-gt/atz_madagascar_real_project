@@ -20,10 +20,9 @@ class ActivityPageController extends Controller
     {
         $activity = Activity::where('slug', $slug)
             ->published()
-            ->with('translations')
+            ->with(['translations', 'galleries'])
             ->firstOrFail();
 
-        // Optionnel : Charger les activités connexes (même catégorie)
         $relatedActivities = Activity::published()
             ->byCategory($activity->category)
             ->where('id', '!=', $activity->id)
