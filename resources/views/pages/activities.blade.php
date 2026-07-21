@@ -19,7 +19,7 @@
                                 class="activity-link block">
                                 <div
                                     class="activity-card rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border">
-                                    <div class="activity-image-wrapper relative h-64 overflow-hidden">
+                                    <div class="activity-image-wrapper">
                                         @if ($activity->hero_image)
                                             <img src="{{ Storage::url($activity->hero_image) }}"
                                                 alt="{{ $activity->title }}"
