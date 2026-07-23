@@ -12,53 +12,57 @@
             </div>
 
             <div class="activities-carousel-wrapper relative">
-                <div class="activities-parent">
-                    @if ($activities->isNotEmpty())
+
+                @if ($activities->isNotEmpty())
+                    <button type="button" class="carousel-arrow carousel-arrow--prev" id="carouselPrev"
+                        aria-label="Précédent">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button type="button" class="carousel-arrow carousel-arrow--next" id="carouselNext"
+                        aria-label="Suivant">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <div class="activities-parent">
                         @foreach ($activities as $activity)
                             <a href="{{ route('activities.show', ['locale' => app()->getLocale(), 'slug' => $activity->slug]) }}"
-                                class="activity-link block">
+                                class="activity-link block {{ $loop->first ? 'active' : '' }}">
                                 <div
-                                    class="activity-card rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border">
-                                    <div class="activity-image-wrapper">
+                                    class="activity-card rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl border">
+                                    <div class="activity-image-wrapper relative h-64 overflow-hidden">
                                         @if ($activity->hero_image)
                                             <img src="{{ Storage::url($activity->hero_image) }}"
                                                 alt="{{ $activity->title }}"
-                                                class="activity-image w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                                                class="activity-image w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                                 <i class="fas fa-image text-5xl text-gray-400"></i>
                                             </div>
                                         @endif
-                                        <div
-                                            class="activity-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-                                        </div>
-                                        <span class="text-red-500 font-bold">
-                                            {{ $activity->category }}
-                                        </span>
+                                        <div class="activity-overlay absolute inset-0"></div>
+                                        <span class="activity-badge">{{ $activity->category }}</span>
                                     </div>
                                     <div class="activity-content p-6 md:p-8">
-                                        <h2 class="activity-title">
-                                            "{{ $activity->title }}"
-                                        </h2>
+                                        <h2 class="activity-title">{{ $activity->title }}</h2>
                                         <p class="activity-description">
                                             {{ Str::limit(strip_tags($activity->description), 150) }}
                                         </p>
                                         <div class="read_more">
                                             <span>@lang('activity.read_more')</span>
-                                            <i
-                                                class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-2"></i>
+                                            <i class="fas fa-arrow-right ml-2"></i>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         @endforeach
-                    @else
-                        <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-dashed border-gray-300">
-                            <i class="fas fa-hands-helping text-6xl text-gray-300 mb-6"></i>
-                            <p class="text-gray-500 text-xl font-medium">@lang('activity.empty')</p>
-                        </div>
-                    @endif
-                </div>
+                    </div>
+                @else
+                    <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-dashed border-gray-300">
+                        <i class="fas fa-hands-helping text-6xl text-gray-300 mb-6"></i>
+                        <p class="text-gray-500 text-xl font-medium">@lang('activity.empty')</p>
+                    </div>
+                @endif
+
             </div>
         </div>
     </section>
@@ -74,10 +78,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const carouselWrapper = document.querySelector('.activities-parent');
-            const activityCards = document.querySelectorAll('.activity-card');
+            const carouselWrapper = document.querySelector('.activities-carousel-wrapper');
+            const activityLinks = document.querySelectorAll('.activity-link');
 
-            if (!carouselWrapper || !activityCards || activityCards.length === 0) {
+            if (!carouselWrapper || !activityLinks || activityLinks.length === 0) {
                 console.warn('⚠️ Carrousel non initialisé (aucune carte trouvée)');
                 return;
             }
@@ -90,14 +94,14 @@
             function createIndicators() {
                 const indicatorsContainer = document.createElement('div');
                 indicatorsContainer.classList.add('activity-indicators');
-                activityCards.forEach((card, index) => {
+                activityLinks.forEach((card, index) => {
                     const indicator = document.createElement('div');
                     indicator.classList.add('activity-indicator');
                     if (index === 0) indicator.classList.add('active');
                     indicator.addEventListener('click', () => goToSlide(index));
                     indicatorsContainer.appendChild(indicator);
                 });
-                carouselWrapper.appendChild(indicatorsContainer);
+                document.querySelector('.activities-parent').appendChild(indicatorsContainer);
             }
 
             function updateIndicators() {
@@ -108,32 +112,29 @@
             }
 
             function showSlide(index) {
-                activityCards.forEach(card => card.classList.remove('active', 'prev'));
-                activityCards[index].classList.add('active');
+                activityLinks.forEach(link => link.classList.remove('active', 'prev'));
+                activityLinks[index].classList.add('active');
                 updateIndicators();
             }
 
             function nextSlide() {
-                activityCards[currentIndex].classList.add('prev');
-                currentIndex = (currentIndex + 1) % activityCards.length;
+                activityLinks[currentIndex].classList.add('prev');
+                currentIndex = (currentIndex + 1) % activityLinks.length;
                 showSlide(currentIndex);
             }
 
             function prevSlide() {
-                activityCards[currentIndex].classList.add('prev');
-                currentIndex = (currentIndex - 1 + activityCards.length) % activityCards.length;
+                activityLinks[currentIndex].classList.add('prev');
+                currentIndex = (currentIndex - 1 + activityLinks.length) % activityLinks.length;
                 showSlide(currentIndex);
             }
 
             function goToSlide(index) {
                 if (index === currentIndex) return;
-                activityCards[currentIndex].classList.add('prev');
+                activityLinks[currentIndex].classList.add('prev');
                 currentIndex = index;
                 showSlide(currentIndex);
-                if (!isPaused) {
-                    stopAutoplay();
-                    startAutoplay();
-                }
+                restartAutoplay();
             }
 
             function startAutoplay() {
@@ -150,6 +151,13 @@
                 }
             }
 
+            function restartAutoplay() {
+                if (!isPaused) {
+                    stopAutoplay();
+                    startAutoplay();
+                }
+            }
+
             function setupHoverListeners() {
                 carouselWrapper.addEventListener('mouseenter', () => {
                     isPaused = true;
@@ -162,19 +170,33 @@
             }
 
             function setupTouchGestures() {
-                let touchStartY = 0;
+                let touchStartX = 0;
                 carouselWrapper.addEventListener('touchstart', (e) => {
-                    touchStartY = e.changedTouches[0].screenY;
+                    touchStartX = e.changedTouches[0].screenX;
                 }, {
                     passive: true
                 });
                 carouselWrapper.addEventListener('touchend', (e) => {
-                    const swipeDistance = touchStartY - e.changedTouches[0].screenY;
+                    const swipeDistance = touchStartX - e.changedTouches[0].screenX;
                     if (Math.abs(swipeDistance) > 50) {
                         swipeDistance > 0 ? nextSlide() : prevSlide();
+                        restartAutoplay();
                     }
                 }, {
                     passive: true
+                });
+            }
+
+            function setupArrows() {
+                const prevBtn = document.getElementById('carouselPrev');
+                const nextBtn = document.getElementById('carouselNext');
+                if (prevBtn) prevBtn.addEventListener('click', () => {
+                    prevSlide();
+                    restartAutoplay();
+                });
+                if (nextBtn) nextBtn.addEventListener('click', () => {
+                    nextSlide();
+                    restartAutoplay();
                 });
             }
 
@@ -183,7 +205,8 @@
                 showSlide(currentIndex);
                 setupHoverListeners();
                 setupTouchGestures();
-                setTimeout(startAutoplay, SLIDE_DURATION);
+                setupArrows();
+                startAutoplay();
             }
 
             init();
