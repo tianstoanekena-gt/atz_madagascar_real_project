@@ -33,10 +33,6 @@
 
                         {{-- CTA --}}
                         <div class="cta-buttons">
-                            <a href="{{ localized_route('contact') }}" class="btn btn-primary">
-                                <i class="fas fa-heart"></i>
-                                <span>@lang('activity.support')</span>
-                            </a>
                             <a href="{{ localized_route('activities') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i>
                                 <span>@lang('activity.back')</span>
@@ -104,8 +100,8 @@
 
     <style>
         /* ============================================
-                                                                   ANIMATIONS & DÉCORATIONS CSS PUR
-                                                                   ============================================ */
+                                                                                                                               ANIMATIONS & DÉCORATIONS CSS PUR
+                                                                                                                               ============================================ */
 
         /* Animations d'apparition */
         .fade-up {
@@ -412,8 +408,8 @@
         }
 
         /* ============================================
-                                                                   LIGHTBOX (GRAND PLAN)
-                                                                   ============================================ */
+                                                                                                                               LIGHTBOX (GRAND PLAN)
+                                                                                                                               ============================================ */
         .lightbox {
             display: none;
             position: fixed;
