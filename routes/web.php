@@ -54,8 +54,9 @@ Route::prefix('{locale}')
         Route::get('/activities', [App\Http\Controllers\ActivityPageController::class, 'index'])->name('activities');
         Route::get('/activities/{slug}', [App\Http\Controllers\ActivityPageController::class, 'show'])->name('activities.show');
         //projects
-        Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
-        Route::get('/project/details', [ProjectDetailController::class, 'index'])->name('project.details');
+        // Projets (Frontend)
+        Route::get('/projects', [\App\Http\Controllers\ProjectPageController::class, 'index'])->name('projects');
+        Route::get('/projects/{slug}', [\App\Http\Controllers\ProjectPageController::class, 'show'])->name('projects.show');
         //contact
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
         //staff in about page
@@ -195,6 +196,12 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/activities', \App\Http\Controllers\Admin\ActivityController::class)
             ->except(['show'])
             ->names('admin.activities');
+
+
+        // Gestion des Projets (Admin)
+        Route::resource('dashboard/projects', \App\Http\Controllers\Admin\ProjectController::class)
+            ->except(['show'])
+            ->names('admin.projects');
     });
 
 

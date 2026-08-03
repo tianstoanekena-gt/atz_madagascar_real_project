@@ -14,35 +14,71 @@
             </div>
 
             {{-- Grille de projets --}}
+            {{-- Grille de projets dynamique --}}
             <div class="projects-grid">
-                {{-- Projet 1 - Réalisé --}}
-                <a href="{{ localized_route('project.details') }}">
-                    <div class="project-card" data-status="completed">
-                        <div class="project-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500&h=300&fit=crop"
-                                alt="Projet Éducation" class="project-image">
-                            <span class="project-badge badge-completed">Réalisé</span>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Programme de Parrainage Scolaire 2025/2026</h3>
-                            <p class="project-description">
-                                18 enfants parrainés pour l'année scolaire, avec fournitures et frais de scolarité pris en
-                                charge.
-                            </p>
-                            <div class="project-date">
-                                <svg fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                Jan 2025 - Déc 2026
+                @forelse ($projects as $project)
+                    <a href="{{ localized_route('projects.show', ['slug' => $project->slug]) }}">
+                        <div class="project-card" data-status="{{ $project->status }}">
+                            <div class="project-image-wrapper">
+                                @if ($project->hero_image)
+                                    <img src="{{ Storage::url($project->hero_image) }}" alt="{{ $project->title }}"
+                                        class="project-image">
+                                @else
+                                    <div class="project-image"
+                                        style="background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-image text-4xl text-gray-400"></i>
+                                    </div>
+                                @endif
+
+                                {{-- Badge dynamique selon le statut --}}
+                                <span class="project-badge badge-{{ $project->status }}">
+                                    @if ($project->status === 'completed')
+                                        Réalisé
+                                    @elseif ($project->status === 'ongoing')
+                                        En cours
+                                    @else
+                                        À venir
+                                    @endif
+                                </span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill progress-completed" style="width: 100%"></div>
+
+                            <div class="project-content">
+                                <h3 class="project-title">{{ $project->title }}</h3>
+                                <p class="project-description">
+                                    {{ Str::limit($project->short_description, 100) }}
+                                </p>
+
+                                <div class="project-date">
+                                    <svg fill="currentColor" viewBox="0 0 20 20" class="w-4 h-4 mr-2">
+                                        <path fill-rule="evenodd"
+                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    @if ($project->start_date && $project->end_date)
+                                        {{ $project->start_date->format('M Y') }} - {{ $project->end_date->format('M Y') }}
+                                    @elseif ($project->start_date)
+                                        Depuis {{ $project->start_date->format('M Y') }}
+                                    @else
+                                        Date à définir
+                                    @endif
+                                </div>
+
+                                {{-- Barre de progression (si un objectif financier est défini) --}}
+                                @if ($project->target_amount > 0)
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-{{ $project->status }}"
+                                            style="width: {{ $project->progress_percentage }}%"></div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                    </a>
+                @empty
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i class="fas fa-folder-open text-4xl mb-3"></i>
+                        <p>@lang('project.fallback')</p>
                     </div>
-                </a>
+                @endforelse
             </div>
         </div>
     </section>

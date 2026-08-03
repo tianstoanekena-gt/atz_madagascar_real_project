@@ -90,7 +90,7 @@
 
             <!-- Projets -->
             <li class="nav-item {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.projects.index') }}" class="nav-link">
                     <i class="fas fa-project-diagram nav-icon"></i>
                     <span class="nav-text">Projets</span>
                 </a>
@@ -98,7 +98,7 @@
 
             <!-- Parrainages -->
             <li class="nav-item {{ request()->routeIs('admin.sponsorships.*') ? 'active' : '' }}">
-                <a href="#" class="nav-link">
+                <a href="" class="nav-link">
                     <i class="fas fa-user-friends nav-icon"></i>
                     <span class="nav-text">Parrainages</span>
                 </a>

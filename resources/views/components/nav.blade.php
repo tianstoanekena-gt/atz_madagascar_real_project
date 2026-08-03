@@ -41,7 +41,7 @@
                         [
                             'route' => 'projects',
                             'label' => 'navigation.projects',
-                            'children' => ['project.details'],
+                            'children' => ['projects.show'],
                         ],
                         [
                             'route' => 'contact',
