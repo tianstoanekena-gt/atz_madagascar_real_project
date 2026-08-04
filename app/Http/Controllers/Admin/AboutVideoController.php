@@ -53,7 +53,11 @@ class AboutVideoController extends Controller
     {
         $request->validate([
             'lang' => 'required|in:mg,fr,en|unique:about_videos,lang,' . $aboutVideo->id,
-            'video_url' => 'required|url|regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/',
+            'video_url' => [
+                'required',
+                'url',
+                'regex:#^(https?\://)?(www\.youtube\.com|youtu\.?be)/.+$#'
+            ],
         ], [
             'lang.required' => 'La langue est obligatoire.',
             'lang.in' => 'La langue doit être mg, fr ou en.',
