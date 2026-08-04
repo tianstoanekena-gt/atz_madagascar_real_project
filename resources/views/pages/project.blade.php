@@ -34,11 +34,11 @@
                                 {{-- Badge dynamique selon le statut --}}
                                 <span class="project-badge badge-{{ $project->status }}">
                                     @if ($project->status === 'completed')
-                                        Réalisé
+                                        @lang('project.status_completed')
                                     @elseif ($project->status === 'ongoing')
-                                        En cours
+                                        @lang('project.status_ongoing')
                                     @else
-                                        À venir
+                                        @lang('project.status_upcoming')
                                     @endif
                                 </span>
                             </div>
