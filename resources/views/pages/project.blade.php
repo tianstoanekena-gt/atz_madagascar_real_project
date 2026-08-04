@@ -13,11 +13,10 @@
                 <div class="title-underline"></div>
             </div>
 
-            {{-- Grille de projets --}}
             {{-- Grille de projets dynamique --}}
             <div class="projects-grid">
                 @forelse ($projects as $project)
-                    <a href="{{ localized_route('projects.show', ['slug' => $project->slug]) }}">
+                    <a href="{{ localized_route('projects.show', ['slug' => $project->slug]) }}" class="project-link">
                         <div class="project-card" data-status="{{ $project->status }}">
                             <div class="project-image-wrapper">
                                 @if ($project->hero_image)
@@ -29,6 +28,8 @@
                                         <i class="fas fa-image text-4xl text-gray-400"></i>
                                     </div>
                                 @endif
+
+                                <div class="project-image-scrim"></div>
 
                                 {{-- Badge dynamique selon le statut --}}
                                 <span class="project-badge badge-{{ $project->status }}">
@@ -70,6 +71,11 @@
                                             style="width: {{ $project->progress_percentage }}%"></div>
                                     </div>
                                 @endif
+
+                                <span class="project-cta">
+                                    <span></span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
                             </div>
                         </div>
                     </a>
