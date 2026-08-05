@@ -24,7 +24,6 @@
 .activities-carousel-wrapper {
     position: relative;
     padding: 60px 0;
-    background: linear-gradient(135deg, #ffffff 0%, var(--color-background) 100%);
 }
 
 .activities-parent {

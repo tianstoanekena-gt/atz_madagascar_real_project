@@ -4,81 +4,67 @@
 
 @section('content')
     <section class="activity-page">
-        <div class="container mx-auto px-4 max-w-6xl">
 
-            {{-- HEADER --}}
-            <div class="header mb-12 fade-up">
-                <nav class="breadcrumb text-sm text-gray-500 mb-4 flex items-center gap-2">
-                    <a href="{{ localized_route('home') }}" class="head_cta"><i class="fas fa-home"></i></a>
-                    <a href="{{ localized_route('activities') }}" class="head_cta"><i class="fas fa-list"></i></a>
-                </nav>
-                <div class="title-decoration"></div>
-            </div>
-
-            {{-- GRID --}}
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 detail_card_section">
-
-                <h1 class="activity-title-main col-span-1 lg:col-span-5">{{ $activity->title }}</h1>
-                {{-- INFO (2/5) --}}
-                <div class="lg:col-span-2 fade-up delay-2">
-                    <div class="info-card">
-                        <h2 class="info-title">
-                            @lang('activity.about')
-                            <span class="title-underline"></span>
-                        </h2>
-
-                        <div class="info-description">
-                            <p>{{ $activity->description }}</p>
-                        </div>
-
-                        {{-- CTA --}}
-                        <div class="cta-buttons">
-                            <a href="{{ localized_route('activities') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i>
-                                <span>@lang('activity.back')</span>
-                            </a>
-                        </div>
-                    </div>
+        {{-- HERO PLEINE LARGEUR --}}
+        <div class="activity-hero">
+            @if ($activity->hero_image)
+                <img src="{{ Storage::url($activity->hero_image) }}" alt="{{ $activity->title }}" class="activity-hero-img">
+            @else
+                <div class="activity-hero-placeholder">
+                    <i class="fas fa-image"></i>
                 </div>
+            @endif
 
-                {{-- MEDIA (3/5) --}}
-                <div class="lg:col-span-3 fade-up delay-1">
-                    {{-- HERO IMAGE AVEC ZOOM --}}
-                    @if ($activity->hero_image)
-                        <div class="media-card cursor-zoom-in"
-                            onclick="openLightbox('{{ Storage::url($activity->hero_image) }}')">
-                            <img src="{{ Storage::url($activity->hero_image) }}" alt="{{ $activity->title }}"
-                                class="hero-image">
-                            <div class="media-overlay flex items-center justify-center">
-                                <i
-                                    class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
-                            </div>
-                        </div>
-                    @else
-                        <div class="media-card">
-                            <div class="hero-placeholder">
-                                <i class="fas fa-image text-6xl text-gray-400"></i>
-                            </div>
-                        </div>
-                    @endif
-                    <br>
-                    <br>
+            <div class="activity-hero-overlay"></div>
 
-                    {{-- GALERIE MINIMALISTE AVEC ZOOM --}}
+            <div class="activity-hero-content">
+                <nav class="activity-breadcrumb">
+                    <a href="{{ localized_route('home') }}" class="activity-breadcrumb-link">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <span class="activity-breadcrumb-sep">/</span>
+                    <a href="{{ localized_route('activities') }}" class="activity-breadcrumb-link">
+                        @lang('activity.back')
+                    </a>
+                    <span class="activity-breadcrumb-sep">/</span>
+                    <span class="activity-breadcrumb-current">{{ $activity->title }}</span>
+                </nav>
+
+                <h1 class="activity-hero-title">{{ $activity->title }}</h1>
+            </div>
+        </div>
+
+        {{-- CORPS --}}
+        <div class="activity-body">
+            <div class="activity-layout">
+
+                {{-- CONTENU PRINCIPAL --}}
+                <div class="activity-main">
+                    <div class="activity-section-label">
+                        <span class="activity-label-dot"></span>
+                        @lang('activity.about')
+                    </div>
+
+                    <div class="activity-text">
+                        <p>{{ $activity->description }}</p>
+                    </div>
+
+                    {{-- GALERIE --}}
                     @if ($activity->galleries->isNotEmpty())
-                        <div class="gallery mt-10 fade-up delay-2">
-                            <h3 class="gallery-title">
-                                <i class="fas fa-images"></i> @lang('activity.gallery')
-                            </h3>
-                            <div class="gallery-grid grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div class="activity-gallery-block">
+                            <div class="activity-section-label">
+                                <span class="activity-label-dot"></span>
+                                @lang('activity.gallery')
+                            </div>
+
+                            <div class="activity-gallery-grid">
                                 @foreach ($activity->galleries as $galleryItem)
-                                    <div class="gallery-item cursor-zoom-in"
-                                        onclick="openLightbox('{{ Storage::url($galleryItem->image_path) }}')">
+                                    <div class="activity-gallery-item"
+                                        onclick="activityOpenLightbox('{{ Storage::url($galleryItem->image_path) }}')">
                                         <img src="{{ Storage::url($galleryItem->image_path) }}" alt="Galerie"
-                                            class="gallery-image">
-                                        <div class="gallery-overlay flex items-center justify-center">
-                                            <i
-                                                class="fas fa-search-plus text-white text-2xl opacity-0 transition-opacity duration-300"></i>
+                                            class="activity-gallery-img" loading="lazy">
+                                        <div class="activity-gallery-zoom">
+                                            <i class="fas fa-search-plus"></i>
                                         </div>
                                     </div>
                                 @endforeach
@@ -86,436 +72,433 @@
                         </div>
                     @endif
                 </div>
-
             </div>
         </div>
 
-        {{-- LIGHTBOX (GRAND PLAN) --}}
-        <div id="image-lightbox" class="lightbox" onclick="closeLightbox(event)">
-            <span class="lightbox-close">&times;</span>
-            <img class="lightbox-content" id="lightbox-img">
+        {{-- LIGHTBOX --}}
+        <div id="activity-lightbox" class="activity-lightbox" onclick="activityCloseLightbox(event)">
+            <button type="button" class="activity-lightbox-close" onclick="activityCloseLightbox(event)">
+                <i class="fas fa-times"></i>
+            </button>
+            <img class="activity-lightbox-img" id="activity-lightbox-img" alt="Aperçu">
         </div>
 
     </section>
 
     <style>
-        /* ============================================
-                                                                                                                               ANIMATIONS & DÉCORATIONS CSS PUR
-                                                                                                                               ============================================ */
+        :root {
+            --color-primary: #feed02;
+            --color-secondary: #c7ba04;
+            --color-text: #0d0c43;
+            --color-background: #fffef2;
+            --color-accent: #6f4413;
+            --color-blue: #0da3d8;
+            --color-green: #6e9d2e;
+            --color-red: rgb(200, 0, 0);
+        }
 
-        /* Animations d'apparition */
-        .fade-up {
+        .activity-page {
+            background: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--color-text);
+        }
+
+        /* ===== HERO ===== */
+        .activity-hero {
+            position: relative;
+            width: 100%;
+            height: 62vh;
+            min-height: 380px;
+            max-height: 620px;
+            overflow: hidden;
+            background: var(--color-text);
+        }
+
+        .activity-hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            animation: activityHeroZoom 12s ease-out forwards;
+        }
+
+        @keyframes activityHeroZoom {
+            from {
+                transform: scale(1.12);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .activity-hero-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .activity-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(13, 12, 67, 0.92) 0%, rgba(13, 12, 67, 0.35) 45%, rgba(13, 12, 67, 0.05) 75%);
+        }
+
+        .activity-hero-content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0 24px 44px;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .activity-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
             opacity: 0;
-            transform: translateY(40px);
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: activityFadeIn 0.7s ease forwards 0.2s;
         }
 
-        .delay-1 {
-            animation-delay: 0.15s;
+        .activity-breadcrumb-link {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color 0.25s ease;
         }
 
-        .delay-2 {
-            animation-delay: 0.3s;
+        .activity-breadcrumb-link:hover {
+            color: var(--color-primary);
         }
 
-        @keyframes fadeUp {
+        .activity-breadcrumb-sep {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .activity-breadcrumb-current {
+            color: var(--color-primary);
+            font-size: 13px;
+            font-weight: 700;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .activity-hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.15;
+            max-width: 780px;
+            opacity: 0;
+            transform: translateY(18px);
+            animation: activityFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.35s;
+        }
+
+        @keyframes activityFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes activityFadeUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .activity-page {
-            margin-top: 4rem;
-            padding-bottom: 4rem;
+        /* ===== BODY ===== */
+        .activity-body {
+            padding: 56px 24px 90px;
         }
 
-        .head_cta {
-            color: #0DA3D8;
-            transition: all 0.2s ease-in-out;
-            font-size: 2rem;
-            margin-right: 5rem;
+        .activity-layout {
+            max-width: 1180px;
+            margin: 0 auto;
+            grid-template-columns: 1fr 300px;
+            gap: 56px;
+            align-items: start;
         }
 
-        .head_cta:hover {
-            color: #FEE002;
-            transform: scale(1.05);
-        }
-
-        .detail_card_section {
-            margin-top: 4rem;
-        }
-
-        /* Header & Titre */
-        .activity-title-main {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+        .activity-section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
             font-weight: 800;
-            color: #1a202c;
-            line-height: 1.2;
-            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-blue);
+            margin-bottom: 18px;
+        }
+
+        .activity-label-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--color-primary);
+        }
+
+        .activity-text p {
+            font-size: 1.15rem;
+            line-height: 1.85;
+            color: var(--color-text);
+            opacity: 0.82;
+            white-space: pre-line;
+        }
+
+        .activity-gallery-block {
+            margin-top: 56px;
+        }
+
+        /* ===== GALERIE MASONRY ===== */
+        .activity-gallery-grid {
+            column-count: 6;
+            column-gap: 2px;
+        }
+
+        .activity-gallery-item {
             position: relative;
-            text-transform: capitalize;
-        }
-
-        .title-decoration {
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #0DA3D8, #FEE002);
-            border-radius: 2px;
-            margin-top: 1rem;
-            animation: expandWidth 1.2s ease-out forwards;
-            transform-origin: left;
-        }
-
-        @keyframes expandWidth {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 80px;
-            }
-        }
-
-        /* Media Card */
-        .media-card {
-            background: white;
-            border-radius: 24px;
+            break-inside: avoid;
+            margin-bottom: 14px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            position: relative;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(13, 12, 67, 0.08);
         }
 
-        .media-card:hover {
-            box-shadow: 0 20px 60px rgba(13, 163, 216, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .hero-image {
+        .activity-gallery-img {
             width: 100%;
-            height: 400px;
-            object-fit: cover;
-            transition: transform 0.7s ease;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .media-card:hover .hero-image {
-            transform: scale(1.05);
+        .activity-gallery-item:hover .activity-gallery-img {
+            transform: scale(1.06);
         }
 
-        .hero-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        .activity-gallery-zoom {
+            position: absolute;
+            inset: 0;
+            background: rgba(13, 12, 67, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .media-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .media-card:hover .media-overlay {
-            opacity: 1;
-        }
-
-        /* Gallery Minimaliste */
-        .gallery-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .gallery-title i {
-            color: #0DA3D8;
-            font-size: 1.1rem;
-        }
-
-        .gallery-item {
-            aspect-ratio: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(13, 163, 216, 0.15);
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .gallery-item:hover .gallery-image {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(13, 163, 216, 0.4);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .gallery-item:hover .gallery-overlay {
+        .activity-gallery-item:hover .activity-gallery-zoom {
             opacity: 1;
         }
 
-        /* Info Card */
-        .info-card {
-            background: white;
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        .activity-gallery-zoom i {
+            color: #ffffff;
+            font-size: 1.4rem;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .activity-sidebar-card {
             position: sticky;
-            top: 6rem;
-            transition: all 0.4s ease;
+            top: 24px;
+            background: var(--color-background);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid rgba(13, 12, 67, 0.06);
+            display: none;
         }
 
-        .info-card:hover {
-            box-shadow: 0 15px 50px rgba(13, 163, 216, 0.12);
-        }
-
-        .info-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f3f4f6;
+        .activity-sidebar-thumb {
             position: relative;
-        }
-
-        .title-underline {
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, #0DA3D8, #FEE002);
-            animation: slideIn 1s ease-out forwards;
-        }
-
-        @keyframes slideIn {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 60px;
-            }
-        }
-
-        .info-description {
-            margin-bottom: 2rem;
-        }
-
-        .info-description p {
-            line-height: 1.8;
-            white-space: pre-line;
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: #4b5563;
-        }
-
-        /* CTA Buttons */
-        .cta-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 1rem 1.5rem;
             border-radius: 12px;
-            font-weight: 600;
-            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .activity-sidebar-thumb img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .activity-sidebar-thumb:hover img {
+            transform: scale(1.06);
+        }
+
+        .activity-sidebar-thumb-zoom {
+            position: absolute;
+            inset: 0;
+            background: rgba(13, 12, 67, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-sidebar-thumb:hover .activity-sidebar-thumb-zoom {
+            opacity: 1;
+        }
+
+        .activity-sidebar-thumb-zoom i {
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .activity-sidebar-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 18px;
+            background: var(--color-text);
+            color: #ffffff;
+            border-radius: 10px;
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+        .activity-sidebar-btn:hover {
+            background: var(--color-blue);
+            transform: translateY(-2px);
         }
 
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #0DA3D8, #0985b0);
-            color: white;
-            box-shadow: 0 4px 15px rgba(13, 163, 216, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(13, 163, 216, 0.4);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #374151;
-            border: 2px solid #e5e7eb;
-        }
-
-        .btn-secondary:hover {
-            border-color: #0DA3D8;
-            color: #0DA3D8;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(13, 163, 216, 0.15);
-        }
-
-        .btn i {
-            font-size: 1.1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .btn:hover i {
-            transform: scale(1.2);
-        }
-
-        /* ============================================
-                                                                                                                               LIGHTBOX (GRAND PLAN)
-                                                                                                                               ============================================ */
-        .lightbox {
+        /* ===== LIGHTBOX ===== */
+        .activity-lightbox {
             display: none;
             position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(8px);
+            inset: 0;
+            background: rgba(13, 12, 67, 0.95);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            padding: 30px;
         }
 
-        .lightbox.active {
+        .activity-lightbox.is-open {
             display: flex;
-            opacity: 1;
         }
 
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90vh;
+        .activity-lightbox-img {
+            max-width: 100%;
+            max-height: 88vh;
             border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            object-fit: contain;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
-        .lightbox.active .lightbox-content {
-            transform: scale(1);
-        }
-
-        .lightbox-close {
+        .activity-lightbox-close {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: 300;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.3s;
-            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.25s ease, transform 0.25s ease;
         }
 
-        .lightbox-close:hover {
-            color: #0DA3D8;
+        .activity-lightbox-close:hover {
+            background: var(--color-red);
             transform: rotate(90deg);
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-
-            .hero-image,
-            .hero-placeholder {
-                height: 280px;
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .activity-layout {
+                grid-template-columns: 1fr;
             }
 
-            .info-card {
+            .activity-sidebar-card {
                 position: static;
-                padding: 1.5rem;
             }
 
-            .cta-buttons {
-                flex-direction: column;
+            .activity-hero-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .activity-hero {
+                height: 46vh;
+                min-height: 300px;
             }
 
-            .btn {
-                width: 100%;
+            .activity-hero-title {
+                font-size: 1.6rem;
             }
 
-            .gallery-grid {
-                gap: 2 !important;
+            .activity-body {
+                padding: 40px 16px 60px;
+            }
+
+            .activity-text p {
+                font-size: 1rem;
+            }
+
+            .activity-gallery-grid {
+                column-count: 2;
+                column-gap: 10px;
+            }
+
+            .activity-gallery-item {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .activity-hero-title {
+                font-size: 1.35rem;
+            }
+
+            .activity-breadcrumb-current {
+                max-width: 140px;
             }
         }
     </style>
 
     <script>
-        // Logique Lightbox (Grand Plan)
-        function openLightbox(src) {
-            const lightbox = document.getElementById('image-lightbox');
-            const img = document.getElementById('lightbox-img');
+        function activityOpenLightbox(src) {
+            const lightbox = document.getElementById('activity-lightbox');
+            const img = document.getElementById('activity-lightbox-img');
             img.src = src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Empêche le scroll arrière-plan
+            lightbox.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeLightbox(event) {
-            // Ferme si on clique sur le fond ou la croix, mais pas sur l'image elle-même
-            if (event.target.id === 'image-lightbox' || event.target.classList.contains('lightbox-close')) {
-                const lightbox = document.getElementById('image-lightbox');
-                lightbox.classList.remove('active');
-                document.body.style.overflow = 'auto'; // Réactive le scroll
-            }
+        function activityCloseLightbox(event) {
+            // Ferme uniquement au clic sur le fond ou le bouton, pas sur l'image elle-même
+            if (event.target.id === 'activity-lightbox-img') return;
+            const lightbox = document.getElementById('activity-lightbox');
+            lightbox.classList.remove('is-open');
+            document.body.style.overflow = 'auto';
         }
 
-        // Fermeture avec la touche Echap
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                const lightbox = document.getElementById('image-lightbox');
-                if (lightbox.classList.contains('active')) {
-                    lightbox.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
+                document.getElementById('activity-lightbox').classList.remove('is-open');
+                document.body.style.overflow = 'auto';
             }
         });
     </script>

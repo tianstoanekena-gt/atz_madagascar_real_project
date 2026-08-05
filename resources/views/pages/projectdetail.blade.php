@@ -4,11 +4,16 @@
 
 @section('content')
     <section class="project-detail-page">
-        <div class="containers">
+        <div class="containerss">
             {{-- HEADER --}}
             <div class="header fade-up">
+                <a href="{{ localized_route('projects') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>@lang('project.cta_back')</span>
+                </a>
                 <h1>{{ $project->title }}</h1>
                 <div class="project-status {{ $project->status }}">
+                    <span class="status-dot"></span>
                     @if ($project->status === 'completed')
                         @lang('project.status_completed')
                     @elseif($project->status === 'ongoing')
@@ -18,7 +23,6 @@
                     @endif
                 </div>
             </div>
-            <br>
 
             {{-- GRID --}}
             <div class="grid">
@@ -78,7 +82,7 @@
                                     <strong>{{ $project->progress_percentage }}%</strong>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: {{ $project->progress_percentage }}%"></div>
+                                    <div class="progress-fill" data-progress="{{ $project->progress_percentage }}"></div>
                                 </div>
                                 <div class="progress-amounts">
                                     <span>{{ number_format($project->current_amount, 0, ',', ' ') }} Ar</span>
@@ -118,110 +122,152 @@
         /* ===== BASE ===== */
         .project-detail-page {
             background: var(--color-background);
-            padding: 80px 20px;
+            padding: 64px 20px 90px;
             font-family: system-ui, -apple-system, sans-serif;
             color: var(--color-text);
         }
 
-        .containers {
-            margin: 40px 50px;
+        .containerss {
+            margin: 0 auto;
         }
 
         /* ===== HEADER ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text);
+            opacity: 0.6;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+            transform: translateX(-3px);
+            color: var(--color-blue);
+        }
+
         .header h1 {
-            font-size: 38px;
+            font-size: 34px;
             color: var(--color-text);
             font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 14px;
         }
 
         .project-status {
-            margin-top: 15px;
-            padding: 6px 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
             border-radius: 999px;
             font-size: 13px;
             font-weight: 600;
-            display: inline-block;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
         }
 
         .completed {
-            background: rgba(110, 157, 46, 0.15);
+            background: rgba(110, 157, 46, 0.12);
             color: var(--color-green);
         }
 
         .ongoing {
-            background: rgba(13, 163, 216, 0.15);
+            background: rgba(13, 163, 216, 0.12);
             color: var(--color-blue);
         }
 
         .upcoming {
-            background: rgba(254, 237, 2, 0.3);
+            background: rgba(254, 237, 2, 0.22);
             color: var(--color-accent);
         }
 
         /* ===== GRID ===== */
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: 0.95fr 1.15fr;
+            gap: 48px;
+            margin-top: 42px;
         }
 
-        @media(max-width:900px) {
+        @media (max-width: 900px) {
             .grid {
                 grid-template-columns: 1fr;
+                gap: 32px;
             }
         }
 
         /* ===== IMAGE ===== */
         .image-card {
-            border-radius: 18px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 12px 40px rgba(13, 12, 67, 0.08);
+            box-shadow: 0 8px 28px rgba(13, 12, 67, 0.07);
             background: #ffffff;
         }
 
         .image-card img {
             width: 100%;
             display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .image-card.hover-lift:hover img {
+            transform: scale(1.04);
         }
 
         .image-placeholder {
             width: 100%;
-            height: 400px;
+            height: 360px;
             background: rgba(13, 12, 67, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: var(--color-text);
-            opacity: 0.3;
+            opacity: 0.25;
         }
 
         /* ===== KPI ===== */
         .kpi-grid {
-            margin-top: 25px;
+            margin-top: 20px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 12px;
         }
 
         .kpi-box {
             background: #ffffff;
-            padding: 20px;
-            border-radius: 14px;
-            border-top: 4px solid var(--color-primary);
-            box-shadow: 0 4px 15px rgba(13, 12, 67, 0.05);
+            padding: 18px;
+            border-radius: 12px;
+            border-top: 3px solid var(--color-primary);
+            box-shadow: 0 3px 12px rgba(13, 12, 67, 0.05);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+
+        .kpi-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(13, 12, 67, 0.09);
         }
 
         .kpi-box span {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--color-text);
-            opacity: 0.7;
-            margin-bottom: 8px;
+            opacity: 0.6;
+            margin-bottom: 6px;
         }
 
         .kpi-box strong {
-            font-size: 26px;
+            font-size: 22px;
             color: var(--color-text);
             font-weight: 800;
         }
@@ -237,66 +283,81 @@
         /* ===== CARD ===== */
         .info-card {
             background: #ffffff;
-            padding: 32px;
-            border-radius: 18px;
-            box-shadow: 0 10px 35px rgba(13, 12, 67, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(13, 12, 67, 0.05);
+            transition: box-shadow 0.35s ease;
+        }
+
+        .info-card.hover-lift:hover {
+            box-shadow: 0 16px 40px rgba(13, 12, 67, 0.09);
         }
 
         .info-card h2 {
+            font-size: 19px;
             color: var(--color-text);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-weight: 700;
         }
 
         .info-card p {
             color: var(--color-text);
-            opacity: .85;
+            opacity: .8;
             line-height: 1.7;
-            margin-bottom: 15px;
+            font-size: 15px;
         }
 
         /* ===== TIMELINE ===== */
         .timeline {
-            margin-top: 40px;
-            border-left: 3px solid var(--color-secondary);
+            margin-top: 34px;
+            border-left: 2px solid var(--color-secondary);
             padding-left: 20px;
         }
 
         .timeline h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 18px;
             color: var(--color-text);
+            font-weight: 700;
         }
 
         .timeline-item {
-            margin-bottom: 22px;
+            margin-bottom: 18px;
             position: relative;
+            padding: 4px 8px 4px 2px;
+            border-radius: 6px;
+            transition: background 0.25s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(13, 163, 216, 0.05);
         }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -28px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
+            left: -25px;
+            top: 9px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: var(--color-secondary);
             border: 2px solid var(--color-background);
         }
 
         .timeline-item span {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--color-text);
-            opacity: 0.6;
+            opacity: 0.55;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .timeline-item h4 {
-            font-size: 16px;
+            font-size: 15px;
             margin: 0;
+            font-weight: 600;
         }
 
         .timeline-item.done h4 {
@@ -313,24 +374,24 @@
 
         .timeline-item.active::before {
             background: var(--color-blue);
-            box-shadow: 0 0 0 4px rgba(13, 163, 216, 0.2);
+            box-shadow: 0 0 0 4px rgba(13, 163, 216, 0.18);
         }
 
         /* ===== PROGRESS ===== */
         .progress-section {
-            margin-top: 40px;
+            margin-top: 34px;
         }
 
         .progress-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 14px;
+            margin-bottom: 8px;
+            font-size: 13px;
             font-weight: 600;
         }
 
         .progress-bar {
-            height: 10px;
+            height: 8px;
             background: rgba(13, 12, 67, 0.08);
             border-radius: 999px;
             overflow: hidden;
@@ -338,34 +399,36 @@
 
         .progress-fill {
             height: 100%;
+            width: 0%;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-green));
-            transition: width 1s ease-out;
+            transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .progress-amounts {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 13px;
+            margin-top: 7px;
+            font-size: 12px;
             color: var(--color-text);
-            opacity: 0.7;
+            opacity: 0.65;
             font-weight: 500;
         }
 
         /* ===== CTA ===== */
         .cta {
-            margin-top: 40px;
+            margin-top: 34px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .btn {
-            padding: 14px 26px;
-            border-radius: 12px;
+            padding: 13px 24px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            transition: all .3s ease;
+            font-size: 14px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
             text-align: center;
         }
 
@@ -377,7 +440,11 @@
         .primary:hover {
             background: var(--color-secondary);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(199, 186, 4, 0.3);
+            box-shadow: 0 8px 18px rgba(199, 186, 4, 0.3);
+        }
+
+        .primary:active {
+            transform: translateY(0);
         }
 
         .secondary {
@@ -392,19 +459,23 @@
             transform: translateY(-2px);
         }
 
+        .secondary:active {
+            transform: translateY(0);
+        }
+
         /* ===== ANIMATION & HOVER FIX ===== */
         .fade-up {
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp .8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(24px);
+            animation: fadeUp .7s forwards cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .delay-1 {
-            animation-delay: .2s;
+            animation-delay: .15s;
         }
 
         .delay-2 {
-            animation-delay: .4s;
+            animation-delay: .3s;
         }
 
         @keyframes fadeUp {
@@ -414,106 +485,84 @@
             }
         }
 
-        /* Le hover-lift est séparé de l'animation pour éviter le conflit CSS */
+        /* hover-lift séparé de l'animation pour éviter le conflit CSS sur "transform" */
         .hover-lift {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 45px rgba(13, 12, 67, 0.12);
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .project-detail-page {
-                padding: 60px 15px;
-            }
-
-            .containers {
-                margin: 20px 15px;
+                padding: 48px 16px 70px;
             }
 
             .header h1 {
-                font-size: 28px;
+                font-size: 26px;
             }
 
             .kpi-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 10px;
             }
 
             .cta {
                 flex-direction: column;
             }
-
-            .btn {
-                text-align: center;
-            }
         }
 
         @media (max-width: 480px) {
             .project-detail-page {
-                padding: 50px 12px;
-            }
-
-            .containers {
-                margin: 15px 10px;
+                padding: 40px 12px 60px;
             }
 
             .header h1 {
-                font-size: 24px;
+                font-size: 22px;
                 line-height: 1.3;
             }
 
             .grid {
-                gap: 40px;
+                gap: 28px;
             }
 
             .info-card {
-                padding: 24px;
+                padding: 22px;
             }
 
             .timeline {
-                padding-left: 15px;
-                border-left-width: 2px;
+                padding-left: 14px;
             }
 
             .timeline-item::before {
-                left: -23px;
-                width: 10px;
-                height: 10px;
-            }
-
-            .cta {
-                gap: 12px;
+                left: -20px;
+                width: 9px;
+                height: 9px;
             }
 
             .btn {
-                padding: 12px 20px;
-                font-size: 14px;
+                padding: 12px 18px;
+                font-size: 13px;
             }
         }
 
         @media (max-width: 350px) {
             .header h1 {
-                font-size: 20px;
+                font-size: 19px;
             }
 
             .info-card {
-                padding: 18px;
+                padding: 16px;
             }
 
             .kpi-box strong {
-                font-size: 20px;
+                font-size: 19px;
             }
         }
     </style>
 
     <script>
-        // Fix du bug : L'animation CSS "fade-up" bloque le "transform" du ":hover".
-        // Ce script retire la classe d'animation une fois qu'elle est terminée pour libérer le hover.
         document.addEventListener('DOMContentLoaded', () => {
+            // Libère le hover une fois l'animation d'entrée terminée
+            // (une animation et une transition ne cohabitent pas bien sur "transform")
             document.querySelectorAll('.fade-up').forEach(el => {
                 el.addEventListener('animationend', () => {
                     el.style.opacity = '1';
@@ -521,6 +570,17 @@
                     el.classList.remove('fade-up', 'delay-1', 'delay-2');
                 });
             });
+
+            // Anime la barre de progression après le chargement, plutôt qu'en dur dans le HTML
+            const fill = document.querySelector('.progress-fill');
+            if (fill) {
+                const target = fill.dataset.progress || 0;
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        fill.style.width = target + '%';
+                    }, 300);
+                });
+            }
         });
     </script>
 @endsection

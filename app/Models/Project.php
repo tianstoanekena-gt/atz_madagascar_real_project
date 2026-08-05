@@ -125,6 +125,12 @@ class Project extends Model
         if (!$this->target_amount || $this->target_amount == 0) {
             return 0;
         }
-        return min(100, ($this->current_amount / $this->target_amount) * 100);
+
+        // 1. On calcule le pourcentage brut
+        $percentage = ($this->current_amount / $this->target_amount) * 100;
+
+        // 2. On arrondit et on bloque à 100% maximum
+        // Le '0' dans round() signifie "0 décimale" (nombre entier)
+        return round(min(100, $percentage), 0);
     }
 }
