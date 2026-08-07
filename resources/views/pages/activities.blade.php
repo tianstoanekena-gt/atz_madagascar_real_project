@@ -27,8 +27,7 @@
                         @foreach ($activities as $activity)
                             <a href="{{ route('activities.show', ['locale' => app()->getLocale(), 'slug' => $activity->slug]) }}"
                                 class="activity-link block {{ $loop->first ? 'active' : '' }}">
-                                <div
-                                    class="activity-card rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl border">
+                                <div class="activity-card">
                                     <div class="activity-image-wrapper relative h-64 overflow-hidden">
                                         @if ($activity->hero_image)
                                             <img src="{{ Storage::url($activity->hero_image) }}"
