@@ -202,6 +202,27 @@ Route::middleware(['auth', 'verified'])
         Route::resource('dashboard/projects', \App\Http\Controllers\Admin\ProjectController::class)
             ->except(['show'])
             ->names('admin.projects');
+
+        // Réseaux sociaux
+        Route::resource('dashboard/contact/social-media', \App\Http\Controllers\Admin\ContactSocialMediaController::class)
+            ->except(['show'])
+            ->names('admin.contact.social-media');
+
+        // Horaires d'ouverture (page unique d'édition)
+        Route::get('dashboard/contact/opening-hours', [\App\Http\Controllers\Admin\OpeningHourController::class, 'index'])
+            ->name('admin.contact.opening-hours.index');
+        Route::put('dashboard/contact/opening-hours', [\App\Http\Controllers\Admin\OpeningHourController::class, 'update'])
+            ->name('admin.contact.opening-hours.update');
+
+        // Messages reçus (lecture + suppression)
+        Route::get('dashboard/contact/messages', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])
+            ->name('admin.contact.messages.index');
+        Route::get('dashboard/contact/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'show'])
+            ->name('admin.contact.messages.show');
+        Route::put('dashboard/contact/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'update'])
+            ->name('admin.contact.messages.update');
+        Route::delete('dashboard/contact/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])
+            ->name('admin.contact.messages.destroy');
     });
 
 
