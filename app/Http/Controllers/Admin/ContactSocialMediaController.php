@@ -25,7 +25,7 @@ class ContactSocialMediaController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'url' => 'required|url|max:255',
-            'icon' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:512',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2050',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ]);

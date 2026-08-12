@@ -59,6 +59,8 @@ Route::prefix('{locale}')
         Route::get('/projects/{slug}', [\App\Http\Controllers\ProjectPageController::class, 'show'])->name('projects.show');
         //contact
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+        Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
         //staff in about page
         Route::get('/staff', [StaffController::class, 'index'])->name('staff');
         // Statistiques (Frontend)
@@ -69,6 +71,11 @@ Route::prefix('{locale}')
         Route::get('/sponsors/{slug}', [SponsorController::class, 'show'])
             ->name('sponsors.show')
             ->where('slug', '[a-z0-9\-]+');
+
+
+
+
+
         //routing parrain
         Route::get('/parrain', [BecomeParrainController::class, 'index'])->name('auth.parrain');
         //routing sponsor

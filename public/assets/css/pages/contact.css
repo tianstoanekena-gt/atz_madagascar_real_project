@@ -114,6 +114,7 @@
 
 .contact-text {
     color: var(--color-text);
+    font-size: 1.05rem;
     font-weight: 500;
 }
 

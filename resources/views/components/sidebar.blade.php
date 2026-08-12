@@ -156,6 +156,38 @@
                 </a>
             </li>
 
+            <!-- Contact avec sous-menu -->
+            <li class="nav-item has-submenu {{ request()->routeIs('admin.contact.*') ? 'active open' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-address-book nav-icon"></i>
+                    <span class="nav-text">Contact</span>
+                    <i class="fas fa-chevron-down submenu-arrow"></i>
+                </a>
+                <ul class="submenu">
+                    <li>
+                        <a href="{{ route('admin.contact.social-media.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.contact.social-media.*') ? 'active' : '' }}">
+                            <i class="fas fa-share-alt"></i>
+                            Réseaux Sociaux
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.contact.opening-hours.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.contact.opening-hours.*') ? 'active' : '' }}">
+                            <i class="fas fa-clock"></i>
+                            Horaires
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.contact.messages.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.contact.messages.*') ? 'active' : '' }}">
+                            <i class="fas fa-envelope"></i>
+                            Messages
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <!-- Statistiques avec sous-menu -->
             <li class="nav-item has-submenu {{ request()->routeIs('admin.stats.*') ? 'active open' : '' }}">
                 <a href="#" class="nav-link">

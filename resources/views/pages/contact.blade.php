@@ -16,55 +16,25 @@
                 <div class="contact-info">
                     <h3 class="info-title">@lang('contact.coordonates')</h3>
 
-                    {{-- Réseaux sociaux et contacts --}}
+                    {{-- Réseaux sociaux dynamisés et contacts --}}
                     <div class="contact-links">
-                        {{-- Facebook --}}
-                        <a href="#" class="contact-link">
-                            <div class="contact-icon icon-facebook">
-                                <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="">
-                            </div>
-                            <span class="contact-text">Akany Tia Zaza Madagascar</span>
-                        </a>
-
-                        {{-- Instagram --}}
-                        <a href="#" class="contact-link">
-                            <div class="contact-icon icon-instagram">
-                                <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="">
-                            </div>
-                            <span class="contact-text">Akany Tia Zaza Madagascar</span>
-                        </a>
-
-                        {{-- Messenger --}}
-                        <a href="#" class="contact-link">
-                            <div class="contact-icon icon-messenger">
-                                <img src="{{ asset('assets/images/icons/messenger.png') }}" alt="">
-                            </div>
-                            <span class="contact-text">Akany Tia Zaza Madagascar</span>
-                        </a>
-
-                        {{-- WhatsApp --}}
-                        <a href="https://wa.me/" class="contact-link">
-                            <div class="contact-icon icon-whatsapp">
-                                <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="">
-                            </div>
-                            <span class="contact-text">+261 34 XX XXX X</span>
-                        </a>
-
-                        {{-- Email --}}
-                        <a href="mailto:atzmadag@gmail.com" class="contact-link">
-                            <div class="contact-icon icon-email">
-                                <img src="{{ asset('assets/images/icons/email.png') }}" alt="">
-                            </div>
-                            <span class="contact-text">atzmadag@gmail.com</span>
-                        </a>
-
-                        {{-- Téléphone --}}
-                        <a href="" class="contact-link">
-                            <div class="contact-icon icon-phone">
-                                <img src="{{ asset('assets/images/icons/telephone.png') }}" alt="">
-                            </div>
-                            <span class="contact-text">+261 34 XX XXX X</span>
-                        </a>
+                        @forelse ($socialMedias as $social)
+                            <a href="{{ $social->url }}" class="contact-link" target="_blank" rel="noopener noreferrer">
+                                <div class="contact-icon">
+                                    @if ($social->icon)
+                                        {{-- Utilise Storage::url pour récupérer le chemin de l'image uploadée --}}
+                                        <img src="{{ Storage::url($social->icon) }}" alt="{{ $social->name }}">
+                                    @else
+                                        {{-- Fallback de sécurité si l'image est manquante --}}
+                                        <i class="fas fa-link text-2xl text-gray-400"></i>
+                                    @endif
+                                </div>
+                                <span class="contact-text">{{ $social->name }}</span>
+                            </a>
+                        @empty
+                            {{-- Message temporaire si aucun réseau n'est encore configuré en admin --}}
+                            <p class="text-sm text-gray-500 italic">Aucun réseau social configuré pour le moment.</p>
+                        @endforelse
                     </div>
 
                     {{-- Horaires --}}
@@ -76,30 +46,112 @@
                             </svg>
                             @lang('contact.hour')
                         </h4>
-                        <p class="schedule-text">@lang('contact.dayly')</p>
+
+                        @php
+                            // Mapping des jours FR → MG/EN
+                            $daysTranslation = [
+                                'fr' => [
+                                    'Lundi' => 'Lundi',
+                                    'Mardi' => 'Mardi',
+                                    'Mercredi' => 'Mercredi',
+                                    'Jeudi' => 'Jeudi',
+                                    'Vendredi' => 'Vendredi',
+                                    'Samedi' => 'Samedi',
+                                    'Dimanche' => 'Dimanche',
+                                ],
+                                'mg' => [
+                                    'Lundi' => 'Alatsinainy',
+                                    'Mardi' => 'Talata',
+                                    'Mercredi' => 'Alarobia',
+                                    'Jeudi' => 'Alakamisy',
+                                    'Vendredi' => 'Zoma',
+                                    'Samedi' => 'Sabotsy',
+                                    'Dimanche' => 'Alahady',
+                                ],
+                                'en' => [
+                                    'Lundi' => 'Monday',
+                                    'Mardi' => 'Tuesday',
+                                    'Mercredi' => 'Wednesday',
+                                    'Jeudi' => 'Thursday',
+                                    'Vendredi' => 'Friday',
+                                    'Samedi' => 'Saturday',
+                                    'Dimanche' => 'Sunday',
+                                ],
+                            ];
+
+                            // Configurer Carbon pour utiliser la locale actuelle
+                            \Carbon\Carbon::setLocale(app()->getLocale());
+                        @endphp
+
+                        @forelse ($openingHours as $hour)
+                            <p class="schedule-text">
+                                <strong>{{ $daysTranslation[app()->getLocale()][$hour->day] ?? $hour->day }}:</strong>
+                                @if ($hour->open_time && $hour->close_time)
+                                    {{ \Carbon\Carbon::parse($hour->open_time)->format('g:i') }}
+                                    {{ \Carbon\Carbon::parse($hour->open_time)->format('A') }} -
+                                    {{ \Carbon\Carbon::parse($hour->close_time)->format('g:i') }}
+                                    {{ \Carbon\Carbon::parse($hour->close_time)->format('A') }}
+                                @else
+                                    @lang('contact.closed')
+                                @endif
+                            </p>
+                        @empty
+                            <p class="schedule-text text-gray-500 italic">@lang('contact.no_hours')</p>
+                        @endforelse
                     </div>
                 </div>
+
+                @if (session('success'))
+                    <div
+                        class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-lg flex items-center gap-3">
+                        <i class="fas fa-check-circle text-xl"></i>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                @endif
 
                 {{-- Formulaire de contact --}}
                 <div class="contact-form-wrapper">
                     <h3 class="form-title">@lang('contact.form_title')</h3>
-                    <form action="#" method="POST" class="contact-form">
+                    <form action="{{ route('contact.store', ['locale' => app()->getLocale()]) }}" method="POST"
+                        class="contact-form">
                         @csrf
+
+                        {{-- Champ Nom --}}
                         <div class="form-group">
                             <label for="name" class="form-label">@lang('contact.form_name')</label>
-                            <input type="text" id="name" name="name" class="form-input"
-                                placeholder="@lang('contact.form_name')" required>
+                            <input type="text" id="name" name="name" value="{{ old('name') }}"
+                                class="form-input @error('name') border-red-500 @enderror" placeholder="@lang('contact.form_name')"
+                                required>
+                            @error('name')
+                                <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+                                    <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
+                        {{-- Champ Email --}}
                         <div class="form-group">
                             <label for="email" class="form-label">@lang('contact.form_email')</label>
-                            <input type="email" id="email" name="email" class="form-input"
-                                placeholder="@lang('contact.form_email')" required>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                class="form-input @error('email') border-red-500 @enderror" placeholder="@lang('contact.form_email')"
+                                required>
+                            @error('email')
+                                <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+                                    <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
+                        {{-- Champ Message --}}
                         <div class="form-group">
                             <label for="message" class="form-label">@lang('contact.form_message')</label>
-                            <textarea id="message" name="message" rows="5" class="form-textarea" placeholder="@lang('contact.form_message')" required></textarea>
+                            <textarea id="message" name="message" rows="5" class="form-textarea @error('message') border-red-500 @enderror"
+                                placeholder="@lang('contact.form_message')" required>{{ old('message') }}</textarea>
+                            @error('message')
+                                <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+                                    <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <button type="submit" class="submit-btn">

@@ -20,4 +20,22 @@ return [
     'country' => 'Firenena',
     'way' => 'Lalana',
     'take_itinery' => 'Hijery lalana',
+    // Messages de succès
+    'success_message' => 'Nalefa tsara ny hafatrao. Hamelona anao amin\'ny fotoana fohy iray amin\'ny ekipanay.',
+
+    // Messages d'erreur de validation
+    'name_required' => 'Ilaina ny anarana.',
+    'name_regex' => 'Ny anarana dia tsy maintsy misy litera, elanelana, apostrophe na tsipika fotsiny.',
+    'name_max' => 'Ny anarana dia tsy tokony hihoatra ny 100 tarehintsoratra.',
+    'email_required' => 'Ilaina ny adiresy mailaka.',
+    'email_email' => 'Ampidiro adiresy mailaka marina sy misy.',
+    'email_max' => 'Ny adiresy mailaka dia tsy tokony hihoatra ny 255 tarehintsoratra.',
+    'message_required' => 'Ilaina ny hafatra.',
+    'message_min' => 'Ny hafatra dia tsy maintsy misy 10 tarehintsoratra farafahakeliny.',
+    'message_max' => 'Ny hafatra dia tsy tokony hihoatra ny 5000 tarehintsoratra.',
+    'message_regex' => 'Ny hafatra dia misy tarehintsoratra manokana tsy azo ampiasaina (<, >, {, }).',
+
+    // Messages horaires
+    'no_hours' => 'Tsy misy ora voasokatra',
+    'closed' => 'Mihidy',
 ];
