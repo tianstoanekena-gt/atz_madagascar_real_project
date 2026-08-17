@@ -24,10 +24,17 @@ class ContactSocialMediaController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'url' => 'required|url|max:255',
+            'url' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^(https?:\/\/[^\s]+|mailto:[^\s@]+@[^\s@]+\.[^\s@]+|tel:\+?[0-9\s\-]+)$/i',
+            ],
             'icon' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2050',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
+        ], [
+            'url.regex' => 'Le lien doit être une URL valide (https://...), un email (mailto:...) ou un numéro (tel:...).',
         ]);
 
         $iconPath = $request->file('icon')->store('contact/icons', 'public');
@@ -52,10 +59,17 @@ class ContactSocialMediaController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'url' => 'required|url|max:255',
+            'url' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^(https?:\/\/[^\s]+|mailto:[^\s@]+@[^\s@]+\.[^\s@]+|tel:\+?[0-9\s\-]+)$/i',
+            ],
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:512',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
+        ], [
+            'url.regex' => 'Le lien doit être une URL valide (https://...), un email (mailto:...) ou un numéro (tel:...).',
         ]);
 
         $updateData = [

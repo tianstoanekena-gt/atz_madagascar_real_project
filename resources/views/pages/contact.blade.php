@@ -101,12 +101,14 @@
                     </div>
                 </div>
 
+                {{-- Toast de succes (si validation réussie) --}}
                 @if (session('success'))
-                    <div
-                        class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-lg flex items-center gap-3">
-                        <i class="fas fa-check-circle text-xl"></i>
-                        <span>{{ session('success') }}</span>
-                    </div>
+                    <x-toast type="success" :message="session('success')" />
+                @endif
+
+                {{-- Toast d'erreur (si validation échoue) --}}
+                @if ($errors->any())
+                    <x-toast type="error" :message="'Veuillez corriger les erreurs ci-dessous.'" />
                 @endif
 
                 {{-- Formulaire de contact --}}
