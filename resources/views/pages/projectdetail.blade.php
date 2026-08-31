@@ -93,7 +93,7 @@
 
                         {{-- CTA --}}
                         <div class="cta">
-                            <a href="{{ localized_route('contact') }}" class="btn primary">
+                            <a href="{{ localized_route('auth.sponsor') }}" class="btn primary">
                                 @lang('project.cta_support')
                             </a>
                             <a href="{{ localized_route('projects') }}" class="btn secondary">
