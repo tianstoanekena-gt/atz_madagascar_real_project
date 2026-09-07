@@ -97,11 +97,37 @@
             </li>
 
             <!-- Parrainages -->
-            <li class="nav-item {{ request()->routeIs('admin.sponsorships.*') ? 'active' : '' }}">
-                <a href="" class="nav-link">
+            <!-- Parrainages avec sous-menu -->
+            <li
+                class="nav-item has-submenu {{ request()->routeIs('admin.students.*') || request()->routeIs('admin.godparents.*') || request()->routeIs('admin.sponsorships.*') ? 'active open' : '' }}">
+                <a href="#" class="nav-link">
                     <i class="fas fa-user-friends nav-icon"></i>
                     <span class="nav-text">Parrainages</span>
+                    <i class="fas fa-chevron-down submenu-arrow"></i>
                 </a>
+                <ul class="submenu">
+                    <li>
+                        <a href="{{ route('admin.students.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
+                            <i class="fas fa-child"></i>
+                            Élèves à parrainer
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.godparents.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.godparents.*') ? 'active' : '' }}">
+                            <i class="fas fa-user-tie"></i>
+                            Parrains
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.sponsorships.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.sponsorships.*') ? 'active' : '' }}">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            Demandes
+                        </a>
+                    </li>
+                </ul>
             </li>
 
 

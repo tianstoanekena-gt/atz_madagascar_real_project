@@ -230,6 +230,39 @@ Route::middleware(['auth', 'verified'])
             ->name('admin.contact.messages.update');
         Route::delete('dashboard/contact/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])
             ->name('admin.contact.messages.destroy');
+
+
+        // ==================== PARRAINAGE (ADMIN) ====================
+        // Gestion des élèves à parrainer
+        Route::resource('dashboard/parrainage/students', \App\Http\Controllers\Admin\StudentController::class)
+            ->except(['show'])
+            ->names('admin.students');
+
+        // Gestion des parrains
+        Route::get('dashboard/parrainage/godparents', [\App\Http\Controllers\Admin\GodparentController::class, 'index'])
+            ->name('admin.godparents.index');
+        Route::get('dashboard/parrainage/godparents/{godparent}', [\App\Http\Controllers\Admin\GodparentController::class, 'show'])
+            ->name('admin.godparents.show');
+        Route::get('dashboard/parrainage/godparents/{godparent}/edit', [\App\Http\Controllers\Admin\GodparentController::class, 'edit'])
+            ->name('admin.godparents.edit');
+        Route::put('dashboard/parrainage/godparents/{godparent}', [\App\Http\Controllers\Admin\GodparentController::class, 'update'])
+            ->name('admin.godparents.update');
+        Route::delete('dashboard/parrainage/godparents/{godparent}', [\App\Http\Controllers\Admin\GodparentController::class, 'destroy'])
+            ->name('admin.godparents.destroy');
+
+        // Gestion des demandes de parrainage (workflow CM)
+        Route::get('dashboard/parrainage/sponsorships', [\App\Http\Controllers\Admin\SponsorshipController::class, 'index'])
+            ->name('admin.sponsorships.index');
+        Route::get('dashboard/parrainage/sponsorships/{sponsorship}', [\App\Http\Controllers\Admin\SponsorshipController::class, 'show'])
+            ->name('admin.sponsorships.show');
+        Route::post('dashboard/parrainage/sponsorships/{sponsorship}/approve', [\App\Http\Controllers\Admin\SponsorshipController::class, 'approve'])
+            ->name('admin.sponsorships.approve');
+        Route::post('dashboard/parrainage/sponsorships/{sponsorship}/reject', [\App\Http\Controllers\Admin\SponsorshipController::class, 'reject'])
+            ->name('admin.sponsorships.reject');
+        Route::post('dashboard/parrainage/sponsorships/{sponsorship}/reset', [\App\Http\Controllers\Admin\SponsorshipController::class, 'resetStatus'])
+            ->name('admin.sponsorships.reset');
+        Route::delete('dashboard/parrainage/sponsorships/{sponsorship}', [\App\Http\Controllers\Admin\SponsorshipController::class, 'destroy'])
+            ->name('admin.sponsorships.destroy');
     });
 
 
