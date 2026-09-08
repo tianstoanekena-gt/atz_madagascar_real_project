@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\ActivitiesController;
-use App\Http\Controllers\ActivitiesDetailsController;
 use App\Http\Controllers\Admin\AboutCardController;
 use App\Http\Controllers\Admin\AboutInterventionController;
 use App\Http\Controllers\Admin\AboutTextController;
@@ -13,8 +11,6 @@ use App\Http\Controllers\BecomeSponsorsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProjectDetailController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Admin\LogoController;
