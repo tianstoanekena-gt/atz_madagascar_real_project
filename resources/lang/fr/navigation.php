@@ -7,5 +7,6 @@ return [
     'contact' => 'Contact',
     'faq' => 'FAQ',
     'login' => 'Connexion',
-    'logo_alt' => 'Logo ATZ Madagascar'
+    'logo_alt' => 'Logo ATZ Madagascar',
+    'parrainage' => 'Parrainage'
 ];

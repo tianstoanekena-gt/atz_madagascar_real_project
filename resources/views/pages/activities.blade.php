@@ -31,8 +31,7 @@
                                     <div class="activity-image-wrapper relative h-64 overflow-hidden">
                                         @if ($activity->hero_image)
                                             <img src="{{ Storage::url($activity->hero_image) }}"
-                                                alt="{{ $activity->title }}"
-                                                class="activity-image w-full h-full object-cover">
+                                                alt="{{ $activity->title }}" class="activity-image">
                                         @else
                                             <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                                 <i class="fas fa-image text-5xl text-gray-400"></i>

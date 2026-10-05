@@ -12,8 +12,8 @@
             </div>
             <div class="btn-zone">
                 <a href="{{ localized_route('about') }}" class="hero-btn">@lang('hero.cta_button')</a>
-                <a href="{{ localized_route('auth.parrain') }}" class="hero-btn">@lang('hero.become_sponsor')</a>
-                <a href="{{ localized_route('auth.sponsor') }}" class="hero-btn">@lang('hero.support_us')</a>
+                {{-- <a href="" class="hero-btn">@lang('hero.become_sponsor')</a> --}}
+                <a href="{{ localized_route('contact') }}" class="hero-btn">@lang('hero.support_us')</a>
             </div>
         </div>
         <div class="hero-img-parent">
@@ -22,18 +22,7 @@
                     alt="Hero ATZ Madagascar">
             @endforeach
         </div>
-        {{-- <div style="background: red; padding: 50px;">
-            <h1 style="color: white;">SLIDES: {{ $heroSlides->count() }}</h1>
 
-            @foreach ($heroSlides as $slide)
-                <div style="background: white; margin: 20px; padding: 20px;">
-                    <p><strong>Path:</strong> {{ $slide->image_path }}</p>
-                    <p><strong>URL:</strong> {{ asset('storage/' . $slide->image_path) }}</p>
-                    <img src="{{ asset('storage/' . $slide->image_path) }}"
-                        style="max-width: 300px; border: 5px solid green;">
-                </div>
-            @endforeach
-        </div> --}}
 
     </section>
 
@@ -43,12 +32,6 @@
          * ============================================
          * HERO CARROUSEL VERTICAL AUTOMATIQUE
          * ============================================
-         *
-         * FANAZAVANA AMIN'NY TENY MALAGASY:
-         *
-         * Ity script ity dia manao carrousel otomatika ho an'ny sary.
-         * Mifamadika avy ambany mankany ambony ny sary tsirairay.
-         * Tsy mila bouton na keyboard activation.
          */
 
         document.addEventListener('DOMContentLoaded', function() {

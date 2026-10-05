@@ -20,7 +20,7 @@ return [
     'country' => 'Pays',
     'way' => 'Itinéraire',
     'take_itinery' => 'Voir l’itinéraire',
-    'success_message' => 'Votre message a bien été envoyé. Un membre de notre équipe vous répondra dans les plus brefs délais.',
+    'success_message' => 'Votre message a bien été envoyé. Un membre de notre équipe vous répondra dans les plus brefs délais dans 24h maximum.',
     'name_required' => 'Le nom est obligatoire.',
     'name_regex' => 'Le nom ne doit contenir que des lettres, espaces, apostrophes ou tirets.',
     'name_max' => 'Le nom ne doit pas dépasser 100 caractères.',

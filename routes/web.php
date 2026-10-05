@@ -6,8 +6,6 @@ use App\Http\Controllers\Admin\AboutInterventionController;
 use App\Http\Controllers\Admin\AboutTextController;
 use App\Http\Controllers\Admin\AboutVideoController;
 use App\Http\Controllers\Admin\ContactTypeController;
-use App\Http\Controllers\BecomeParrainController;
-use App\Http\Controllers\BecomeSponsorsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -67,15 +65,6 @@ Route::prefix('{locale}')
         Route::get('/sponsors/{slug}', [SponsorController::class, 'show'])
             ->name('sponsors.show')
             ->where('slug', '[a-z0-9\-]+');
-
-
-
-
-
-        //routing parrain
-        Route::get('/parrain', [BecomeParrainController::class, 'index'])->name('auth.parrain');
-        //routing sponsor
-        Route::get('/sponsor', [BecomeSponsorsController::class, 'index'])->name('auth.sponsor');
     });
 
 

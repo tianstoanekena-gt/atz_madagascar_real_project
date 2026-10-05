@@ -7,5 +7,6 @@ return [
     'contact' => 'Fifandraisana',
     'faq' => 'FAQ',
     'login' => 'Hiditra',
-    'logo_alt' => 'Logo ATZ Madagascar'
+    'logo_alt' => 'Logo ATZ Madagascar',
+    'parrainage' => 'Mpiantoka'
 ];

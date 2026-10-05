@@ -21,7 +21,7 @@ return [
     'way' => 'Way',
     'take_itinery' => 'Take Itinerary',
     // Messages de succès
-    'success_message' => 'Your message has been sent successfully. A member of our team will get back to you shortly.',
+    'success_message' => 'Your message has been sent successfully. A member of our team will get back to you shortly in 24 hours; thank you!',
 
     // Messages d'erreur de validation
     'name_required' => 'The name is required.',

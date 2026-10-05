@@ -21,7 +21,7 @@ return [
     'way' => 'Lalana',
     'take_itinery' => 'Hijery lalana',
     // Messages de succès
-    'success_message' => 'Nalefa tsara ny hafatrao. Hamelona anao amin\'ny fotoana fohy iray amin\'ny ekipanay.',
+    'success_message' => 'Lasa soamantsara, ary voarain\'ny tompon\'andraikitra ny hafatrao, ho valiany izany ao anatin\'ny 24 ora; Mankasitraka.',
 
     // Messages d'erreur de validation
     'name_required' => 'Ilaina ny anarana.',
