@@ -8,5 +8,5 @@ return [
     'faq' => 'FAQ',
     'login' => 'Connexion',
     'logo_alt' => 'Logo ATZ Madagascar',
-    'parrainage' => 'Parrainage'
+    'parrainage' => 'Parrainage',
 ];

@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\ContactTypeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\SponsorController as AdminSponsorController;
@@ -31,7 +30,6 @@ Route::prefix('{locale}')
     ->where(['locale' => 'mg|fr|en'])
     ->middleware(SetLocale::class)
     ->group(function () {
-
         // Routes pour toutes les pages publiques
         //home
         Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -54,17 +52,12 @@ Route::prefix('{locale}')
         //contact
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
         //staff in about page
         Route::get('/staff', [StaffController::class, 'index'])->name('staff');
-        // Statistiques (Frontend)
+        // Statistiques (pages publiques)
         Route::get('/stats', [App\Http\Controllers\StatsController::class, 'index'])->name('stats');
-        //partenary in about page
-        Route::get('/sponsors', [SponsorController::class, 'index'])->name('sponsors');
-        // Page détails sponsor
-        Route::get('/sponsors/{slug}', [SponsorController::class, 'show'])
-            ->name('sponsors.show')
-            ->where('slug', '[a-z0-9\-]+');
+        // Parrainage (Frontend)
+        Route::get('/parrainage', [App\Http\Controllers\ParrainageController::class, 'index'])->name('parrainage.index');
     });
 
 

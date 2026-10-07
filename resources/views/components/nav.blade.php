@@ -43,11 +43,11 @@
                             'label' => 'navigation.projects',
                             'children' => ['projects.show'],
                         ],
-                        // [
-                        //     'route' => 'parrainage.index',
-                        //     'label' => 'navigation.parrainage',
-                        //     'children' => [],
-                        // ],
+                        [
+                            'route' => 'parrainage.index',
+                            'label' => 'navigation.parrainage',
+                            'children' => [],
+                        ],
                         [
                             'route' => 'contact',
                             'label' => 'navigation.contact',
