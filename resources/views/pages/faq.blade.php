@@ -71,7 +71,6 @@
                     <h3>@lang('faq.not_found_title')</h3>
                     <p>@lang('faq.not_found_text')</p>
                     <a href="{{ localized_route('contact') }}" class="contact-btn">
-                        <i class="fa-regular fa-envelope"></i>
                         @lang('faq.contact_btn')
                     </a>
                 </div>
@@ -82,8 +81,8 @@
     {{-- CSS : ON GARDE TON CODE ORIGINAL INTACT --}}
     <style coped>
         /* ============================================
-                                                                       PAGE FAQ - STYLES AVEC VOS COULEURS
-                                                                       ============================================ */
+                                                                           PAGE FAQ - STYLES AVEC VOS COULEURS
+                                                                           ============================================ */
 
         :root {
             --color-primary: #feed02;
@@ -135,8 +134,8 @@
         }
 
         /* ============================================
-                                                                       BARRE DE RECHERCHE
-                                                                       ============================================ */
+                                                                           BARRE DE RECHERCHE
+                                                                           ============================================ */
         .faq-search-wrapper {
             max-width: 600px;
             margin: 40px auto 30px;
@@ -213,8 +212,8 @@
         }
 
         /* ============================================
-                                                                       CATÉGORIES
-                                                                       ============================================ */
+                                                                           CATÉGORIES
+                                                                           ============================================ */
         .faq-categories {
             display: flex;
             justify-content: center;
@@ -260,8 +259,8 @@
         }
 
         /* ============================================
-                                                                       GRILLE FAQ
-                                                                       ============================================ */
+                                                                           GRILLE FAQ
+                                                                           ============================================ */
         .faq-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -319,8 +318,8 @@
         }
 
         /* ============================================
-                                                                       ITEMS FAQ
-                                                                       ============================================ */
+                                                                           ITEMS FAQ
+                                                                           ============================================ */
         .faq-item {
             background: white;
             border-radius: 16px;
@@ -417,8 +416,8 @@
         }
 
         /* ============================================
-                                                                       ÉLÉMENTS SPÉCIAUX DANS LES RÉPONSES
-                                                                       ============================================ */
+                                                                           ÉLÉMENTS SPÉCIAUX DANS LES RÉPONSES
+                                                                           ============================================ */
         .faq-highlight {
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             color: var(--color-text);
@@ -498,8 +497,8 @@
         }
 
         /* ============================================
-                                                                       SECTION "VOUS N'AVEZ PAS TROUVÉ?"
-                                                                       ============================================ */
+                                                                           SECTION "VOUS N'AVEZ PAS TROUVÉ?"
+                                                                           ============================================ */
         .faq-no-answer {
             margin: 80px 0 40px;
             padding: 60px 40px;
@@ -565,8 +564,8 @@
         }
 
         /* ============================================
-                                                                       RECHERCHE HIGHLIGHT
-                                                                       ============================================ */
+                                                                           RECHERCHE HIGHLIGHT
+                                                                           ============================================ */
         .faq-item.highlight {
             animation: highlightPulse 1s ease 2;
             border-color: var(--color-primary);
@@ -585,8 +584,8 @@
         }
 
         /* ============================================
-                                                                       RESPONSIVE
-                                                                       ============================================ */
+                                                                           RESPONSIVE
+                                                                           ============================================ */
 
         /* Tablettes (1024px) */
         @media (max-width: 1024px) {

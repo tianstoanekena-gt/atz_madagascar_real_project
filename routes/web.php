@@ -45,7 +45,6 @@ Route::prefix('{locale}')
         // Activités (Frontend)
         Route::get('/activities', [App\Http\Controllers\ActivityPageController::class, 'index'])->name('activities');
         Route::get('/activities/{slug}', [App\Http\Controllers\ActivityPageController::class, 'show'])->name('activities.show');
-        //projects
         // Projets (Frontend)
         Route::get('/projects', [\App\Http\Controllers\ProjectPageController::class, 'index'])->name('projects');
         Route::get('/projects/{slug}', [\App\Http\Controllers\ProjectPageController::class, 'show'])->name('projects.show');
@@ -58,6 +57,10 @@ Route::prefix('{locale}')
         Route::get('/stats', [App\Http\Controllers\StatsController::class, 'index'])->name('stats');
         // Parrainage (Frontend)
         Route::get('/parrainage', [App\Http\Controllers\ParrainageController::class, 'index'])->name('parrainage.index');
+        // Sponsoring route (frontend)
+        Route::get('/sponsors', [App\Http\Controllers\SponsorController::class, 'index'])->name('sponsors');
+        //sponsor details route (frontend)
+        Route::get('/sponsors/{slug}', [App\Http\Controllers\SponsorController::class, 'show'])->name('sponsors.show');
     });
 
 
