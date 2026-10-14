@@ -32,6 +32,10 @@ class StudentController extends Controller
             'whatsapp' => ['nullable', 'regex:/^\+?[0-9]{10,15}$/'],
             'education_level' => ['required', 'in:primaire,college,lycee,superieur,formation_pro'],
             'description' => ['required', 'string', 'min:20', 'max:2000'],
+            'description_mg' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'needs_mg' => ['nullable', 'string'],
+            'needs_en' => ['nullable', 'string'],
             'needs' => ['required', 'string', 'min:10', 'max:1000'],
             'target_amount' => ['required', 'numeric', 'min:10000', 'max:100000000'],
             'status' => ['required', 'in:pending,active,completed'],
@@ -52,6 +56,8 @@ class StudentController extends Controller
         $validated['order'] = $request->order ?? 0;
 
         Student::create($validated);
+
+        //dd($request->all());
 
         return redirect()->route('admin.students.index')
             ->with('success', 'Élève ajouté avec succès.');
@@ -74,7 +80,11 @@ class StudentController extends Controller
             'whatsapp' => ['nullable', 'regex:/^\+?[0-9]{10,15}$/'],
             'education_level' => ['required', 'in:primaire,college,lycee,superieur,formation_pro'],
             'description' => ['required', 'string', 'min:20', 'max:2000'],
+            'description_mg' => ['nullable', 'string'],       // ✅ AJOUTÉ
+            'description_en' => ['nullable', 'string'],       // ✅ AJOUTÉ
             'needs' => ['required', 'string', 'min:10', 'max:1000'],
+            'needs_mg' => ['nullable', 'string'],             // ✅ AJOUTÉ
+            'needs_en' => ['nullable', 'string'],             // ✅ AJOUTÉ
             'target_amount' => ['required', 'numeric', 'min:10000', 'max:100000000'],
             'status' => ['required', 'in:pending,active,completed'],
             'is_featured' => ['boolean'],
@@ -87,7 +97,6 @@ class StudentController extends Controller
 
         // Si nouvelle photo uploadée
         if ($request->hasFile('photo')) {
-            // Supprimer l'ancienne photo
             if ($student->photo) {
                 Storage::disk('public')->delete($student->photo);
             }
@@ -99,7 +108,6 @@ class StudentController extends Controller
         return redirect()->route('admin.students.index')
             ->with('success', 'Élève mis à jour avec succès.');
     }
-
     public function destroy(Student $student)
     {
         // Vérifier s'il y a des sponsorships en cours

@@ -19,4 +19,10 @@ class ParrainageController extends Controller
         // On envoie $students à la vue (c'est ce qu'attend ton filtrage JS)
         return view('pages.parrainage.index', compact('students'));
     }
+
+    public function show($studentId)
+    {
+        $student = \App\Models\Student::findOrFail($studentId);
+        return view('pages.parrainage.show', compact('student'));
+    }
 }

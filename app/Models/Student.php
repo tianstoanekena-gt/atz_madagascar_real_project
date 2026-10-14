@@ -19,7 +19,11 @@ class Student extends Model
         'whatsapp',
         'education_level',
         'description',
+        'description_mg',
+        'description_en',
         'needs',
+        'needs_mg',
+        'needs_en',
         'target_amount',
         'collected_amount',
         'status',
@@ -36,7 +40,6 @@ class Student extends Model
     ];
 
     // ==================== RELATIONS ====================
-
     public function sponsorships(): HasMany
     {
         return $this->hasMany(Sponsorship::class);
@@ -50,7 +53,6 @@ class Student extends Model
     }
 
     // ==================== SCOPES ====================
-
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
@@ -78,76 +80,48 @@ class Student extends Model
 
     // ==================== ACCESSORS ====================
 
-    /**
-     * Âge calculé dynamiquement à partir de la date de naissance
-     */
     public function getAgeAttribute(): int
     {
         return $this->birth_date->age;
     }
 
-    /**
-     * Nom complet
-     */
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
 
-    /**
-     * URL complète de la photo
-     */
     public function getPhotoUrlAttribute(): string
     {
         return $this->photo ? Storage::url($this->photo) : asset('assets/images/default-student.png');
     }
 
-    /**
-     * Progression du financement (en %)
-     */
     public function getProgressAttribute(): float
     {
         if ($this->target_amount <= 0) return 0;
         return min(100, round(($this->collected_amount / $this->target_amount) * 100, 2));
     }
 
-    /**
-     * Montant restant à collecter
-     */
     public function getRemainingAmountAttribute(): float
     {
         return max(0, $this->target_amount - $this->collected_amount);
     }
 
     /**
-     * Traduction du niveau d'éducation
+     * Traduction dynamique du niveau d'éducation via les fichiers de langue
      */
     public function getEducationLevelLabelAttribute(): string
     {
-        return [
-            'primaire' => 'Primaire',
-            'college' => 'Collège',
-            'lycee' => 'Lycée',
-            'superieur' => 'Études supérieures',
-            'formation_pro' => 'Formation professionnelle',
-        ][$this->education_level] ?? $this->education_level;
+        return __('students.levels.' . $this->education_level);
     }
 
     /**
-     * Traduction du statut
+     * Traduction dynamique du statut via les fichiers de langue
      */
     public function getStatusLabelAttribute(): string
     {
-        return [
-            'pending' => 'En attente',
-            'active' => 'En cours',
-            'completed' => 'Terminé',
-        ][$this->status] ?? $this->status;
+        return __('students.statuses.' . $this->status);
     }
 
-    /**
-     * Couleur du badge statut
-     */
     public function getStatusColorAttribute(): string
     {
         return [
@@ -155,5 +129,39 @@ class Student extends Model
             'active' => 'green',
             'completed' => 'blue',
         ][$this->status] ?? 'gray';
+    }
+
+    /**
+     * Récupère la description traduite selon la langue active
+     */
+    public function getDescriptionTranslatedAttribute(): string
+    {
+        $locale = app()->getLocale();
+
+        if ($locale === 'mg' && $this->description_mg) {
+            return $this->description_mg;
+        }
+        if ($locale === 'en' && $this->description_en) {
+            return $this->description_en;
+        }
+
+        return $this->description; // Fallback sur le français
+    }
+
+    /**
+     * Récupère les besoins traduits selon la langue active
+     */
+    public function getNeedsTranslatedAttribute(): string
+    {
+        $locale = app()->getLocale();
+
+        if ($locale === 'mg' && $this->needs_mg) {
+            return $this->needs_mg;
+        }
+        if ($locale === 'en' && $this->needs_en) {
+            return $this->needs_en;
+        }
+
+        return $this->needs; // Fallback sur le français
     }
 }

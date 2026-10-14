@@ -57,6 +57,12 @@ Route::prefix('{locale}')
         Route::get('/stats', [App\Http\Controllers\StatsController::class, 'index'])->name('stats');
         // Parrainage (Frontend)
         Route::get('/parrainage', [App\Http\Controllers\ParrainageController::class, 'index'])->name('parrainage.index');
+        Route::get('/parrain/{studentId}', [\App\Http\Controllers\ParrainageController::class, 'show'])->name('parrainage.show');
+        // Pages protégées (nécessite d'être connecté via Breeze)
+        Route::middleware('auth')->group(function () {
+            Route::get('/parrain/{student}/parrainer', [\App\Http\Controllers\ParrainageController::class, 'form'])->name('parrainage.form');
+            Route::post('/parrain/{student}/parrainer', [\App\Http\Controllers\ParrainageController::class, 'store'])->name('parrainage.store');
+        });
         // Sponsoring route (frontend)
         Route::get('/sponsors', [App\Http\Controllers\SponsorController::class, 'index'])->name('sponsors');
         //sponsor details route (frontend)

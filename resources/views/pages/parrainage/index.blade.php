@@ -24,10 +24,10 @@
                         <i class="fas fa-filter"></i>
                         @lang('parrainage.filter_by_level')
                     </h3>
-                    <span class="total-count">
+                    {{-- <span class="total-count">
                         <span id="visible-count">{{ $students->count() }}</span>
                         <span>@lang('parrainage.students_found')</span>
-                    </span>
+                    </span> --}}
                 </div>
 
                 <div class="filters-buttons">
@@ -79,11 +79,6 @@
                                     <i class="fas fa-check-circle"></i>
                                     <span>@lang('parrainage.completed')</span>
                                 </div>
-                            @else
-                                <div class="student-status available">
-                                    <span class="status-dot"></span>
-                                    <span>@lang('parrainage.available')</span>
-                                </div>
                             @endif
                         </div>
                         {{-- Contenu --}}
@@ -107,7 +102,7 @@
                                         <i class="fas fa-birthday-cake"></i>
                                     </span>
                                     <span>
-                                        {{ $student->age }} ans
+                                        {{ $student->age }} @lang('students.years_old')
                                     </span>
                                 </div>
                                 <div class="student-info student-location">
@@ -119,9 +114,9 @@
                                     </span>
                                 </div>
                             </div>
-                            {{-- Description courte --}}
+                            {{-- Description courte (Traduite dynamiquement) --}}
                             <p class="student-description">
-                                {{ Str::limit($student->description, 120) }}
+                                {{ Str::limit($student->description_translated, 180) }}
                             </p>
                             {{-- Progression --}}
                             <div class="progress-container">
@@ -153,7 +148,8 @@
                             {{-- CTA --}}
                             <div class="student-action">
                                 @if ($student->status !== 'completed')
-                                    <a href="{{ localized_route('contact') }}" class="btn-parrainer">
+                                    <a href="{{ route('parrainage.show', ['locale' => app()->getLocale(), 'studentId' => $student->id]) }}"
+                                        class="btn-parrainer">
                                         <span class="btn-content">
                                             <span class="btn-icon">
                                                 <i class="fas fa-heart"></i>
@@ -206,9 +202,9 @@
 
     <style>
         /* =========================================================
-                       VARIABLES — ATZ MADAGASCAR
-                       (MANQUANTES dans le fichier d'origine : c'était le bug)
-                       ========================================================= */
+                                                                                                                       VARIABLES — ATZ MADAGASCAR
+                                                                                                                       (MANQUANTES dans le fichier d'origine : c'était le bug)
+                                                                                                                       ========================================================= */
         :root {
             --par-primary: #feed02;
             --par-secondary: #0d0c43;
@@ -225,8 +221,8 @@
         }
 
         /* =========================================================
-                       BASE — SECTION / HERO
-                       ========================================================= */
+                                                                                                                       BASE — SECTION / HERO
+                                                                                                                       ========================================================= */
         .parrainage-section {
             padding: 4.5rem 0 6rem;
             background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
@@ -268,8 +264,8 @@
         }
 
         /* =========================================================
-                       FILTRES DYNAMIQUES
-                       ========================================================= */
+                                                                                                                       FILTRES DYNAMIQUES
+                                                                                                                       ========================================================= */
         .filters-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -403,8 +399,8 @@
         }
 
         /* =========================================================
-                       GRILLE DE CARTES
-                       ========================================================= */
+                                                                                                                       GRILLE DE CARTES
+                                                                                                                       ========================================================= */
         .students-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -777,8 +773,8 @@
         }
 
         /* =========================================================
-                       ÉTATS VIDES
-                       ========================================================= */
+                                                                                                                       ÉTATS VIDES
+                                                                                                                       ========================================================= */
         .empty-students,
         .no-results {
             grid-column: 1 / -1;
@@ -827,8 +823,8 @@
         }
 
         /* =========================================================
-                       RESPONSIVE
-                       ========================================================= */
+                                                                                                                       RESPONSIVE
+                                                                                                                       ========================================================= */
         @media (max-width: 700px) {
             .parrainage-title {
                 font-size: 2rem;
