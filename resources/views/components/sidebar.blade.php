@@ -120,13 +120,6 @@
                             Parrains
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.sponsorships.index') }}"
-                            class="submenu-link {{ request()->routeIs('admin.sponsorships.*') ? 'active' : '' }}">
-                            <i class="fas fa-hand-holding-heart"></i>
-                            Demandes
-                        </a>
-                    </li>
                 </ul>
             </li>
 

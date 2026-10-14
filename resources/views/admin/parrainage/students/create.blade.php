@@ -18,7 +18,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
                         <input type="text" name="first_name" value="{{ old('first_name') }}"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('first_name') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('first_name') border-red-500 @enderror"
                             required>
                         @error('first_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -27,7 +27,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
                         <input type="text" name="last_name" value="{{ old('last_name') }}"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('last_name') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('last_name') border-red-500 @enderror"
                             required>
                         @error('last_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -39,7 +39,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date de naissance</label>
                         <input type="date" name="birth_date" value="{{ old('birth_date') }}" max="{{ date('Y-m-d') }}"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('birth_date') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('birth_date') border-red-500 @enderror"
                             required>
                         @error('birth_date')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -48,7 +48,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Genre</label>
                         <select name="gender"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('gender') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('gender') border-red-500 @enderror"
                             required>
                             <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Masculin</option>
                             <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Féminin</option>
@@ -60,7 +60,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Photo (Obligatoire)</label>
                         <input type="file" name="photo" accept="image/*"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('photo') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('photo') border-red-500 @enderror"
                             required>
                         @error('photo')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -69,7 +69,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Localisation</label>
                         <input type="text" name="location" value="{{ old('location') }}"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('location') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('location') border-red-500 @enderror"
                             required>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp (Facultatif)</label>
                         <input type="text" name="whatsapp" value="{{ old('whatsapp') }}" placeholder="+261..."
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('whatsapp') border-red-500 @enderror">
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('whatsapp') border-red-500 @enderror">
                         @error('whatsapp')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
@@ -86,7 +86,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Niveau d'éducation</label>
                         <select name="education_level"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('education_level') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('education_level') border-red-500 @enderror"
                             required>
                             <option value="primaire">Primaire</option>
                             <option value="college">Collège</option>
@@ -100,14 +100,14 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Description (Situation actuelle)</label>
                     <textarea name="description" rows="3"
-                        class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('description') border-red-500 @enderror"
+                        class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('description') border-red-500 @enderror"
                         required>{{ old('description') }}</textarea>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Besoins spécifiques</label>
                     <textarea name="needs" rows="2"
-                        class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('needs') border-red-500 @enderror"
+                        class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('needs') border-red-500 @enderror"
                         required>{{ old('needs') }}</textarea>
                 </div>
 
@@ -115,7 +115,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Objectif (Ar)</label>
                         <input type="number" name="target_amount" value="{{ old('target_amount') }}" min="10000"
-                            class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('target_amount') border-red-500 @enderror"
+                            class="w-full border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('target_amount') border-red-500 @enderror"
                             required>
                     </div>
                     <div>
