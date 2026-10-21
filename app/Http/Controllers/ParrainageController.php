@@ -20,9 +20,19 @@ class ParrainageController extends Controller
         return view('pages.parrainage.index', compact('students'));
     }
 
-    public function show($studentId)
+    /**
+     * Affiche la page de détails publique d'un élève
+     */
+    public function show($locale = null, $studentId = null)
     {
-        $student = \App\Models\Student::findOrFail($studentId);
+        // MÉTHODE 100% SÉCURISÉE : 
+        // On récupère le paramètre par son NOM dans la route, 
+        // peu importe l'ordre ou les changements futurs d'URL.
+        $id = request()->route('studentId') ?? $studentId;
+
+        // On récupère l'élève (findOrFail gère automatiquement le 404 si l'ID n'existe pas)
+        $student = \App\Models\Student::findOrFail($id);
+
         return view('pages.parrainage.show', compact('student'));
     }
 }

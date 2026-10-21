@@ -26,4 +26,9 @@ return [
     'available' => 'Available',
     'progress' => 'Progress',
     'no_results' => 'No student matches this filter.',
+    'back_to_list' => 'Back to list',
+    'story_telling' => 'Storytelling',
+    'specific_needs' => 'what he/she needs',
+    'parrainage_thnks' => 'Thank you for your sponsorship!',
+    'cta_spronsor' => 'Contacted management to sponsor :name',
 ];

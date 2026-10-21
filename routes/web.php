@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // Redirige la racine vers FR
 Route::get('/', function () {
-    return redirect('/fr');
+    return redirect('/mg');
 });
 
 // Groupe multilingue pour les pages publiques
@@ -55,9 +55,15 @@ Route::prefix('{locale}')
         Route::get('/staff', [StaffController::class, 'index'])->name('staff');
         // Statistiques (pages publiques)
         Route::get('/stats', [App\Http\Controllers\StatsController::class, 'index'])->name('stats');
-        // Parrainage (Frontend)
+        // ==================== PARRAINAGE (FRONTEND) ====================
+        // Page publique (liste des enfants)
         Route::get('/parrainage', [App\Http\Controllers\ParrainageController::class, 'index'])->name('parrainage.index');
-        Route::get('/parrain/{studentId}', [\App\Http\Controllers\ParrainageController::class, 'show'])->name('parrainage.show');
+
+        // ✅ AJOUTE CETTE LIGNE ICI (Page de détails d'un élève - 100% publique)
+        Route::get('/parrainage/{studentId}', [App\Http\Controllers\ParrainageController::class, 'show'])->name('parrainage.show');
+
+        // Sponsoring route (frontend)
+        Route::get('/sponsors', [App\Http\Controllers\SponsorController::class, 'index'])->name('sponsor.index');
         // Pages protégées (nécessite d'être connecté via Breeze)
         Route::middleware('auth')->group(function () {
             Route::get('/parrain/{student}/parrainer', [\App\Http\Controllers\ParrainageController::class, 'form'])->name('parrainage.form');

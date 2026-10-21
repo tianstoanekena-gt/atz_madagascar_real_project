@@ -27,4 +27,9 @@ return [
     'available' => 'Disponible',
     'progress' => 'Progression',
     'no_results' => 'Aucun élève ne correspond à ce filtre.',
+    'back_to_list' => 'Retour à la liste',
+    'story_telling' => 'Récit',
+    'specific_needs' => 'ce dont il/elle a besoin',
+    'parrainage_thnks' => 'Merci pour votre parrainage !',
+    'cta_spronsor' => 'Contacté la direction pour parrainer :name',
 ];

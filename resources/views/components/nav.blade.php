@@ -46,7 +46,7 @@
                         [
                             'route' => 'parrainage.index',
                             'label' => 'navigation.parrainage',
-                            'children' => [],
+                            'children' => ['parrainage.show'],
                         ],
                         [
                             'route' => 'contact',

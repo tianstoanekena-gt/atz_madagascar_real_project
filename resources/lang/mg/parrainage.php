@@ -16,4 +16,9 @@ return [
     'filter_lycee' => 'Ambaratonga ambony',
     'filter_superieur' => 'Anjely manontolo',
     'filter_formation_pro' => 'Fiofanana matihanina',
+    'back_to_list' => 'Miverina any amin\'ny lisitra',
+    'story_telling' => 'Tantara keliny',
+    'specific_needs' => 'Ireo zavatra tena ilainy',
+    'parrainage_thnks' => 'Misaotra anao mialoha amin\'ny fandraisanao anjara !',
+    'cta_spronsor' => 'Manorata aminay raha te hanohana an\'i :name',
 ];
