@@ -31,4 +31,6 @@ return [
     'specific_needs' => 'what he/she needs',
     'parrainage_thnks' => 'Thank you for your sponsorship!',
     'cta_spronsor' => 'Contacted management to sponsor :name',
+    'sponsored' => 'Already sponsored',
+    'sponsored_by' => 'Sponsored by :name',
 ];

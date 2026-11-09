@@ -30,6 +30,61 @@ class SponsorshipController extends Controller
         return view('admin.parrainage.sponsorships.index', compact('sponsorships', 'students'));
     }
 
+    /**
+     * Affiche le formulaire de création d'un parrainage (Liaison manuelle)
+     */
+    public function create(Request $request)
+    {
+        // Récupère tous les parrains et les élèves disponibles
+        $godparents = \App\Models\Godparent::orderBy('last_name')->get();
+        $students = \App\Models\Student::whereIn('status', ['pending', 'active'])->ordered()->get();
+
+        // Permet de pré-sélectionner un parrain ou un élève si on vient d'une fiche dédiée
+        $selectedGodparent = $request->query('godparent_id');
+        $selectedStudent = $request->query('student_id');
+
+        return view('admin.parrainage.sponsorships.create', compact('godparents', 'students', 'selectedGodparent', 'selectedStudent'));
+    }
+
+    /**
+     * Enregistre la liaison Parrain <-> Élève
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'godparent_id' => ['required', 'exists:godparents,id'],
+            'student_id' => ['required', 'exists:students,id'],
+            'amount' => ['required', 'numeric', 'min:1000'],
+            'message' => ['nullable', 'string', 'max:1000'],
+        ], [
+            'godparent_id.exists' => 'Le parrain sélectionné est invalide.',
+            'student_id.exists' => 'L\'élève sélectionné est invalide.',
+            'amount.min' => 'Le montant doit être d\'au moins 1 000 Ar.',
+        ]);
+
+        // 1. Créer le parrainage (Statut 'validated' directement car c'est l'admin qui le saisit)
+        $sponsorship = Sponsorship::create([
+            'godparent_id' => $validated['godparent_id'],
+            'student_id' => $validated['student_id'],
+            'amount' => $validated['amount'],
+            'message' => $validated['message'] ?? '',
+            'payment_status' => 'validated',
+            'validated_by' => Auth::id(),
+            'validated_at' => now(),
+        ]);
+
+        // 2. Incrémenter le montant collecté de l'élève
+        $sponsorship->student->increment('collected_amount', $validated['amount']);
+
+        // 3. Vérifier si l'objectif est atteint pour changer le statut
+        if ($sponsorship->student->collected_amount >= $sponsorship->student->target_amount) {
+            $sponsorship->student->update(['status' => 'completed']);
+        }
+
+        return redirect()->route('admin.sponsorships.index')
+            ->with('success', 'Parrainage créé et validé avec succès. Le montant a été ajouté à l\'élève.');
+    }
+
     public function show(Sponsorship $sponsorship)
     {
         $sponsorship->load(['student', 'godparent', 'validator']);

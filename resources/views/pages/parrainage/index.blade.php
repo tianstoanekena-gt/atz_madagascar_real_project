@@ -79,6 +79,16 @@
                                     <i class="fas fa-check-circle"></i>
                                     <span>@lang('parrainage.completed')</span>
                                 </div>
+                            @elseif ($student->is_sponsored)
+                                <div class="student-status sponsored">
+                                    <i class="fas fa-heart"></i>
+                                    <span>@lang('parrainage.sponsored')</span>
+                                </div>
+                            @else
+                                {{-- <div class="student-status available">
+                                    <span class="status-dot"></span>
+                                    <span>@lang('parrainage.available')</span>
+                                </div> --}}
                             @endif
                         </div>
                         {{-- Contenu --}}
@@ -118,33 +128,6 @@
                             <p class="student-description">
                                 {{ Str::limit($student->description_translated, 180) }}
                             </p>
-                            {{-- Progression --}}
-                            <div class="progress-container">
-                                <div class="progress-top">
-                                    <div class="progress-title">
-                                        <i class="fas fa-hand-holding-heart"></i>
-                                        <span>@lang('parrainage.progress')</span>
-                                    </div>
-                                    <span class="progress-percentage">
-                                        {{ $student->progress }}%
-                                    </span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill" style="--progress-width: {{ $student->progress }}%">
-                                        <span class="progress-glow"></span>
-                                    </div>
-                                </div>
-                                <div class="progress-labels">
-                                    <span class="amount-current">
-                                        {{ number_format($student->collected_amount, 0, ',', ' ') }}
-                                        <small>Ar</small>
-                                    </span>
-                                    <span class="amount-target">
-                                        {{ number_format($student->target_amount, 0, ',', ' ') }}
-                                        <small>Ar</small>
-                                    </span>
-                                </div>
-                            </div>
                             {{-- CTA --}}
                             <div class="student-action">
                                 @if ($student->status !== 'completed')
@@ -202,9 +185,9 @@
 
     <style>
         /* =========================================================
-                                                                                                                           VARIABLES — ATZ MADAGASCAR
-                                                                                                                           (MANQUANTES dans le fichier d'origine : c'était le bug)
-                                                                                                                           ========================================================= */
+                                                                                                                                                               VARIABLES — ATZ MADAGASCAR
+                                                                                                                                                               (MANQUANTES dans le fichier d'origine : c'était le bug)
+                                                                                                                                                               ========================================================= */
         :root {
             --par-primary: #feed02;
             --par-secondary: #0d0c43;
@@ -221,8 +204,8 @@
         }
 
         /* =========================================================
-                                                                                                                           BASE — SECTION / HERO
-                                                                                                                           ========================================================= */
+                                                                                                                                                               BASE — SECTION / HERO
+                                                                                                                                                               ========================================================= */
         .parrainage-section {
             padding: 4.5rem 0 6rem;
             background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
@@ -264,8 +247,8 @@
         }
 
         /* =========================================================
-                                                                                                                           FILTRES DYNAMIQUES
-                                                                                                                           ========================================================= */
+                                                                                                                                                               FILTRES DYNAMIQUES
+                                                                                                                                                               ========================================================= */
         .filters-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -274,6 +257,27 @@
             margin-bottom: 2.5rem;
             box-shadow: var(--par-shadow);
             border: 1px solid var(--par-border);
+        }
+
+        .student-status.sponsored {
+            background: var(--par-primary);
+            color: var(--par-secondary);
+        }
+
+        .student-status.sponsored i {
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.25);
+            }
         }
 
         .filters-header {
@@ -399,8 +403,8 @@
         }
 
         /* =========================================================
-                                                                                                                           GRILLE DE CARTES
-                                                                                                                           ========================================================= */
+                                                                                                                                                               GRILLE DE CARTES
+                                                                                                                                                               ========================================================= */
         .students-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -773,8 +777,8 @@
         }
 
         /* =========================================================
-                                                                                                                           ÉTATS VIDES
-                                                                                                                           ========================================================= */
+                                                                                                                                                               ÉTATS VIDES
+                                                                                                                                                               ========================================================= */
         .empty-students,
         .no-results {
             grid-column: 1 / -1;
@@ -823,8 +827,8 @@
         }
 
         /* =========================================================
-                                                                                                                           RESPONSIVE
-                                                                                                                           ========================================================= */
+                                                                                                                                                               RESPONSIVE
+                                                                                                                                                               ========================================================= */
         @media (max-width: 700px) {
             .parrainage-title {
                 font-size: 2rem;

@@ -34,27 +34,12 @@
                                 <span class="show-tag">
                                     <i class="fas fa-map-marker-alt"></i> {{ $student->location }}
                                 </span>
-                            </div>
-                        </div>
-
-                        {{-- Barre de progression --}}
-                        <div class="show-progress-card">
-                            <div class="progress-header">
-                                <div>
-                                    <p class="progress-amount">{{ number_format($student->collected_amount, 0, ',', ' ') }}
-                                        <small>Ar</small>
-                                    </p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="progress-target">{{ number_format($student->target_amount, 0, ',', ' ') }}
-                                        <small>Ar</small>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill" style="--progress-width: {{ $student->progress }}%">
-                                    <span class="progress-glow"></span>
-                                </div>
+                                @if ($student->is_sponsored && $student->main_godparent)
+                                    <span class="show-tag sponsored-tag">
+                                        <i class="fas fa-heart"></i>
+                                        <span>@lang('parrainage.sponsored_by', ['name' => $student->main_godparent])</span>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -89,15 +74,33 @@
                             <div class="show-cta-card">
                                 <h3 class="cta-title">@lang('parrainage.parrainage_thnks', ['name' => explode(' ', $student->first_name)[0], 'default' => 'Vous souhaitez parrainer ' . explode(' ', $student->first_name)[0] . ' ?'])</h3>
 
-
-                                <a href="{{ route('contact', ['locale' => app()->getLocale()]) }}" class="show-cta-btn">
-                                    <span class="btn-content">
+                                {{-- ✅ STATUT AU-DESSUS DU BOUTON --}}
+                                @if ($student->is_sponsored && $student->main_godparent)
+                                    <div class="sponsored-status-banner">
                                         <i class="fas fa-heart"></i>
-                                        <span>@lang('parrainage.cta_spronsor', ['name' => explode(' ', $student->first_name)[0]])</span>
-                                        {{-- <i class="fas fa-arrow-right"></i> --}}
-                                    </span>
-                                    <span class="btn-shine"></span>
-                                </a>
+                                        <span>@lang('parrainage.sponsored_by', ['name' => $student->main_godparent])</span>
+                                    </div>
+                                @endif
+
+                                {{-- ✅ BOUTON CONDITIONNEL --}}
+                                @if ($student->is_sponsored)
+                                    {{-- Bouton désactivé si déjà parrainé --}}
+                                    <button type="button" class="show-cta-btn btn-disabled" disabled>
+                                        <span class="btn-content">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>@lang('parrainage.already_sponsored', 'Déjà parrainé')</span>
+                                        </span>
+                                    </button>
+                                @else
+                                    {{-- Bouton actif si disponible --}}
+                                    <a href="{{ route('contact', ['locale' => app()->getLocale()]) }}" class="show-cta-btn">
+                                        <span class="btn-content">
+                                            <i class="fas fa-heart"></i>
+                                            <span>@lang('parrainage.cta_spronsor', ['name' => explode(' ', $student->first_name)[0]])</span>
+                                        </span>
+                                        <span class="btn-shine"></span>
+                                    </a>
+                                @endif
                             </div>
                         </div>
 
@@ -109,8 +112,8 @@
 
     <style>
         /* =========================================================
-                                                                                   VARIABLES & BASE - COULEURS ATZ MADAGASCAR
-                                                                                   ========================================================= */
+                                                                                                               VARIABLES & BASE - COULEURS ATZ MADAGASCAR
+                                                                                                               ========================================================= */
         :root {
             --show-primary: #feed02;
             --show-secondary: #c7ba04;
@@ -125,6 +128,58 @@
             --show-radius: 1.5rem;
             --show-shadow: 0 20px 40px rgba(13, 12, 67, 0.08);
             --show-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Banner de statut "Déjà parrainé" */
+        .sponsored-status-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(254, 237, 2, 0.15);
+            border: 1px solid var(--show-primary);
+            border-radius: 999px;
+            color: var(--show-primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .sponsored-status-banner i {
+            animation: heartBeatBanner 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeatBanner {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        /* Bouton désactivé */
+        .show-cta-btn.btn-disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            box-shadow: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .show-cta-btn.btn-disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            box-shadow: none;
+        }
+
+        .show-cta-btn.btn-disabled .btn-content {
+            opacity: 0.7;
         }
 
         .student-show-section {
@@ -303,6 +358,29 @@
 
         .show-tag i {
             color: var(--show-primary);
+        }
+
+        .show-tag.sponsored-tag {
+            background: rgba(254, 237, 2, 0.25);
+            border-color: var(--show-primary);
+            color: var(--show-primary);
+            font-weight: 700;
+        }
+
+        .show-tag.sponsored-tag i {
+            animation: heartBeatShow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeatShow {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
         }
 
         /* Progression */
@@ -534,8 +612,8 @@
         }
 
         /* =========================================================
-                                                                                   RESPONSIVE - TABLETTE (max-width: 899px)
-                                                                                   ========================================================= */
+                                                                                                               RESPONSIVE - TABLETTE (max-width: 899px)
+                                                                                                               ========================================================= */
         @media (max-width: 899px) {
             .student-show-section {
                 padding: 2rem 1.25rem 4rem;
@@ -561,8 +639,8 @@
         }
 
         /* =========================================================
-                                                                                   RESPONSIVE - MOBILE (max-width: 600px)
-                                                                                   ========================================================= */
+                                                                                                               RESPONSIVE - MOBILE (max-width: 600px)
+                                                                                                               ========================================================= */
         @media (max-width: 600px) {
             .student-show-section {
                 padding: 1.5rem 1rem 3rem;
@@ -650,8 +728,8 @@
         }
 
         /* =========================================================
-                                                                                   RESPONSIVE - TRÈS PETIT ÉCRAN (max-width: 400px)
-                                                                                   ========================================================= */
+                                                                                                               RESPONSIVE - TRÈS PETIT ÉCRAN (max-width: 400px)
+                                                                                                               ========================================================= */
         @media (max-width: 400px) {
             .student-show-section {
                 padding: 1rem 0.75rem 2.5rem;

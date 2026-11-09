@@ -164,4 +164,27 @@ class Student extends Model
 
         return $this->needs; // Fallback sur le français
     }
+
+    /**
+     * Vérifie si l'élève a au moins un parrainage validé
+     */
+    public function getIsSponsoredAttribute(): bool
+    {
+        return $this->sponsorships()
+            ->where('payment_status', 'validated')
+            ->exists();
+    }
+
+    /**
+     * Récupère le nom du parrain principal (le premier validé)
+     */
+    public function getMainGodparentAttribute(): ?string
+    {
+        $sponsorship = $this->sponsorships()
+            ->where('payment_status', 'validated')
+            ->with('godparent')
+            ->first();
+
+        return $sponsorship ? $sponsorship->godparent->full_name : null;
+    }
 }

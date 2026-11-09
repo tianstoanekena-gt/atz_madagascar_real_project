@@ -32,4 +32,6 @@ return [
     'specific_needs' => 'ce dont il/elle a besoin',
     'parrainage_thnks' => 'Merci pour votre parrainage !',
     'cta_spronsor' => 'Contacté la direction pour parrainer :name',
+    'sponsored' => 'Déjà parrainé',
+    'sponsored_by' => 'Parrainé par :name',
 ];

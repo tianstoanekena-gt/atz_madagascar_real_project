@@ -120,6 +120,14 @@
                             Parrains
                         </a>
                     </li>
+                    {{-- ✅ NOUVEAU LIEN AJOUTÉ ICI --}}
+                    <li>
+                        <a href="{{ route('admin.sponsorships.index') }}"
+                            class="submenu-link {{ request()->routeIs('admin.sponsorships.*') ? 'active' : '' }}">
+                            <i class="fas fa-handshake"></i>
+                            Liaisons & Dons
+                        </a>
+                    </li>
                 </ul>
             </li>
 

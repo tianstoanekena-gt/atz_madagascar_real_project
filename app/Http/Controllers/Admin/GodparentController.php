@@ -18,6 +18,39 @@ class GodparentController extends Controller
         return view('admin.parrainage.godparents.index', compact('godparents'));
     }
 
+    public function create()
+    {
+        return view('admin.parrainage.godparents.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'first_name' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZÀ-ÿ\s\'\-]+$/u'],
+            'last_name' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZÀ-ÿ\s\'\-]+$/u'],
+            'email' => ['required', 'email:rfc,dns', 'max:255', 'unique:godparents,email'],
+            'whatsapp' => ['required', 'regex:/^\+?[0-9]{10,15}$/'],
+            'address' => ['required', 'string', 'max:500'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+        ], [
+            'first_name.regex' => 'Le prénom ne doit contenir que des lettres, espaces, apostrophes ou tirets.',
+            'last_name.regex' => 'Le nom ne doit contenir que des lettres, espaces, apostrophes ou tirets.',
+            'email.email' => 'Veuillez entrer une adresse email valide.',
+            'email.unique' => 'Cet email est déjà utilisé par un autre parrain.',
+            'whatsapp.regex' => 'Le numéro WhatsApp doit être au format international (ex: +261341234567).',
+        ]);
+
+        // Upload de la photo (facultatif)
+        if ($request->hasFile('photo')) {
+            $validated['photo'] = $request->file('photo')->store('godparents', 'public');
+        }
+
+        Godparent::create($validated);
+
+        return redirect()->route('admin.godparents.index')
+            ->with('success', 'Parrain ajouté avec succès.');
+    }
+
     public function show(Godparent $godparent)
     {
         $godparent->load(['sponsorships.student', 'user']);

@@ -21,4 +21,6 @@ return [
     'specific_needs' => 'Ireo zavatra tena ilainy',
     'parrainage_thnks' => 'Misaotra anao mialoha amin\'ny fandraisanao anjara !',
     'cta_spronsor' => 'Manorata aminay raha te hanohana an\'i :name',
+    'sponsored' => 'Efa misy miantoka',
+    'sponsored_by' => 'Iantohan\'i :name',
 ];

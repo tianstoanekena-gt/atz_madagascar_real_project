@@ -234,6 +234,10 @@ Route::middleware(['auth', 'verified'])
         // Gestion des parrains
         Route::get('dashboard/parrainage/godparents', [\App\Http\Controllers\Admin\GodparentController::class, 'index'])
             ->name('admin.godparents.index');
+        Route::get('dashboard/parrainage/godparents/create', [\App\Http\Controllers\Admin\GodparentController::class, 'create'])
+            ->name('admin.godparents.create');
+        Route::post('dashboard/parrainage/godparents', [\App\Http\Controllers\Admin\GodparentController::class, 'store'])
+            ->name('admin.godparents.store');
         Route::get('dashboard/parrainage/godparents/{godparent}', [\App\Http\Controllers\Admin\GodparentController::class, 'show'])
             ->name('admin.godparents.show');
         Route::get('dashboard/parrainage/godparents/{godparent}/edit', [\App\Http\Controllers\Admin\GodparentController::class, 'edit'])
@@ -256,6 +260,16 @@ Route::middleware(['auth', 'verified'])
             ->name('admin.sponsorships.reset');
         Route::delete('dashboard/parrainage/sponsorships/{sponsorship}', [\App\Http\Controllers\Admin\SponsorshipController::class, 'destroy'])
             ->name('admin.sponsorships.destroy');
+
+        // Gestion des demandes de parrainage (workflow CM)
+        Route::get('dashboard/parrainage/sponsorships/create', [\App\Http\Controllers\Admin\SponsorshipController::class, 'create'])
+            ->name('admin.sponsorships.create');
+        Route::post('dashboard/parrainage/sponsorships', [\App\Http\Controllers\Admin\SponsorshipController::class, 'store'])
+            ->name('admin.sponsorships.store');
+
+        Route::get('dashboard/parrainage/sponsorships', [\App\Http\Controllers\Admin\SponsorshipController::class, 'index'])
+            ->name('admin.sponsorships.index');
+        // ... (le reste des routes existantes)    
     });
 
 
