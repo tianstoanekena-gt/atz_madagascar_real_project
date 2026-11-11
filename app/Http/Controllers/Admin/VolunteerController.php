@@ -43,8 +43,8 @@ class VolunteerController extends Controller
             'translations.*.role' => 'required|string|max:255',
             'translations.*.description' => 'nullable|string|max:5000',
             'contacts' => 'nullable|array',
-            'contacts.*.contact_type_id' => 'required|exists:contact_types,id',
-            'contacts.*.contact_value' => 'required|string|max:255',
+            'contacts.*.contact_type_id' => 'nullable|exists:contact_types,id',
+            'contacts.*.contact_value' => 'nullable|string|max:255',
             'contacts.*.custom_url' => 'nullable|url|max:500',
         ]);
 
@@ -118,8 +118,8 @@ class VolunteerController extends Controller
             'translations.*.role' => 'required|string|max:255',
             'translations.*.description' => 'nullable|string|max:5000',
             'contacts' => 'nullable|array',
-            'contacts.*.contact_type_id' => 'required|exists:contact_types,id',
-            'contacts.*.contact_value' => 'required|string|max:255',
+            'contacts.*.contact_type_id' => 'nullable|exists:contact_types,id',
+            'contacts.*.contact_value' => 'nullable|string|max:255',
             'contacts.*.custom_url' => 'nullable|url|max:500',
         ]);
 

@@ -56,25 +56,26 @@
                                 @foreach ($member->allContacts as $contact)
                                     @php
                                         // Déterminer l'URL (custom ou générée)
-$url = $contact->url;
+                                        $url = $contact->url;
 
-// Déterminer le type pour data-type
-$dataType = $contact->type_slug;
+                                        // Déterminer le type pour data-type
+                                        $dataType = $contact->type_slug;
 
-// Mapping pour les icônes FontAwesome
-$iconMap = [
-    'email' => 'fas fa-envelope',
-    'whatsapp' => 'fab fa-whatsapp',
-    'facebook' => 'fab fa-facebook',
-    'linkedin' => 'fab fa-linkedin',
-    'instagram' => 'fab fa-instagram',
-    'phone' => 'fas fa-phone',
-    'website' => 'fas fa-globe',
-    'twitter' => 'fab fa-twitter',
-    'tiktok' => 'fab fa-tiktok',
-    'other' => 'fas fa-link',
-];
-$iconClass = $iconMap[$dataType] ?? 'fas fa-link';
+                                        // Mapping pour les icônes FontAwesome
+                                        $iconMap = [
+                                            'email' => 'fas fa-envelope',
+                                            'whatsapp' => 'fab fa-whatsapp',
+                                            'facebook' => 'fab fa-facebook',
+                                            'messenger' => 'fab fa-facebook-messenger',
+                                            'linkedin' => 'fab fa-linkedin',
+                                            'instagram' => 'fab fa-instagram',
+                                            'phone' => 'fas fa-phone',
+                                            'website' => 'fas fa-globe',
+                                            'twitter' => 'fab fa-twitter',
+                                            'tiktok' => 'fab fa-tiktok',
+                                            'other' => 'fas fa-link',
+                                        ];
+                                        $iconClass = $iconMap[$dataType] ?? 'fas fa-link';
                                     @endphp
 
                                     <a href="{{ $url }}" class="contact-link" data-type="{{ $dataType }}"
