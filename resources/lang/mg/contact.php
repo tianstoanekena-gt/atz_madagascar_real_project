@@ -3,7 +3,7 @@
 return [
     'sec_title' => 'Mifandraisa aminay',
     'sec_desc' => 'Raha manana fanontaniana ianao dia aza misalasala mifandray aminay. Hamaly anao izahay ao anatin’ny fotoana fohy mba hanampiana anao.',
-    'coordonates' => 'Ny mombamomba anay',
+    'coordonates' => 'Ireo tambajotran-tserasera ahitanao anay',
     'form_title' => 'Alefaso aminay ny hafatrao',
     'form_name' => 'Ny anaranao',
     'form_email' => 'Ny mailakao',

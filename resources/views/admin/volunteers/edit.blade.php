@@ -239,13 +239,13 @@
 
                                                 <div>
                                                     <label class="block text-xs font-medium text-gray-600 mb-1">
-                                                        URL personnalisée (optionnel)
+                                                        URL personnalisée (ex: https://..., mailto:..., tel:...)
                                                     </label>
-                                                    <input type="url"
+                                                    <input type="text"
                                                         name="contacts[{{ $type->id }}][custom_url]"
-                                                        value="{{ old('contacts.' . $type->id . '.custom_url', $memberContact->custom_url ?? '') }}"
+                                                        value="{{ old('contacts.' . $type->id . '.custom_url') }}"
                                                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                                        placeholder="https://...">
+                                                        placeholder="mailto:exemple@email.com ou https://...">
                                                 </div>
                                             </div>
                                         </div>

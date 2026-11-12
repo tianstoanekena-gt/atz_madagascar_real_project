@@ -40,10 +40,10 @@
 
                     {{-- KPI --}}
                     <div class="kpi-grid">
-                        <div class="kpi-box">
+                        {{-- <div class="kpi-box">
                             <span>@lang('project.kpi_beneficiaries')</span>
                             <strong>{{ $project->beneficiaries_count ?? 0 }}</strong>
-                        </div>
+                        </div> --}}
                         <div class="kpi-box success">
                             <span>@lang('project.kpi_progress')</span>
                             <strong>{{ $project->progress_percentage }}%</strong>
@@ -85,8 +85,8 @@
                                     <div class="progress-fill" data-progress="{{ $project->progress_percentage }}"></div>
                                 </div>
                                 <div class="progress-amounts">
-                                    <span>{{ number_format($project->current_amount, 0, ',', ' ') }} Ar</span>
-                                    <span>{{ number_format($project->target_amount, 0, ',', ' ') }} Ar</span>
+                                    {{-- <span>{{ number_format($project->current_amount, 0, ',', ' ') }} Ar</span>
+                                    <span>{{ number_format($project->target_amount, 0, ',', ' ') }} Ar</span> --}}
                                 </div>
                             </div>
                         @endif

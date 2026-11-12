@@ -45,7 +45,11 @@ class VolunteerController extends Controller
             'contacts' => 'nullable|array',
             'contacts.*.contact_type_id' => 'nullable|exists:contact_types,id',
             'contacts.*.contact_value' => 'nullable|string|max:255',
-            'contacts.*.custom_url' => 'nullable|url|max:500',
+            'contacts.*.custom_url' => [
+                'nullable',
+                'max:500',
+                'regex:/^(https?:\/\/|mailto:|tel:|whatsapp:).+$/i'
+            ],
         ]);
 
         DB::beginTransaction();
@@ -120,7 +124,11 @@ class VolunteerController extends Controller
             'contacts' => 'nullable|array',
             'contacts.*.contact_type_id' => 'nullable|exists:contact_types,id',
             'contacts.*.contact_value' => 'nullable|string|max:255',
-            'contacts.*.custom_url' => 'nullable|url|max:500',
+            'contacts.*.custom_url' => [
+                'nullable',
+                'max:500',
+                'regex:/^(https?:\/\/|mailto:|tel:|whatsapp:).+$/i'
+            ],
         ]);
 
         DB::beginTransaction();

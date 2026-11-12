@@ -1,15 +1,15 @@
 <?php
 return [
     'about_section' => 'À propos',
-    'about_description' => 'ATZ est une plateforme moderne dédiée à la gestion et à la digitalisation des services pour faciliter la relation entre les membres de l\'association et les partenaires',
+    'about_description' => 'Ce site web a été conçu par un jeune soutenu par l\'association Akany Tia Zaza. Il a été créé afin d\'améliorer la communication et les échanges avec nos membres et partenaires, tant au niveau local (à Madagascar) qu\'à l\'international. Ce portail vise également à faire connaître l\'existence de notre association, ainsi qu\'à solliciter des soutiens et des partenariats dans tous les domaines, sans distinction. Merci infiniment !',
     'quick_links' => 'Liens rapides',
     'home_link' => 'Accueil',
     'about_link' => 'À propos',
     'activities_link' => 'Activités',
     'contact_link' => 'Contact',
     'contact_section' => 'Contact',
-    'contact_email' => 'Email : contact@atz.mg',
-    'contact_phone' => 'Tél : +261 34 00 000 00',
+    'contact_email' => 'Email : atz.andranovelona.fihavanana@gmail.com',
+    'contact_phone' => 'Tél : +261 38 41 007 47',
     'contact_address' => 'Antananarivo, Madagascar',
     'follow_us' => 'Suivez-nous',
     'social_facebook' => 'Facebook',

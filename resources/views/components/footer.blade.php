@@ -57,7 +57,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>@lang('footer.copyright')</p>
+            <p>@lang('footer.copyright', ['year' => date('Y')])</p>
         </div>
 
     </footer>

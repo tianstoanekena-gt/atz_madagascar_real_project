@@ -159,6 +159,13 @@
       color: var(--color-accent);
   }
 
+
+    .card-text {
+        font-size: 15px;
+        line-height: 1.6;
+        font-weight: 700;
+    }
+
   /* Animation d'apparition */
   @keyframes fadeInScale {
       from {
@@ -325,12 +332,12 @@
         margin-bottom: 0.75rem;
         text-transform: capitalize;
     }
-
+/* 
     .card-text {
         font-size: 0.9rem;
         line-height: 1.6;
         font-weight: 500;
-    }
+    } */
 
     .values-section {
         display: flex;
@@ -380,7 +387,7 @@
 
     .value-text {
         color: var(--color-text);
-        font-size: 0.9rem;
+        font-size: 18px;
         line-height: 1.6;
         font-weight: bold;
     }
@@ -634,6 +641,10 @@
         font-size: 13px;
         line-height: 1.6;
     }
+
+    /* .intro-text{
+        padding: -5rem;
+    } */
 }
 
 /* Petits smartphones (350px) */
@@ -780,7 +791,7 @@
     }
 
     .card-text {
-        font-size: 13px;
+        font-size: 15px;
         line-height: 1.6;
     }
 
@@ -873,3 +884,94 @@
 
 
 
+
+
+/* ============================================
+   RESPONSIVE - VIDÉO, INTRO-TEXT & SEMI_SECTION_TITLE
+   Pour écrans 300px à 500px
+   ============================================ */
+
+/* Tablettes et petits écrans (768px et moins) */
+@media (max-width: 768px) {
+    .videos {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .about-video-text-parent {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .intro-text {
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    .semi_section_title {
+        font-size: 1.5rem;
+        padding: 2rem 0;
+    }
+}
+
+/* Smartphones moyens (500px et moins) */
+@media (max-width: 500px) {
+    .videos {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 1rem;
+    }
+
+    .about-container {
+        margin: 20px 15px;
+    }
+
+    .intro-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: left;
+    }
+
+    .semi_section_title {
+        font-size: 1.3rem;
+        padding: 1.5rem 0;
+    }
+}
+
+/* Petits smartphones (400px et moins) */
+@media (max-width: 400px) {
+    .videos {
+        border-radius: 0.75rem;
+    }
+
+    .intro-text {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .semi_section_title {
+        font-size: 1.15rem;
+        padding: 1.2rem 0;
+    }
+}
+
+/* Très petits écrans (320px et moins) */
+@media (max-width: 320px) {
+    .videos {
+        border-radius: 0.5rem;
+    }
+
+    .intro-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .semi_section_title {
+        font-size: 1rem;
+        padding: 1rem 0;
+    }
+}

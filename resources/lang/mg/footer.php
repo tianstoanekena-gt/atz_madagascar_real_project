@@ -1,15 +1,15 @@
 <?php
 return [
     'about_section' => 'Mombamomba',
-    'about_description' => 'ATZ dia platforme maoderina natao mba ho fanehoana ny serivisy sy hetsika hataon\'ny fikambanana, mba hanatsarana ny fifandraisana eo amin\'ny fikambanana sy ny mpanohana sy mpiara-miasa',
+    'about_description' => 'Ity tranokala ity dia ankizy iray notohanan\'ny Akany Tia Zaza no nanangana azy; natao mba ahafahana manatsara ny fanehoana sy fifandraisana amin\'ireo mpikambana sy mpiara-miasa na eto antoerana (Madagasikara) na any ivelany. Natao ihany koa hanehoana fa misy ity fikambanana ity; ary mba ahafahana mitady fanampiana sy fiarahamiasa amin\'ny sehatra rehetra tsy hanavahana. Misaotra Tompoko !',
     'quick_links' => 'Rohy haingana',
     'home_link' => 'Fandraisana',
     'about_link' => 'Mombamomba',
     'activities_link' => 'Hetsika',
     'contact_link' => 'Fifandraisana',
     'contact_section' => 'Mifandraisa Aminay',
-    'contact_email' => 'Mailaka : contact@atz.mg',
-    'contact_phone' => 'Finday : +261 34 00 000 00',
+    'contact_email' => 'Mailaka : atz.andranovelona.fihavanana@gmail.com',
+    'contact_phone' => 'Finday : +261 38 41 007 47',
     'contact_address' => 'Antananarivo, Madagasikara',
     'follow_us' => 'Araho izahay',
     'social_facebook' => 'Facebook',
@@ -18,5 +18,4 @@ return [
     'social_email' => 'Mailaka',
     'newsletter_placeholder' => 'Ny Mailakao',
     'newsletter_button' => 'Alefa',
-    'copyright' => '© 2026 ATZ Platform – Zo rehetra voatokana',
 ];

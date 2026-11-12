@@ -24,12 +24,14 @@
     border-bottom: solid 3px var(--color-secondary);
     display:inline-flex;
 }
-
+/* 
 .staff p{
     color: var(--color-text);
     line-height: 1.8;
     text-align: justify;
-}
+    font-weight: 400;
+    font-size:22px;
+} */
 
 
 
@@ -349,9 +351,8 @@
  .member-description {
      color: var(--color-text);
      line-height: 1.6;
-     font-size: 0.95rem;
+     font-size: 15px;
      margin-bottom: 20px;
-     opacity: 0.85;
  }
 
  /* Contacts */
@@ -1313,5 +1314,260 @@
 
     .volunteer-since {
         font-size: 9px;
+    }
+}
+
+
+
+
+
+/* ============================================
+   CORRECTIONS CRITIQUES - SECTIONS STAFF (300px - 500px)
+   ============================================ */
+
+/* 1. SUPPRESSION DU BUG "height: 50vh" qui cassait l'affichage mobile */
+.office_section,
+.volunteers-section {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    padding: 40px 0;
+}
+
+.office_section .container,
+.volunteers-section .container {
+    padding: 0 15px;
+}
+
+/* ============================================
+   2. TEXTE D'INTRO (team-intro-text) & TITRE PRINCIPAL
+   ============================================ */
+@media (max-width: 500px) {
+    .team-intro-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        padding: 0 10px;
+    }
+
+    .staff h1 {
+        font-size: 1.8rem;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .team-intro-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .staff h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   3. SOUS-TITRES DE SECTIONS (Bleu / Vert)
+   ============================================ */
+@media (max-width: 500px) {
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+
+    .title-underline {
+        width: 60px;
+        height: 4px;
+    }
+}
+
+@media (max-width: 400px) {
+    .section-title {
+        font-size: 1.4rem;
+    }
+
+    .title-underline {
+        width: 50px;
+        height: 3px;
+    }
+}
+
+/* ============================================
+   4. OFFICE CARDS (Section Bureau) - Optimisation Mobile
+   ============================================ */
+@media (max-width: 500px) {
+    .office_card {
+        flex-direction: column;
+        min-height: auto;
+        border-radius: 12px;
+    }
+
+    .card-left {
+        width: 100%;
+        padding: 20px 20px 10px 20px;
+    }
+
+    .member-image-wrapper {
+        max-width: 180px;
+        margin: 0 auto;
+        border-radius: 12px;
+    }
+
+    .card-right {
+        padding: 15px 20px 25px 20px;
+    }
+
+    .member-name {
+        font-size: 1.2rem;
+    }
+
+    .member-role {
+        font-size: 0.85rem;
+        padding: 4px 12px;
+    }
+
+    .member-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .member-contacts {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .contact-link {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 350px) {
+    .office_card {
+        border-radius: 10px;
+    }
+
+    .card-left {
+        padding: 15px 15px 10px 15px;
+    }
+
+    .member-image-wrapper {
+        max-width: 140px;
+    }
+
+    .card-right {
+        padding: 10px 15px 20px 15px;
+    }
+
+    .member-name {
+        font-size: 1.1rem;
+    }
+
+    .member-role {
+        font-size: 0.75rem;
+        padding: 3px 10px;
+    }
+
+    .member-description {
+        font-size: 0.85rem;
+    }
+
+    .contact-link {
+        font-size: 0.75rem;
+        padding: 6px 8px;
+    }
+}
+
+/* ============================================
+   5. VOLUNTEER CARDS (Section Bénévoles) - Optimisation Mobile
+   ============================================ */
+@media (max-width: 500px) {
+    .volunteers-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .volunteer-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 15px;
+        border-radius: 12px;
+    }
+
+    .volunteer-image {
+        width: 100%;
+        max-width: 160px;
+        height: 160px;
+        margin: 0 auto 15px auto;
+    }
+
+    .volunteer-image img {
+        border-radius: 12px;
+        /* Plus carré sur mobile pour mieux s'adapter */
+    }
+
+    .image-overlay {
+        border-radius: 12px;
+    }
+
+    .volunteer-coord {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .volunteer-coord ul {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .volunteer-coord img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .volunteer-name {
+        font-size: 1.1rem;
+    }
+
+    .volunteer-role {
+        font-size: 0.9rem;
+    }
+
+    .volunteer-since {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+    }
+}
+
+@media (max-width: 350px) {
+    .volunteer-card {
+        padding: 15px 10px;
+    }
+
+    .volunteer-image {
+        max-width: 130px;
+        height: 130px;
+        margin-bottom: 12px;
+    }
+
+    .volunteer-name {
+        font-size: 1rem;
+    }
+
+    .volunteer-role {
+        font-size: 0.85rem;
+    }
+
+    .volunteer-coord img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .volunteer-since {
+        font-size: 0.7rem;
+        padding: 3px 10px;
     }
 }

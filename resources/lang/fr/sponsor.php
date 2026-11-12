@@ -27,5 +27,7 @@ return [
     'our_story' => 'Notre histoire',
     'gallery' => 'Galerie',
     'cta_contact' => 'Nous contacter',
-    'cta_see_all' => 'Voir tous les sponsors'
+    'cta_see_all' => 'Voir tous les sponsors',
+    'cta_title' => 'Devenir sponsor',
+    'cta_description' => 'Rejoignez notre programme de sponsoring et faites une différence dans la vie des enfants à Madagascar. Votre soutien nous aide à fournir des services essentiels et à créer des opportunités pour un avenir meilleur.',
 ];
