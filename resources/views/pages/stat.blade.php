@@ -10,26 +10,6 @@
                 {{-- <span class="section-eyebrow"><i class="fa-solid fa-chart-simple"></i> @lang('stat.title')</span> --}}
                 <h2 class="section-title">@lang('stat.title')</h2>
                 <div class="title-underline"></div>
-
-                @if ($availableYears->count() > 1)
-                    <form method="GET" action="{{ route('stats') }}" class="year-filter-form">
-                        <label for="year_select" class="year-filter-label">
-                            <i class="fa-regular fa-calendar"></i>
-                            @lang('stat.year_label')
-                        </label>
-                        <div class="year-select-wrapper">
-                            <select name="year" id="year_select" onchange="this.form.submit()" class="year-select">
-                                @foreach ($availableYears as $year)
-                                    <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>
-                                        {{ $year }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </form>
-                @else
-                    <p class="section-subtitle">@lang('stat.subtitle') {{ $currentYear }}</p>
-                @endif
             </div>
 
             {{-- FALLBACK GLOBAL --}}
@@ -208,8 +188,8 @@
 
     <style>
         /* ============================================
-                                                                               PAGE STATISTIQUES - DESIGN AMÉLIORÉ
-                                                                               ============================================ */
+                                                                                                                   PAGE STATISTIQUES - DESIGN AMÉLIORÉ
+                                                                                                                   ============================================ */
 
         .stats-section {
             padding: 5rem 0 6rem;
