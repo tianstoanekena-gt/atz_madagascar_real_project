@@ -4,7 +4,7 @@ return [
     'categories' => [
         'all' => 'Ny fanontaniana rehetra',
         'general' => 'Ankapobeny',
-        'membership' => 'Fidirana an-kavana',
+        'membership' => 'Fanotaniana hafa',
         'donation' => 'Fanomezana',
         'activities' => 'Hetsika',
         'contact' => 'Fifandraisana',
