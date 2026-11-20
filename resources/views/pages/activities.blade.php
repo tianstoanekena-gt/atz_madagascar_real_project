@@ -38,7 +38,7 @@
                                             </div>
                                         @endif
                                         <div class="activity-overlay absolute inset-0"></div>
-                                        <span class="activity-badge">{{ $activity->category }}</span>
+                                        {{-- <span class="activity-badge">{{ $activity->category }}</span> --}}
                                     </div>
                                     <div class="activity-content p-6 md:p-8">
                                         <h2 class="activity-title">{{ $activity->title }}</h2>

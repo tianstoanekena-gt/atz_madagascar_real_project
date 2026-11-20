@@ -12,18 +12,50 @@ class FaqController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = Faq::orderBy('order')->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $query = Faq::query();
 
+        // Filtre par catégorie
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Filtre par statut
+        if ($request->filled('status')) {
+            if ($request->status === 'published') {
+                $query->where('is_published', true);
+            } elseif ($request->status === 'draft') {
+                $query->where('is_published', false);
+            }
+        }
+
+        // Recherche par question (FR, MG ou EN)
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('question_fr', 'like', "%{$search}%")
+                    ->orWhere('question_mg', 'like', "%{$search}%")
+                    ->orWhere('question_en', 'like', "%{$search}%");
+            });
+        }
+
+        $faqs = $query->orderBy('order')->orderBy('created_at', 'desc')->paginate(20);
+
+        // Statistiques (toujours calculées sur toutes les FAQ, pas seulement filtrées)
+        $allFaqs = Faq::all();
         $stats = [
-            'total' => Faq::count(),
-            'published' => Faq::published()->count(),
-            'draft' => Faq::where('is_published', false)->count(),
-            'by_category' => Faq::selectRaw('category, count(*) as count')
-                ->groupBy('category')
-                ->pluck('count', 'category'),
+            'total' => $allFaqs->count(),
+            'published' => $allFaqs->where('is_published', true)->count(),
+            'draft' => $allFaqs->where('is_published', false)->count(),
+            'by_category' => $allFaqs->groupBy('category')->map(function ($items, $category) {
+                $first = $items->first();
+                return [
+                    'name' => $first->category_name ?? ucfirst($category),
+                    'icon' => $first->category_icon ?? 'fas fa-folder',
+                    'count' => $items->count(),
+                ];
+            })->toArray(),
         ];
 
         return view('admin.faq.index', compact('faqs', 'stats'));

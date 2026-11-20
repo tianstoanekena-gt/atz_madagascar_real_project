@@ -30,4 +30,5 @@ return [
     'cta_see_all' => 'See All Sponsors',
     'cta_title' => 'Become a Sponsor',
     'cta_description' => 'Join our sponsorship program and make a difference in the lives of children in Madagascar. Your support helps us provide essential services and create opportunities for a brighter future.',
+    'active' => 'sponsor active',
 ];

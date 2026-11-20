@@ -87,6 +87,102 @@
                 </div>
             @endif
 
+            <!-- ✅ NOUVEAU : Barre de filtres et recherche -->
+            <div class="bg-white shadow-md rounded-xl p-5 mb-6">
+                <form method="GET" action="{{ route('admin.faq.index') }}"
+                    class="flex flex-col md:flex-row gap-4 items-end">
+
+                    {{-- Recherche par question --}}
+                    <div class="flex-1 min-w-0">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-2">
+                            <i class="fas fa-search mr-1"></i> Rechercher
+                        </label>
+                        <input type="text" name="search" value="{{ request('search') }}"
+                            placeholder="Rechercher une question..."
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    </div>
+
+                    {{-- Filtre par catégorie --}}
+                    <div class="md:w-64">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-2">
+                            <i class="fas fa-folder mr-1"></i> Catégorie
+                        </label>
+                        <select name="category"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white">
+                            <option value="">Toutes les catégories</option>
+                            @foreach ($stats['by_category'] as $categoryKey => $categoryData)
+                                <option value="{{ $categoryKey }}"
+                                    {{ request('category') == $categoryKey ? 'selected' : '' }}>
+                                    {{ $categoryData['name'] }} ({{ $categoryData['count'] }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Filtre par statut --}}
+                    <div class="md:w-48">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase mb-2">
+                            <i class="fas fa-toggle-on mr-1"></i> Statut
+                        </label>
+                        <select name="status"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white">
+                            <option value="">Tous les statuts</option>
+                            <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>Publiés
+                            </option>
+                            <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Brouillons</option>
+                        </select>
+                    </div>
+
+                    {{-- Boutons d'action --}}
+                    <div class="flex gap-2">
+                        <button type="submit"
+                            class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm transition shadow-sm flex items-center gap-2">
+                            <i class="fas fa-filter"></i>
+                            <span>Filtrer</span>
+                        </button>
+
+                        @if (request()->hasAny(['search', 'category', 'status']))
+                            <a href="{{ route('admin.faq.index') }}"
+                                class="px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium text-sm transition flex items-center gap-2">
+                                <i class="fas fa-times"></i>
+                                <span>Reset</span>
+                            </a>
+                        @endif
+                    </div>
+                </form>
+
+                {{-- Indicateur de filtres actifs --}}
+                @if (request()->hasAny(['search', 'category', 'status']))
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2 text-sm">
+                        <span class="text-gray-500 font-medium">
+                            <i class="fas fa-info-circle mr-1"></i> Filtres actifs :
+                        </span>
+                        @if (request('search'))
+                            <span
+                                class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                                <i class="fas fa-search"></i> "{{ Str::limit(request('search'), 20) }}"
+                            </span>
+                        @endif
+                        @if (request('category'))
+                            <span
+                                class="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
+                                <i class="fas fa-folder"></i>
+                                {{ $stats['by_category'][request('category')]['name'] ?? request('category') }}
+                            </span>
+                        @endif
+                        @if (request('status'))
+                            <span
+                                class="inline-flex items-center gap-1 px-3 py-1 {{ request('status') == 'published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700' }} rounded-full text-xs font-medium">
+                                <i
+                                    class="fas fa-{{ request('status') == 'published' ? 'check-circle' : 'pause-circle' }}"></i>
+                                {{ request('status') == 'published' ? 'Publié' : 'Brouillon' }}
+                            </span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+
+
             <!-- Tableau des FAQs -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden">
                 @if ($faqs->count() > 0)
@@ -122,7 +218,8 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <div>
-                                                <strong class="text-gray-900">{{ Str::limit($faq->question, 60) }}</strong>
+                                                <strong
+                                                    class="text-gray-900">{{ Str::limit($faq->question, 60) }}</strong>
                                                 <br>
                                                 <small class="text-gray-500">
                                                     {{ $faq->created_at->format('d/m/Y') }}

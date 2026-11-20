@@ -30,4 +30,5 @@ return [
     'cta_see_all' => 'Hahita ireo mpanohana rehetra',
     'cta_title' => 'Te Ho lasa mpanohana anay',
     'cta_description' => 'Maro ireo tetikasa sy hetsika mila fanohanana sy fanohanana; meteza ho mpanohana ny fikambanana',
+    'active' => 'Mpanohana amperinasa tanteraka',
 ];
