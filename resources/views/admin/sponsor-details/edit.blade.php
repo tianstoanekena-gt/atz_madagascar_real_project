@@ -35,6 +35,7 @@
                 </div>
             @endif
 
+
             <form action="{{ route('admin.sponsors.details.update', $sponsor->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
@@ -170,13 +171,18 @@
                                 @endphp
 
                                 @foreach ($existingPhotos as $index => $photo)
-                                    <div class="photo-item border rounded-lg p-4 bg-gray-50">
+                                    <div class="photo-item border rounded-lg p-4 bg-gray-50"
+                                        id="photo-item-{{ $photo->id }}">
                                         <div class="flex items-start gap-4">
                                             <img src="{{ Storage::url($photo->photo) }}" alt="Photo {{ $index + 1 }}"
                                                 class="w-24 h-24 object-cover rounded-lg border-2 border-gray-200">
                                             <div class="flex-1">
                                                 <input type="hidden" name="photos[{{ $index }}][existing_id]"
                                                     value="{{ $photo->id }}">
+                                                {{-- ✅ NOUVEAU : Champ caché pour indiquer la suppression --}}
+                                                <input type="hidden" name="photos[{{ $index }}][delete]"
+                                                    id="delete-photo-{{ $photo->id }}" value="0">
+
                                                 <input type="text" name="photos[{{ $index }}][caption]"
                                                     value="{{ $photo->caption }}"
                                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2"
@@ -187,8 +193,9 @@
                                                     placeholder="Ordre">
                                             </div>
                                             <div>
-                                                <button type="button" onclick="removePhoto(this, {{ $photo->id }})"
-                                                    class="text-red-600 hover:text-red-800">
+                                                {{-- ✅ BOUTON SIMPLE qui appelle une fonction JS --}}
+                                                <button type="button" onclick="markForDeletion({{ $photo->id }})"
+                                                    class="text-red-600 hover:text-red-800 p-2" title="Supprimer">
                                                     <i class="fas fa-trash text-lg"></i>
                                                 </button>
                                             </div>
@@ -196,11 +203,10 @@
                                     </div>
                                 @endforeach
 
-                                <!-- Nouvelles photos -->
                                 @for ($i = count($existingPhotos); $i < 5; $i++)
-                                    <div
-                                        class="photo-item border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition">
-                                        <label class="cursor-pointer block">
+                                    <div class="photo-item border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition"
+                                        id="new-photo-slot-{{ $i }}">
+                                        <label class="cursor-pointer block" id="new-photo-label-{{ $i }}">
                                             <i class="fas fa-cloud-upload-alt text-3xl text-blue-600 mb-2"></i>
                                             <p class="text-sm text-gray-600">Ajouter une photo</p>
                                             <input type="file" name="photos[{{ $i }}][photo]"
@@ -208,14 +214,24 @@
                                                 onchange="previewNewPhoto(event, {{ $i }})">
                                         </label>
                                         <div id="new-photo-preview-{{ $i }}" class="hidden mt-4">
-                                            <img src="#" class="w-24 h-24 object-cover rounded-lg mx-auto">
-                                            <input type="text" name="photos[{{ $i }}][caption]"
-                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg mt-2"
-                                                placeholder="Légende">
-                                            <input type="number" name="photos[{{ $i }}][order]"
-                                                value="{{ $i }}"
-                                                class="w-20 px-3 py-2 border border-gray-300 rounded-lg mt-2"
-                                                placeholder="Ordre">
+                                            <div class="flex items-start gap-4">
+                                                <img src="#" class="w-24 h-24 object-cover rounded-lg mx-auto">
+                                                <div class="flex-1 text-left">
+                                                    <input type="text" name="photos[{{ $i }}][caption]"
+                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2"
+                                                        placeholder="Légende">
+                                                    <input type="number" name="photos[{{ $i }}][order]"
+                                                        value="{{ $i }}"
+                                                        class="w-20 px-3 py-2 border border-gray-300 rounded-lg"
+                                                        placeholder="Ordre">
+                                                </div>
+                                                <div>
+                                                    <button type="button" onclick="removeNewPhoto({{ $i }})"
+                                                        class="text-red-600 hover:text-red-800 p-2">
+                                                        <i class="fas fa-trash text-lg"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 @endfor
@@ -245,9 +261,27 @@
         </div>
     </section>
     <script>
-        // Aperçu nouvelle photo
+        // ✅ Marque une photo pour la suppression (sera effective au clic sur "Enregistrer")
+        function markForDeletion(photoId) {
+            if (confirm('Supprimer cette photo ? Elle sera effacée définitivement lors de l\'enregistrement.')) {
+                // 1. Active le champ caché "delete" à 1
+                const deleteInput = document.getElementById(`delete-photo-${photoId}`);
+                if (deleteInput) {
+                    deleteInput.value = '1';
+                }
+
+                // 2. Masque visuellement la carte de la photo
+                const photoItem = document.getElementById(`photo-item-${photoId}`);
+                if (photoItem) {
+                    photoItem.style.display = 'none';
+                }
+            }
+        }
+
+        // ✅ Aperçu nouvelle photo
         function previewNewPhoto(event, index) {
             const file = event.target.files[0];
+            const label = document.getElementById(`new-photo-label-${index}`);
             const preview = document.getElementById(`new-photo-preview-${index}`);
 
             if (file && file.type.match('image.*')) {
@@ -255,21 +289,9 @@
                 reader.onload = function(e) {
                     preview.querySelector('img').src = e.target.result;
                     preview.classList.remove('hidden');
+                    label.classList.add('hidden'); // Cache le bouton d'upload initial
                 }
                 reader.readAsDataURL(file);
-            }
-        }
-
-        // Supprimer une photo
-        function removePhoto(button, photoId) {
-            if (confirm('Supprimer cette photo ?')) {
-                if (photoId) {
-                    // Photo existante → redirection vers route de suppression
-                    window.location.href = `{{ route('admin.sponsors.details.photo.destroy', '__ID__') }}`.replace(
-                        '__ID__', photoId);
-                } else {
-                    button.closest('.photo-item').remove();
-                }
             }
         }
 
