@@ -25,8 +25,8 @@
                 </div>
             @endif
 
-            <form id="social-form" action="{{ route('admin.contact.social-media.update', $socialMedia) }}" method="POST"
-                enctype="multipart/form-data">
+            <form id="social-form" action="{{ route('admin.contact.social-media.update', $socialMedia->id) }}"
+                method="POST" enctype="multipart/form-data">
                 @csrf @method('PUT')
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -101,10 +101,18 @@
                             </div>
 
                             <div class="flex gap-3 mt-6">
-                                <button type="submit" id="submit-btn"
-                                    class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2">
-                                    <i class="fas fa-save"></i><span>Mettre à jour</span>
-                                </button>
+                                {{-- ✅ LA SOLUTION : Un vrai formulaire avec méthode PUT --}}
+                                <form action="{{ route('admin.contact.social-media.update', $socialMedia) }}" method="POST"
+                                    class="flex-1" id="update-form">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <button type="submit" id="submit-btn"
+                                        class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                                        <i class="fas fa-save" id="btn-icon"></i>
+                                        <span id="btn-text">Mettre à jour</span>
+                                    </button>
+                                </form>
                                 <a href="{{ route('admin.contact.social-media.index') }}"
                                     class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
                                     Annuler

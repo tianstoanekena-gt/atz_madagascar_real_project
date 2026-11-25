@@ -1,19 +1,18 @@
-<!-- ========== FOOTER SECTION ========== -->
-<section id="footer-section">
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+    <div class="footer-container">
 
-    <footer class="footer-container">
-
-        <div class="footer-top">
-            <div class="footer-column">
+        <div class="footer-grid">
+            <!-- Colonne 1 : À propos -->
+            <div class="footer-col">
                 <h3>@lang('footer.about_section')</h3>
-                <p>
-                    @lang('footer.about_description')
-                </p>
+                <p>@lang('footer.about_description')</p>
             </div>
 
-            <div class="footer-column">
+            <!-- Colonne 2 : Liens rapides -->
+            <div class="footer-col">
                 <h3>@lang('footer.quick_links')</h3>
-                <ul>
+                <ul class="footer-links">
                     <li><a href="{{ localized_route('home') }}">@lang('footer.home_link')</a></li>
                     <li><a href="{{ localized_route('about') }}">@lang('footer.about_link')</a></li>
                     <li><a href="{{ localized_route('activities') }}">@lang('footer.activities_link')</a></li>
@@ -21,45 +20,42 @@
                 </ul>
             </div>
 
-            <div class="footer-column">
+            <!-- Colonne 3 : Contact -->
+            <div class="footer-col">
                 <h3>@lang('footer.contact_section')</h3>
-                <p>@lang('footer.contact_email')</p>
-                <p>@lang('footer.contact_phone')</p>
-                <p>@lang('footer.contact_address')</p>
+                <ul class="footer-contact">
+                    <li>@lang('footer.contact_address')</li>
+                    <li>@lang('footer.contact_phone')</li>
+                    <li>@lang('footer.contact_email')</li>
+                </ul>
             </div>
 
-            <div class="footer-column">
+            <!-- Colonne 4 : Réseaux & Newsletter -->
+            <div class="footer-col">
                 <h3>@lang('footer.follow_us')</h3>
                 <div class="social-icons">
-                    <a href="#">
-                        <img src="{{ asset('assets/images/icons/facebook.png') }}" alt="Facebook">
-                    </a>
-
-                    <a href="#">
-                        <img src="{{ asset('assets/images/icons/instagram.png') }}" alt="Instagram">
-                    </a>
-
-                    <a href="#">
-                        <img src="{{ asset('assets/images/icons/whatsapp.png') }}" alt="Twitter">
-                    </a>
-
-                    <a href="#">
-                        <img src="{{ asset('assets/images/icons/email.png') }}" alt="Twitter">
-                    </a>
+                    <a href="#" aria-label="Facebook"><img src="{{ asset('assets/images/icons/facebook.png') }}"
+                            alt="Facebook"></a>
+                    {{-- <a href="#" aria-label="WhatsApp"><img src="{{ asset('assets/images/icons/whatsapp.png') }}"
+                            alt="WhatsApp"></a> --}}
+                    <a href="#" aria-label="Email"><img src="{{ asset('assets/images/icons/email.png') }}"
+                            alt="Email"></a>
                 </div>
 
-                <div class="newsletter">
-                    <input type="email" placeholder="@lang('footer.newsletter_placeholder')">
-                    <button>@lang('footer.newsletter_button')</button>
+                <div class="footer-newsletter">
+                    {{-- <p class="newsletter-label">Newsletter</p> --}}
+                    <div class="newsletter-input-group">
+                        <input type="email" placeholder="@lang('footer.newsletter_placeholder')" readonly disabled>
+                        <button type="button" disabled>@lang('footer.newsletter_button')</button>
+                    </div>
                 </div>
-
             </div>
         </div>
 
+        <!-- Bas de page -->
         <div class="footer-bottom">
             <p>@lang('footer.copyright', ['year' => date('Y')])</p>
         </div>
 
-    </footer>
-
-</section>
+    </div>
+</footer>

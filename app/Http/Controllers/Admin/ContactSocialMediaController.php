@@ -65,7 +65,7 @@ class ContactSocialMediaController extends Controller
                 'max:255',
                 'regex:/^(https?:\/\/[^\s]+|mailto:[^\s@]+@[^\s@]+\.[^\s@]+|tel:\+?[0-9\s\-]+)$/i',
             ],
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:512',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:5120',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ], [

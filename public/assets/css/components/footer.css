@@ -1,110 +1,162 @@
-#footer-section {
-    background: var(--color-text);
-    color: var(--color-background);
-    padding: 40px 0 0 0;
-    font-family: Arial, sans-serif;
+/* ============================================
+   FOOTER - DESIGN ÉPURÉ & MODERNE
+   ============================================ */
+.site-footer {
+    background-color: var(--color-text);
+    /* #0d0c43 */
+    color: #ffffff;
+    padding: 60px 0 0 0;
+    font-family: inherit;
+    /* Utilise la police du site */
 }
 
 .footer-container {
-    width: 90%;
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.footer-top {
+/* Grille principale */
+.footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    padding-bottom: 30px;
+    gap: 40px;
+    padding-bottom: 50px;
 }
 
-.footer-column h3 {
+/* Titres des colonnes */
+.footer-col h3 {
     color: var(--color-primary);
-    margin-bottom: 15px;
-    position: relative;
-    transition: 0.3s ease;
+    /* #feed02 */
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
 }
 
-.footer-column h3:hover {
-    color: var(--color-blue);
+/* Textes et paragraphes */
+.footer-col p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 15px 0;
 }
 
-.footer-column p {
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.footer-column ul {
+/* Listes (Liens et Contact) */
+.footer-col ul {
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.footer_link{
-    list-style: none;
+.footer-col ul li {
+    margin-bottom: 12px;
 }
 
-.footer-column ul li {
-    margin-bottom: 10px;
-    list-style: none;
-}
-
-.footer-column ul li a {
-    color: var(--color-background);
+.footer-links li a {
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    transition: 0.3s ease;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
 }
 
-.footer-column ul li a:hover {
+.footer-links li a:hover {
     color: var(--color-primary);
-    padding-left: 5px;
 }
 
+.footer-contact li {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Réseaux sociaux */
 .social-icons {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
 .social-icons a img {
-    width: 30px;
-    transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    /* Si tes icônes sont noires, décommente la ligne suivante pour les rendre blanches : */
     /* filter: brightness(0) invert(1); */
 }
 
 .social-icons a:hover img {
-    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
 }
 
-.newsletter {
-    margin-top: 15px;
+/* Newsletter (État désactivé propre) */
+.footer-newsletter {
+    margin-top: 10px;
+}
+
+.newsletter-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px !important;
+}
+
+.newsletter-input-group {
     display: flex;
-    gap: 5px;
+    gap: 8px;
 }
 
-.newsletter input {
-    padding: 8px;
-    border: none;
+.newsletter-input-group input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
     outline: none;
-    border-radius: 4px;
-    width: 70%;
 }
 
-.newsletter button {
+.newsletter-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-input-group button {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
     background: var(--color-primary);
     color: var(--color-text);
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
-.newsletter button:hover {
-    background: var(--color-secondary);
-}
-
+/* Bas de page */
 .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px 0;
     text-align: center;
-    background: var(--color-accent);
-    padding: 15px;
-    font-size: 14px;
 }
 
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .site-footer {
+        padding-top: 40px;
+    }
+}

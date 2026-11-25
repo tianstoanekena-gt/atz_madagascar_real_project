@@ -206,6 +206,7 @@ Route::middleware(['auth', 'verified'])
         // Réseaux sociaux
         Route::resource('dashboard/contact/social-media', \App\Http\Controllers\Admin\ContactSocialMediaController::class)
             ->except(['show'])
+            ->parameters(['social-media' => 'socialMedia'])
             ->names('admin.contact.social-media');
 
         // Horaires d'ouverture (page unique d'édition)
